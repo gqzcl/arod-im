@@ -1,0 +1,13 @@
+syntax="proto3";
+
+package gim.comet;
+
+option go_package="github.com/gqzcl/gim/api/comet;comet";
+
+import "github.com/gqzcl/gim/api/protocol/protocol.proto";
+
+message PushMsgReq{
+    repeated string keys =1;
+    int32 protoOp=3;
+    gim.protocal.Proto proto=2;
+}
