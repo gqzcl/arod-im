@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package gim.protocol;
 
-option go_package = "./;protocol";
+option go_package = "github.com/gqzcl/gim/api/protocol;protocol";
 
 /*
  * v1.0.0
@@ -14,3 +14,4 @@ message Proto {
     int32 seq = 3;
     bytes body = 4;
 }
+
