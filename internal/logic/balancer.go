@@ -20,9 +20,10 @@ const (
 )
 
 type weightedNode struct {
-	region        string
-	hostname      string
-	addrs         []string
+	region   string
+	hostname string
+	addrs    []string
+	// 固定权值
 	fixedWeight   int64
 	currentWeight int64
 	currentConns  int64

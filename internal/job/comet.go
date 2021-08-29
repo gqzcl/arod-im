@@ -30,6 +30,7 @@ const (
 	grpcInitialConnWindowSize = 1 << 24
 )
 
+// 创建一个和comet的连接
 func newCometClient(addr string) (comet.CometClient, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Second))
 	defer cancel()
