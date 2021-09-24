@@ -17,9 +17,10 @@ type Channel struct {
 	Next     *Channel
 	Prev     *Channel
 
-	Mid      int64
-	Key      string
-	IP       string
+	Mid int64
+	Key string
+	IP  string
+	// 监视操作码
 	watchOps map[int32]struct{}
 	mutex    sync.RWMutex
 }
@@ -54,6 +55,7 @@ func (c *Channel) UnWatch(accepts ...int32) {
 // NeedPush verify if in watch.
 func (c *Channel) NeedPush(op int32) bool {
 	c.mutex.RLock()
+	// 如果在watchOps中，则需要push
 	if _, ok := c.watchOps[op]; ok {
 		c.mutex.RUnlock()
 		return true

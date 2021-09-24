@@ -104,6 +104,7 @@ func (s *Server) Close() (err error) {
 	return
 }
 
+// 更新在线数
 func (s *Server) onlineproc() {
 	for {
 		var (

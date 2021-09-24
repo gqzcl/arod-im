@@ -21,6 +21,7 @@ type Ring struct {
 }
 
 // NewRing new a ring buffer.
+// 创建一个ring队列，长度为最小大于num的2^n
 func NewRing(num int) *Ring {
 	r := new(Ring)
 	r.init(uint64(num))
@@ -28,6 +29,7 @@ func NewRing(num int) *Ring {
 }
 
 // Init init ring.
+// 初始化长度为最小大于num的2^n
 func (r *Ring) Init(num int) {
 	r.init(uint64(num))
 }
@@ -64,6 +66,7 @@ func (r *Ring) GetAdv() {
 
 // Set get a proto to write.
 func (r *Ring) Set() (proto *protocol.Proto, err error) {
+	// wp 和 rp为uint64保证一定成立
 	if r.wp-r.rp >= r.num {
 		return nil, errors.ErrRingFull
 	}
@@ -83,6 +86,6 @@ func (r *Ring) SetAdv() {
 func (r *Ring) Reset() {
 	r.rp = 0
 	r.wp = 0
-	// prevent pad compiler optimization
+	// prevent pad compiler optimization.
 	// r.pad = [40]byte{}
 }

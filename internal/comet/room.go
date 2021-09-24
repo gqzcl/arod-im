@@ -17,7 +17,7 @@ type Room struct {
 	AllOnline int32
 }
 
-// NewRoom new a room struct, store channel room info.
+// NewRoom new a room struct, store Channel room info.
 func NewRoom(id string) (r *Room) {
 	r = new(Room)
 	r.ID = id

@@ -23,6 +23,7 @@ func InitWhitelist(c *conf.Whitelist) (err error) {
 	)
 	if f, err = os.OpenFile(c.WhiteLog, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0644); err == nil {
 		whitelist = new(Whitelist)
+		// 新建创建一个新的记录器。out变量设置日志数据将写入的目标。prefix显示在每个生成的日志行的开头，如果提供了Lmsgprefix标志，则显示在日志头之后。flag参数定义日志记录属性。
 		whitelist.log = log.New(f, "", log.LstdFlags)
 		whitelist.list = make(map[int64]struct{})
 		for _, mid = range c.Whitelist {

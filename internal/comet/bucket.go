@@ -43,7 +43,7 @@ func (b *Bucket) ChannelCount() int {
 	return len(b.chs)
 }
 
-// RoomCount room count in the bucket
+// RoomCount room count in the bucket.
 func (b *Bucket) RoomCount() int {
 	return len(b.rooms)
 }
@@ -73,6 +73,7 @@ func (b *Bucket) ChangeRoom(nrid string, ch *Channel) (err error) {
 		oroom = ch.Room
 	)
 	// change to no room
+	// 如果nrid为空，则直接将ch的room置为空，同时删除原room
 	if nrid == "" {
 		if oroom != nil && oroom.Del(ch) {
 			b.DelRoom(oroom)
@@ -81,18 +82,21 @@ func (b *Bucket) ChangeRoom(nrid string, ch *Channel) (err error) {
 		return
 	}
 	b.cLock.Lock()
+	// 如果id为nrid的room不存在，新建一个id为nrid的room
 	if nroom, ok = b.rooms[nrid]; !ok {
 		nroom = NewRoom(nrid)
 		b.rooms[nrid] = nroom
 	}
 	b.cLock.Unlock()
+	// 从原room中删除ch并从bucket中删除原room
 	if oroom != nil && oroom.Del(ch) {
 		b.DelRoom(oroom)
 	}
-
+	// 在新建的room中添加ch
 	if err = nroom.Put(ch); err != nil {
 		return
 	}
+	// 将ch的room置为新建的room
 	ch.Room = nroom
 	return
 }
@@ -195,6 +199,7 @@ func (b *Bucket) BroadcastRoom(arg *pb.BroadcastRoomReq) {
 }
 
 // Rooms get all room id where online number > 0.
+// TODO ???
 func (b *Bucket) Rooms() (res map[string]struct{}) {
 	var (
 		roomID string

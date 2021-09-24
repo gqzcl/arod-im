@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
-	// Simple static webserver:
+	// Simple static webserver:fmt.Printf("success!")
 	log.Fatal(http.ListenAndServe(":1999", http.FileServer(http.Dir("./"))))
+
 }

@@ -72,11 +72,13 @@ func (s *Server) Operate(ctx context.Context, p *protocol.Proto, ch *Channel, b 
 		}
 		p.Op = protocol.OpChangeRoomReply
 	case protocol.OpSub:
+		// 订阅
 		if ops, err := strings.SplitInt32s(string(p.Body), ","); err == nil {
 			ch.Watch(ops...)
 		}
 		p.Op = protocol.OpSubReply
 	case protocol.OpUnsub:
+		// 取消订阅
 		if ops, err := strings.SplitInt32s(string(p.Body), ","); err == nil {
 			ch.UnWatch(ops...)
 		}

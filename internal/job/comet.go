@@ -123,6 +123,7 @@ func (c *Comet) Broadcast(arg *comet.BroadcastReq) (err error) {
 	return
 }
 
+// 处理消息推送
 func (c *Comet) process(pushChan chan *comet.PushMsgReq, roomChan chan *comet.BroadcastRoomReq, broadcastChan chan *comet.BroadcastReq) {
 	for {
 		select {
