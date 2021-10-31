@@ -1,12 +1,11 @@
 package websocket
 
 import (
+	"arod-im/pkg/selfbufio"
 	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
-
-	"github.com/gqzcl/gim/pkg/bufio"
 )
 
 const (
@@ -58,13 +57,13 @@ var (
 // Conn represents a WebSocket connection.
 type Conn struct {
 	rwc     io.ReadWriteCloser
-	r       *bufio.Reader
-	w       *bufio.Writer
+	r       *selfbufio.Reader
+	w       *selfbufio.Writer
 	maskKey []byte
 }
 
 // new connection
-func newConn(rwc io.ReadWriteCloser, r *bufio.Reader, w *bufio.Writer) *Conn {
+func newConn(rwc io.ReadWriteCloser, r *selfbufio.Reader, w *selfbufio.Writer) *Conn {
 	return &Conn{rwc: rwc, r: r, w: w, maskKey: make([]byte, 4)}
 }
 

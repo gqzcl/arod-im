@@ -1,12 +1,11 @@
 package websocket
 
 import (
+	"arod-im/pkg/selfbufio"
 	"bytes"
 	"fmt"
 	"net/http"
 	"strings"
-
-	"github.com/gqzcl/gim/pkg/bufio"
 )
 
 // Request request.
@@ -17,11 +16,11 @@ type Request struct {
 	Host       string
 	Header     http.Header
 
-	reader *bufio.Reader
+	reader *selfbufio.Reader
 }
 
 // ReadRequest reads and parses an incoming request from b.
-func ReadRequest(r *bufio.Reader) (req *Request, err error) {
+func ReadRequest(r *selfbufio.Reader) (req *Request, err error) {
 	var (
 		b  []byte
 		ok bool

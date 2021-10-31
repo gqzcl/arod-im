@@ -1,13 +1,12 @@
 package websocket
 
 import (
+	"arod-im/pkg/selfbufio"
 	"crypto/sha1"
 	"encoding/base64"
 	"errors"
 	"io"
 	"strings"
-
-	"github.com/gqzcl/gim/pkg/bufio"
 )
 
 var (
@@ -23,7 +22,7 @@ var (
 )
 
 // Upgrade Switching Protocols
-func Upgrade(rwc io.ReadWriteCloser, rr *bufio.Reader, wr *bufio.Writer, req *Request) (conn *Conn, err error) {
+func Upgrade(rwc io.ReadWriteCloser, rr *selfbufio.Reader, wr *selfbufio.Writer, req *Request) (conn *Conn, err error) {
 	if req.Method != "GET" {
 		return nil, ErrBadRequestMethod
 	}

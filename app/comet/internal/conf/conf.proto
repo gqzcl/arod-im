@@ -1,0 +1,80 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "app/comet/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+// message Config{
+//     bool Debug=1; // Debug
+//     Env Env=2; // 环境
+//     Consul consul=3; // 注册中心
+//     TCP TCP=4; 
+//     Websocket Websocket=5;
+//     Protocol Protocol=6; // 协议
+//     Bucket Bucket=7;
+//     RPCClient RPCClient=8;
+//     RPCServer RPCServer=9;
+//     Whitelist Whitelist=10;
+// }
+
+message Env{
+    string Region=1; 
+    string Zone=2;
+    string DeployEnv=3;
+    string Host=4;
+    int64 Weight=5;
+    bool Offline=6;
+    repeated string Addrs=7;
+}
+message Consul{
+    string address = 1;
+    string scheme = 2;
+}
+message TCP{
+    repeated string Bind=1;
+    int32 Sndbuf=2;
+    int32 Rcvbuf=3;
+    bool KeepAlive=4;
+    int32 Reader=5;
+    int32 ReadBuf=6;
+    int32 ReadBufSize=7;
+    int32 Writer=8;
+    int32 WriteBuf=9;
+    int32 WriteBufSize=10;
+}
+message Websocket{
+    repeated string Bind=1;
+    bool TLSOpen=2;
+    repeated string TLSBind=3;
+    string CertFile=4;
+    string PrivateFile=5;
+}
+message Protocol{
+    int32 Timer=1;
+    int32 TimerSize=2;
+    int32 SvrProto=3;
+    int32 CliProto=4; // 
+    google.protobuf.Duration HandshakeTimeout=5;
+}
+message Bucket{
+    int32 Size=1; // bucket的数量-32
+    int32 Channel=2; // channel size-
+    int32 Room=3; // room的数量
+    uint64 RoutineAmount=4; // 协程数量-32
+    int32 RountineSize=5; // chan大小
+}
+message RPCClient{
+    google.protobuf.Duration Dial=1;
+    google.protobuf.Duration Timeout=2;
+}
+message RPCServer{
+    string Network=1;
+    string Addr=2;
+    google.protobuf.Duration Timeout=3;
+    google.protobuf.Duration IdleTimeout=4;
+    google.protobuf.Duration MaxLifeTime=5;
+    google.protobuf.Duration ForceCloseWait=6;
+    google.protobuf.Duration KeepAliveInterval=7;
+    google.protobuf.Duration KeepAliveTimeout=8;
+}
