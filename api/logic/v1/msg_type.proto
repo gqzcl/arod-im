@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package api.logic.v1;
+
+option go_package = "arod-im/api/logic/v1;v1";
+option java_multiple_files = true;
+option java_package = "logic.v1";
+option objc_class_prefix = "APILogicV1";
+
+// 文本消息
+message MsgText{
+  string text = 1;
+}
+
+// 图像类型枚举
+enum ImageFormat{
+  JPG = 0;
+  GIF = 1;
+  PNG = 3;
+  BMP = 4;
+  Other = 5;
+}
+
+// 图片信息
+message ImageInfo{
+  enum ImageType{
+    big = 0; // 大图
+    origin =1; // 原图
+    thumbnail= 2; // 缩略图
+  }
+  ImageType type = 1;
+  int64 size = 2;
+  int64 width = 3;
+  int64 height = 4;
+  string URL = 5;
+}
+
+// 图像消息
+message  MsgImage{
+  string UUID = 1;
+  ImageFormat image_format = 2;
+  repeated ImageInfo image_info_array = 3;
+}
+
+// 表情消息
+message MsgFace{
+  uint32 index = 1;
+}
+
+// 文件消息
+message MsgFile{
+  string UUID = 1;
+  string URL = 2;
+  uint32 file_size = 3;
+  string file_name = 4;
+}
+
+// 视频消息
+message MsgVideo{
+  enum VideoFormat{
+    mp4 = 0;
+    avi = 1;
+  }
+  string VideoUUID = 1; // 视频ID
+  string VideoURL = 2; // 视频地址
+  uint32 VideoSize = 3; // 视频大小
+  uint32 VideoSecond = 4; // 视频时长
+  VideoFormat Video_format = 5; // 视频格式
+  string ThumbURL = 7; // 缩略图地址
+  string ThumbUUID = 8; // 缩略图ID
+  uint32 ThumbSize = 9; // 缩略图大小
+  uint32 ThumbWidth = 10;
+  uint32 ThumbHeight = 11;
+  ImageFormat ThumbFormat = 12; // 缩略图格式
+}
+
+// 音频消息
+message MsgSound{
+  uint32 Size = 1;
+  uint32 Second = 2;
+  string UUID = 3;
+  string URL = 4;
+}

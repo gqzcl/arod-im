@@ -1,42 +1,39 @@
 GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
-INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
+INTERNAL_PROTO_FILES1=$(shell find app/logic/internal -name *.proto)
+INTERNAL_PROTO_FILES2=$(shell find app/job/internal -name *.proto)
 API_PROTO_FILES=$(shell find api -name *.proto)
 
 .PHONY: init
 # init env
 init:
-	go get -u github.com/go-kratos/kratos/cmd/kratos/v2
-	go get -u google.golang.org/protobuf/cmd/protoc-gen-go
-	go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
-	go get -u github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2
-	go get -u github.com/go-kratos/kratos/cmd/protoc-gen-go-errors/v2
-
-.PHONY: errors
-# generate errors code
-errors:
-	protoc --proto_path=. \
-               --proto_path=./third_party \
-               --go_out=paths=source_relative:. \
-               --go-errors_out=paths=source_relative:. \
-               $(API_PROTO_FILES)
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
+	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
+	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 
 .PHONY: config
 # generate internal proto
 config:
-	protoc --proto_path=. \
-	       --proto_path=../../third_party \
- 	       --go_out=paths=source_relative:. \
-	       $(INTERNAL_PROTO_FILES)
+	protoc --proto_path=./app/logic/internal \
+	       --proto_path=./third_party \
+ 	       --go_out=paths=source_relative:./app/logic/internal \
+	       $(INTERNAL_PROTO_FILES1)
+	protoc --proto_path=./app/job/internal \
+    	   --proto_path=./third_party \
+     	   --go_out=paths=source_relative:./app/job/internal \
+    	   $(INTERNAL_PROTO_FILES2)
 
 .PHONY: api
 # generate api proto
 api:
-	protoc --proto_path=. \
+	protoc --proto_path=./api \
 	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:. \
- 	       --go-http_out=paths=source_relative:. \
- 	       --go-grpc_out=paths=source_relative:. \
+ 	       --go_out=paths=source_relative:./api \
+ 	       --go-http_out=paths=source_relative:./api \
+ 	       --go-grpc_out=paths=source_relative:./api \
+ 	       --openapi_out==paths=source_relative:. \
 	       $(API_PROTO_FILES)
 
 .PHONY: build
@@ -47,15 +44,21 @@ build:
 .PHONY: generate
 # generate
 generate:
+	go mod tidy
+	go get github.com/google/wire/cmd/wire@latest
 	go generate ./...
 
 .PHONY: all
 # generate all
 all:
 	make api;
-	make errors;
 	make config;
 	make generate;
+
+# wire
+wire:
+	cd app/logic/cmd/logic && wire
+	cd app/job/cmd/job && wire
 
 # show help
 help:

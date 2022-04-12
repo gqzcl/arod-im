@@ -1,51 +1,81 @@
 package main
 
 import (
+	"arod-im/app/job/internal/conf"
 	"flag"
 	"os"
-	"os/signal"
-	"syscall"
 
-	"arod-im/internal/job"
-	"arod-im/internal/job/conf"
-
-	"github.com/bilibili/discovery/naming"
-
-	resolver "github.com/bilibili/discovery/naming/grpc"
-	log "github.com/golang/glog"
+	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/config"
+	"github.com/go-kratos/kratos/v2/config/file"
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
+	"github.com/go-kratos/kratos/v2/transport/grpc"
 )
 
+// go build -ldflags "-X main.Version=x.y.z"
 var (
-	ver = "0.1.0"
+	// Name is the name of the compiled software.
+	Name string
+	// Version is the version of the compiled software.
+	Version string
+	// flagconf is the config flag.
+	flagconf string
+
+	id, _ = os.Hostname()
 )
+
+func init() {
+	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
+}
+
+func newApp(logger log.Logger, gs *grpc.Server) *kratos.App {
+	return kratos.New(
+		kratos.ID(id),
+		kratos.Name(Name),
+		kratos.Version(Version),
+		kratos.Metadata(map[string]string{}),
+		kratos.Logger(logger),
+		kratos.Server(
+			gs,
+		),
+	)
+}
 
 func main() {
 	flag.Parse()
-	if err := conf.Init(); err != nil {
+	logger := log.With(log.NewStdLogger(os.Stdout),
+		"ts", log.DefaultTimestamp,
+		"caller", log.DefaultCaller,
+		"service.id", id,
+		"service.name", Name,
+		"service.version", Version,
+		"trace.id", tracing.TraceID(),
+		"span.id", tracing.SpanID(),
+	)
+	c := config.New(
+		config.WithSource(
+			file.NewSource(flagconf),
+		),
+	)
+	defer c.Close()
+
+	if err := c.Load(); err != nil {
 		panic(err)
 	}
-	log.Infof("goim-job [version: %s env: %+v] start", ver, conf.Conf.Env)
-	// grpc register naming
-	dis := naming.New(conf.Conf.Discovery)
-	resolver.Register(dis)
-	// job
-	j := job.New(conf.Conf)
-	go j.Consume()
-	// signal
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
-	for {
-		s := <-c
-		log.Infof("goim-job get a signal %s", s.String())
-		switch s {
-		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
-			j.Close()
-			log.Infof("goim-job [version: %s] exit", ver)
-			log.Flush()
-			return
-		case syscall.SIGHUP:
-		default:
-			return
-		}
+
+	var bc conf.Bootstrap
+	if err := c.Scan(&bc); err != nil {
+		panic(err)
+	}
+
+	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
+	if err != nil {
+		panic(err)
+	}
+	defer cleanup()
+	// start and wait for stop signal
+	if err := app.Run(); err != nil {
+		panic(err)
 	}
 }

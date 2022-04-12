@@ -1,0 +1,60 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "arod-im/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  Client client =3;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+    google.protobuf.Duration idle_timeout = 4;
+    google.protobuf.Duration max_life_time = 5;
+    google.protobuf.Duration keep_alive_interval =6;
+    google.protobuf.Duration keep_alive_timeout =7;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Data {
+  message Kafka {
+    string topic = 1;
+    repeated string brokers = 2;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    string auth = 3;
+    int64 active = 4;
+    int64 idle = 5;
+    google.protobuf.Duration dail_timeout =6;
+    google.protobuf.Duration read_timeout = 7;
+    google.protobuf.Duration write_timeout = 8;
+    google.protobuf.Duration idle_timeout = 9;
+    google.protobuf.Duration expire =10;
+  }
+  Kafka kafka = 1;
+  Redis redis = 2;
+}
+
+message Client{
+  message GRPC{
+    google.protobuf.Duration dail = 1;
+    google.protobuf.Duration timeout = 2;
+  }
+  GRPC rpc_client = 1;
+}

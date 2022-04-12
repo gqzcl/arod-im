@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api.connector.v1;
+
+option go_package = "arod-im/api/connector/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.connector.v1";
+
+service Connector {
+	rpc CreateConnector (CreateConnectorRequest) returns (CreateConnectorReply);
+	rpc UpdateConnector (UpdateConnectorRequest) returns (UpdateConnectorReply);
+	rpc DeleteConnector (DeleteConnectorRequest) returns (DeleteConnectorReply);
+	rpc GetConnector (GetConnectorRequest) returns (GetConnectorReply);
+	rpc ListConnector (ListConnectorRequest) returns (ListConnectorReply);
+}
+
+message CreateConnectorRequest {}
+message CreateConnectorReply {}
+
+message UpdateConnectorRequest {}
+message UpdateConnectorReply {}
+
+message DeleteConnectorRequest {}
+message DeleteConnectorReply {}
+
+message GetConnectorRequest {}
+message GetConnectorReply {}
+
+message ListConnectorRequest {}
+message ListConnectorReply {}

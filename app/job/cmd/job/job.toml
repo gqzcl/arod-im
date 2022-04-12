@@ -1,8 +1,0 @@
-# This is a TOML document. Boom
-[discovery]
-    nodes = ["123.56.237.121:7171"]
-
-[kafka]
-    topic = "goim-push-topic"
-    group = "goim-push-group-job"
-    brokers = ["123.56.237.121:9092"]

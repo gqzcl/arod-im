@@ -2,111 +2,144 @@ syntax = "proto3";
 
 package api.logic.v1;
 
+import "google/api/annotations.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/struct.proto";
+
 option go_package = "arod-im/api/logic/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.logic.v1";
 
-import "api/protocol/protocol.proto";
-
 service Logic {
-    // Connect
-    rpc Connect(ConnectReq) returns (ConnectReply);
-    // Disconnect
-    rpc Disconnect(DisConnectReq) returns (DisConnectReply);
-    // Heartbeat
-    rpc Heartbeat(HeartbeatReq) returns (HeartbeatReply);
-    // RenewOnline
-    rpc RenewOnline(OnlineReq) returns (OnlineReply);
-    // Receive
-    rpc Receive(ReceiveReq) returns (ReceiveReply);
-	//ServerList
-	rpc Nodes(NodesReq) returns (NodesReply);
+	rpc SingleSend(SingleSendRequest) returns(SendReplay){
+		option (google.api.http)={
+			post: "/single/send",
+			body: "*",
+		};
+	}
+	rpc SingleRecall(SingleRecallRequest) returns(RecallReplay){
+		option (google.api.http)={
+			post: "/single/recall",
+			body: "*",
+		};
+	}
+	rpc GroupSend(GroupSendRequest) returns(SendReplay){
+		option (google.api.http)={
+			post: "/group/send",
+			body: "*",
+		};
+	}
+	rpc GroupSendMention(GroupSendMentionRequest) returns(SendReplay){
+		option (google.api.http)={
+			post: "/group/send_mention",
+			body: "*",
+		};
+	}
+	rpc GroupRecall(GroupRecallRequest) returns(RecallReplay){
+		option (google.api.http)={
+			post: "/group/recall",
+			body: "*",
+		};
+	}
+	rpc RoomSend(GroupSendRequest) returns(SendReplay){
+		option (google.api.http)={
+			post: "/room/send",
+			body: "*",
+		};
+	}
+	rpc RoomBroadcast(GroupSendRequest) returns(SendReplay){
+		option (google.api.http)={
+			post: "/room/broadcast",
+			body: "*",
+		};
+	}
 }
 
-message PushMsg {
-    enum Type {
-        PUSH = 0;
-        ROOM = 1;
-        BROADCAST = 2;
-    }
-    Type type = 1; // 消息类型
-    int32 operation = 2;
-    int32 speed = 3;
-    string server = 4;
-    string room = 5;
-    repeated string keys = 6;
-    bytes msg = 7; 
+enum MsgType{
+	text = 0; // 文本消息
+	image = 1; // 图片消息
+	face = 2; // 表情消息
+	video = 3; // 视频消息
+	file = 4; // 文件消息
+	sound = 5; // 音频消息
 }
 
-message ConnectReq {
-    string server = 1;
-    string cookie = 2;
-    bytes token = 3;
+// 消息返回响应
+message  SendReplay{
+	string action_status = 1; // 请求结果
+	string error_info = 2; // 错误信息
+	uint32 error_code = 3; // 错误码
+	int64 msg_time = 4; // 消息时间戳
+	string msg_seq = 5; // 消息序列号
 }
 
-message ConnectReply {
-    int64 mid = 1;
-    string key = 2;
-    string roomID = 3;
-    repeated int32 accepts = 4;
-    int64 heartbeat = 5;
+// 撤回消息返回响应
+message  RecallReplay{
+	string action_status = 1; // 请求结果
+	string error_info = 2; // 错误信息
+	uint32 error_code = 3; // 错误码
 }
 
-message DisConnectReq {
-    int64 mid = 1;
-    string key = 2;
-    string server = 3;
+// 单聊发送消息请求
+message SingleSendRequest{
+	// 消息体
+	message MsgBody {
+		MsgType msg_type = 1;
+		// 根据不同消息类型有不同的消息内容
+		google.protobuf.Struct msg_content = 2;
+	}
+
+	string uid = 1;
+	string cid = 2;
+	repeated MsgBody msg_body = 3;
 }
 
-message DisConnectReply {
-    bool has = 1;
+// 单聊撤回消息请求
+message SingleRecallRequest{
+	string uid = 1;
+	string cid = 2;
+	string msg_key =3;
 }
 
-message HeartbeatReq {
-    int64 mid = 1;
-    string key = 2;
-    string server = 3;
+// 群聊发送消息请求
+message GroupSendRequest{
+	// 消息体
+	message MsgBody {
+		string msg_type = 1;
+		// 根据不同消息类型有不同的消息内容
+		google.protobuf.Any msg_content = 2;
+	}
+
+	string uid = 1;
+	string group_id = 2;
+	repeated MsgBody msg_body = 3;
 }
 
-message HeartbeatReply {
+// 群聊@消息请求
+message GroupSendMentionRequest{
+	// 消息体
+	message MsgBody {
+		string msg_type = 1;
+		// 根据不同消息类型有不同的消息内容
+		google.protobuf.Any msg_content = 2;
+	}
+
+	message GroupAtInfo {
+		// 标志为1时表示@全体，为0时为@指定用户
+		uint32 group_at_flag = 1;
+		string group_at_uid = 2;
+	}
+
+	string Uid = 1;
+	string GroupId = 2;
+	repeated MsgBody msg_body = 3;
+	repeated GroupAtInfo group_at_info = 4;
 }
 
-message OnlineReq {
-    string server = 1;
-    map<string, int32> roomCount = 2;
+
+// 群聊撤回消息请求
+message GroupRecallRequest{
+	string group_id = 1;
+	string msg_seq = 2;
 }
 
-message OnlineReply {
-    map<string, int32> allRoomCount = 1;
-}
-
-message ReceiveReq {
-    int64 mid = 1;
-    protocol.Proto proto = 2;
-}
-
-message ReceiveReply {
-}
-
-message NodesReq {
-	string platform = 1;
-	string clientIP = 2;
-}
-
-message NodesReply {
-	string domain = 1;
-	int32 tcp_port = 2;
-	int32 ws_port = 3;
-	int32 wss_port = 4;
-	int32 heartbeat = 5;
-	repeated string nodes = 6;
-	Backoff backoff = 7;
-	int32 heartbeat_max = 8;
-}
-
-message Backoff {
-	int32	max_delay = 1;
-	int32	base_delay = 2;
-	float	factor = 3;
-	float	jitter = 4;
-}

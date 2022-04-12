@@ -1,0 +1,19 @@
+server:
+  http:
+    network: tcp
+    addr: 0.0.0.0:8001
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:9001
+    timeout: 1s
+data:
+  kafka:
+    topic: "logic-single"
+    brokers: ["101.43.63.229:9092"]
+  database:
+    driver: mysql
+    source: root:root@tcp(127.0.0.1:3306)/test
+  redis:
+    addr: 127.0.0.1:6379
+    read_timeout: 0.2s
+    write_timeout: 0.2s

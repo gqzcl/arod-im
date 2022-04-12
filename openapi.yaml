@@ -1,0 +1,269 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Logic API
+    version: 0.0.1
+paths:
+    /group/recall:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_GroupRecall
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GroupRecallRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RecallReplay'
+    /group/send:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_GroupSend
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GroupSendRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendReplay'
+    /group/send_mention:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_GroupSendMention
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GroupSendMentionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendReplay'
+    /room/broadcast:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_RoomBroadcast
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GroupSendRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendReplay'
+    /room/send:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_RoomSend
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GroupSendRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendReplay'
+    /single/recall:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_SingleRecall
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SingleRecallRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RecallReplay'
+    /single/send:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_SingleSend
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SingleSendRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendReplay'
+components:
+    schemas:
+        Any:
+            type: object
+            properties:
+                typeUrl:
+                    type: string
+                    description: 'A URL/resource name that uniquely identifies the type of the serialized protocol buffer message. This string must contain at least one "/" character. The last segment of the URL''s path must represent the fully qualified name of the type (as in `path/google.protobuf.Duration`). The name should be in a canonical form (e.g., leading "." is not accepted). In practice, teams usually precompile into the binary all types that they expect it to use in the context of Any. However, for URLs which use the scheme `http`, `https`, or no scheme, one can optionally set up a type server that maps type URLs to message definitions as follows: * If no scheme is provided, `https` is assumed. * An HTTP GET on the URL must yield a [google.protobuf.Type][]   value in binary format, or produce an error. * Applications are allowed to cache lookup results based on the   URL, or have them precompiled into a binary to avoid any   lookup. Therefore, binary compatibility needs to be preserved   on changes to types. (Use versioned type names to manage   breaking changes.) Note: this functionality is not currently available in the official protobuf release, and it is not used for type URLs beginning with type.googleapis.com. Schemes other than `http`, `https` (or the empty scheme) might be used with implementation specific semantics.'
+                value:
+                    type: string
+                    description: Must be a valid serialized protocol buffer of the above specified type.
+                    format: bytes
+            description: '`Any` contains an arbitrary serialized protocol buffer message along with a URL that describes the type of the serialized message. Protobuf library provides support to pack/unpack Any values in the form of utility functions or additional generated methods of the Any type. Example 1: Pack and unpack a message in C++.     Foo foo = ...;     Any any;     any.PackFrom(foo);     ...     if (any.UnpackTo(&foo)) {       ...     } Example 2: Pack and unpack a message in Java.     Foo foo = ...;     Any any = Any.pack(foo);     ...     if (any.is(Foo.class)) {       foo = any.unpack(Foo.class);     }  Example 3: Pack and unpack a message in Python.     foo = Foo(...)     any = Any()     any.Pack(foo)     ...     if any.Is(Foo.DESCRIPTOR):       any.Unpack(foo)       ...  Example 4: Pack and unpack a message in Go      foo := &pb.Foo{...}      any, err := anypb.New(foo)      if err != nil {        ...      }      ...      foo := &pb.Foo{}      if err := any.UnmarshalTo(foo); err != nil {        ...      } The pack methods provided by protobuf library will by default use ''type.googleapis.com/full.type.name'' as the type URL and the unpack methods only use the fully qualified type name after the last ''/'' in the type URL, for example "foo.bar.com/x/y.z" will yield type name "y.z". JSON ==== The JSON representation of an `Any` value uses the regular representation of the deserialized, embedded message, with an additional field `@type` which contains the type URL. Example:     package google.profile;     message Person {       string first_name = 1;       string last_name = 2;     }     {       "@type": "type.googleapis.com/google.profile.Person",       "firstName": <string>,       "lastName": <string>     } If the embedded message type is well-known and has a custom JSON representation, that representation will be embedded adding a field `value` which holds the custom JSON in addition to the `@type` field. Example (for message [google.protobuf.Duration][]):     {       "@type": "type.googleapis.com/google.protobuf.Duration",       "value": "1.212s"     }'
+        GroupRecallRequest:
+            type: object
+            properties:
+                groupId:
+                    type: string
+                msgSeq:
+                    type: string
+            description: 群聊撤回消息请求
+        GroupSendMentionRequest:
+            type: object
+            properties:
+                Uid:
+                    type: string
+                GroupId:
+                    type: string
+                msgBody:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GroupSendMentionRequest_MsgBody'
+                groupAtInfo:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GroupSendMentionRequest_GroupAtInfo'
+            description: 群聊@消息请求
+        GroupSendMentionRequest_GroupAtInfo:
+            type: object
+            properties:
+                groupAtFlag:
+                    type: integer
+                    description: 标志为1时表示@全体，为0时为@指定用户
+                    format: uint32
+                groupAtUid:
+                    type: string
+        GroupSendMentionRequest_MsgBody:
+            type: object
+            properties:
+                msgType:
+                    type: string
+                msgContent:
+                    $ref: '#/components/schemas/Any'
+            description: 消息体
+        GroupSendRequest:
+            type: object
+            properties:
+                uid:
+                    type: string
+                groupId:
+                    type: string
+                msgBody:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GroupSendRequest_MsgBody'
+            description: 群聊发送消息请求
+        GroupSendRequest_MsgBody:
+            type: object
+            properties:
+                msgType:
+                    type: string
+                msgContent:
+                    $ref: '#/components/schemas/Any'
+            description: 消息体
+        RecallReplay:
+            type: object
+            properties:
+                actionStatus:
+                    type: string
+                errorInfo:
+                    type: string
+                errorCode:
+                    type: integer
+                    format: uint32
+            description: 撤回消息返回响应
+        SendReplay:
+            type: object
+            properties:
+                actionStatus:
+                    type: string
+                errorInfo:
+                    type: string
+                errorCode:
+                    type: integer
+                    format: uint32
+                msgTime:
+                    type: integer
+                    format: int64
+                msgSeq:
+                    type: string
+            description: 消息返回响应
+        SingleRecallRequest:
+            type: object
+            properties:
+                uid:
+                    type: string
+                cid:
+                    type: string
+                msgKey:
+                    type: string
+            description: 单聊撤回消息请求
+        SingleSendRequest:
+            type: object
+            properties:
+                uid:
+                    type: string
+                cid:
+                    type: string
+                msgBody:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/SingleSendRequest_MsgBody'
+            description: 单聊发送消息请求
+        SingleSendRequest_MsgBody:
+            type: object
+            properties:
+                msgType:
+                    type: integer
+                    format: enum
+                msgContent:
+                    type: object
+                    description: 根据不同消息类型有不同的消息内容
+            description: 消息体
+tags:
+    - name: Logic
