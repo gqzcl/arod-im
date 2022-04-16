@@ -2,6 +2,7 @@ GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
 INTERNAL_PROTO_FILES1=$(shell find app/logic/internal -name *.proto)
 INTERNAL_PROTO_FILES2=$(shell find app/job/internal -name *.proto)
+INTERNAL_PROTO_FILES3=$(shell find app/connector/internal -name *.proto)
 API_PROTO_FILES=$(shell find api -name *.proto)
 
 .PHONY: init
@@ -24,6 +25,11 @@ config:
     	   --proto_path=./third_party \
      	   --go_out=paths=source_relative:./app/job/internal \
     	   $(INTERNAL_PROTO_FILES2)
+	protoc --proto_path=./app/connector/internal \
+    	   --proto_path=./third_party \
+     	   --go_out=paths=source_relative:./app/connector/internal \
+    	   $(INTERNAL_PROTO_FILES3)
+
 
 .PHONY: api
 # generate api proto
@@ -59,6 +65,7 @@ all:
 wire:
 	cd app/logic/cmd/logic && wire
 	cd app/job/cmd/job && wire
+	cd app/connector/cmd/connector && wire
 
 # show help
 help:

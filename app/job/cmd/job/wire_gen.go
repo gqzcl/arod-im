@@ -24,11 +24,12 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	if err != nil {
 		return nil, nil, err
 	}
-	jobRepo := data.NewJobRepo(dataData, logger)
+	registry := server.NewNacosRegister(confServer)
+	jobRepo := data.NewJobRepo(dataData, registry, logger)
 	jobUsecase := biz.NewJobUsecase(jobRepo, logger)
 	jobService := service.NewJobService(jobUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, jobService, logger)
-	app := newApp(logger, grpcServer)
+	app := newApp(logger, grpcServer, registry)
 	return app, func() {
 		cleanup()
 	}, nil

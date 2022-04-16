@@ -13,11 +13,6 @@ var (
 	ErrUserNotFound = errors.NotFound(v1.ErrorReason_USER_NOT_FOUND.String(), "user not found")
 )
 
-// Greeter is a Greeter model.
-type Greeter struct {
-	Hello string
-}
-
 // GreeterRepo is a Greater repo.
 type JobRepo interface {
 	Consumer(ctx context.Context) error

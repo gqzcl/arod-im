@@ -21,8 +21,22 @@ message Server {
     string addr = 2;
     google.protobuf.Duration timeout = 3;
   }
+  message Register{
+    string address = 1;
+    uint64 port = 2;
+    string namespaceId = 3;
+    string accessKey = 4;
+    string secretKey = 5;
+    uint64 timeoutMs = 6;
+    string logLevel = 7;
+  }
+  message Kafka {
+    repeated string addrs = 1;
+  }
   HTTP http = 1;
   GRPC grpc = 2;
+  Kafka kafka = 3;
+  Register register = 4;
 }
 
 message Data {

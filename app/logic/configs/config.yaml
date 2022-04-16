@@ -1,11 +1,19 @@
 server:
   http:
     network: tcp
-    addr: 0.0.0.0:8000
+    addr: 0.0.0.0:8003
     timeout: 1s
   grpc:
-    addr: 0.0.0.0:9000
+    addr: 0.0.0.0:9003
     timeout: 1s
+  register:
+   address : 101.43.63.229
+   port : 8848
+   namespaceId: public
+   accessKey: nacos
+   secretKey: nacos
+   timeoutMs: 5000
+   logLevel: debug
 data:
   kafka:
     topic: "logic-single"

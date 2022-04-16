@@ -3,7 +3,9 @@ package main
 import (
 	"arod-im/app/job/internal/conf"
 	"flag"
+	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	"os"
+	"time"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
@@ -29,16 +31,18 @@ func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
-func newApp(logger log.Logger, gs *grpc.Server) *kratos.App {
+func newApp(logger log.Logger, gs *grpc.Server, r *nacos.Registry) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
-		kratos.Name(Name),
-		kratos.Version(Version),
+		kratos.Name("arod-im-job"),
+		kratos.Version("v0.1.0"),
 		kratos.Metadata(map[string]string{}),
 		kratos.Logger(logger),
 		kratos.Server(
 			gs,
 		),
+		kratos.Registrar(r),
+		kratos.RegistrarTimeout(time.Duration(5000)),
 	)
 }
 

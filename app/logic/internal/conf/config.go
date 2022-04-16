@@ -1,13 +1,11 @@
 package conf
 
 import (
-	"flag"
 	"fmt"
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"gopkg.in/yaml.v2"
 	"sync"
 )
 
@@ -68,25 +66,25 @@ func GetConfigClient() config_client.IConfigClient {
 	return configClient
 }
 
-func GetConfig() (*Config, error) {
-	//cc := GetConfigClient()
-	// TODO 可以考虑改造成单例
-	// 获取配置
-	content, err := configClient.GetConfig(vo.ConfigParam{
-		DataId: dataId,
-		Group:  group,
-	})
-	c := new(Config)
-	var configContent string
-	flag.StringVar(&configContent, "conf", content, "-config")
-	err = yaml.Unmarshal([]byte(configContent), c)
-	// fmt.Println(c.TCP)
-	if err != nil {
-		fmt.Println("Unmarshal failed in GetConfig()")
-		return nil, err
-	}
-	return c, nil
-}
+//func GetConfig() (*Config, error) {
+//	//cc := GetConfigClient()
+//	// TODO 可以考虑改造成单例
+//	// 获取配置
+//	content, err := configClient.GetConfig(vo.ConfigParam{
+//		DataId: dataId,
+//		Group:  group,
+//	})
+//	c := new(Config)
+//	var configContent string
+//	flag.StringVar(&configContent, "conf", content, "-config")
+//	err = yaml.Unmarshal([]byte(configContent), c)
+//	// fmt.Println(c.TCP)
+//	if err != nil {
+//		fmt.Println("Unmarshal failed in GetConfig()")
+//		return nil, err
+//	}
+//	return c, nil
+//}
 
 func ConfigPublish(content string) error {
 	// cc := GetConfigClient()

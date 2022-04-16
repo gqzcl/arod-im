@@ -103,3 +103,63 @@
 2022-04-12T11:59:23.880+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
 2022-04-12T11:59:23.887+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55458
 2022-04-12T11:59:23.887+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T15:26:45.301+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T15:26:45.301+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55942
+2022-04-12T15:26:45.301+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T15:28:24.010+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T15:28:24.010+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55698
+2022-04-12T15:28:24.010+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:34:22.388+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:34:22.389+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 54962
+2022-04-12T22:34:22.389+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:34:22.434+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:34:22.434+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55017
+2022-04-12T22:34:22.434+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:36:17.171+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:36:17.172+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55279
+2022-04-12T22:36:17.172+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:36:17.213+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:36:17.213+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55067
+2022-04-12T22:36:17.213+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:37:27.108+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:37:27.108+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55386
+2022-04-12T22:37:27.108+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:37:27.154+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:37:27.154+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55063
+2022-04-12T22:37:27.154+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:41:31.239+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:41:31.240+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55466
+2022-04-12T22:41:31.240+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:41:31.290+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-12T22:43:46.305+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:43:46.305+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55867
+2022-04-12T22:43:46.305+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:43:46.351+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-12T22:58:55.688+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T22:58:55.689+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55392
+2022-04-12T22:58:55.689+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T22:58:55.739+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-12T23:09:03.546+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T23:09:03.547+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55137
+2022-04-12T23:09:03.547+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T23:09:03.596+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-12T23:09:28.169+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T23:09:28.169+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55042
+2022-04-12T23:09:28.169+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T23:09:28.224+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-12T23:10:15.322+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T23:10:15.323+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55263
+2022-04-12T23:10:15.323+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T23:10:15.372+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-12T23:57:38.791+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-12T23:57:38.791+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55895
+2022-04-12T23:57:38.791+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-12T23:57:38.855+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-16T00:04:40.530+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-16T00:04:40.531+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55861
+2022-04-16T00:04:40.531+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-16T00:04:40.578+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-04-16T00:06:02.669+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/log>   cacheDir:</home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache>
+2022-04-16T00:06:02.669+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55650
+2022-04-16T00:06:02.669+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-04-16T00:06:02.718+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>

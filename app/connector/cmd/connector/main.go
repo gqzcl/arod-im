@@ -2,8 +2,11 @@ package main
 
 import (
 	"arod-im/app/connector/internal/conf"
+	"arod-im/pkg/transport/websocket"
 	"flag"
+	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	"os"
+	"time"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
@@ -11,7 +14,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
-	"github.com/go-kratos/kratos/v2/transport/http"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"
@@ -30,17 +32,19 @@ func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
-func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server) *kratos.App {
+func newApp(logger log.Logger, gs *grpc.Server, ws *websocket.Server, r *nacos.Registry) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
-		kratos.Name(Name),
-		kratos.Version(Version),
+		kratos.Name("arod-im-connector"),
+		kratos.Version("v1"),
 		kratos.Metadata(map[string]string{}),
 		kratos.Logger(logger),
 		kratos.Server(
-			hs,
 			gs,
+			ws,
 		),
+		kratos.Registrar(r),
+		kratos.RegistrarTimeout(time.Duration(50000)),
 	)
 }
 

@@ -6,26 +6,18 @@ import (
 	pb "arod-im/api/connector/v1"
 )
 
-type ConnectorService struct {
-	pb.UnimplementedConnectorServer
-}
+func (s *ConnectorService) SingleSend(ctx context.Context, req *pb.SingleSendReq) (*pb.SingleSendReply, error) {
+	s.log.WithContext(ctx).Info("成功收到消息！！！", req.Address, req.Msg)
+	s.bc.SingleSend(req.Address, req.Msg)
 
-func NewConnectorService() *ConnectorService {
-	return &ConnectorService{}
+	return &pb.SingleSendReply{Reply: "成功收到消息！！！"}, nil
 }
-
-func (s *ConnectorService) CreateConnector(ctx context.Context, req *pb.CreateConnectorRequest) (*pb.CreateConnectorReply, error) {
-	return &pb.CreateConnectorReply{}, nil
+func (s *ConnectorService) GroupSend(ctx context.Context, req *pb.GroupSendReq) (*pb.GroupSendReply, error) {
+	return &pb.GroupSendReply{}, nil
 }
-func (s *ConnectorService) UpdateConnector(ctx context.Context, req *pb.UpdateConnectorRequest) (*pb.UpdateConnectorReply, error) {
-	return &pb.UpdateConnectorReply{}, nil
+func (s *ConnectorService) RoomSend(ctx context.Context, req *pb.RoomSendReq) (*pb.RoomSendReply, error) {
+	return &pb.RoomSendReply{}, nil
 }
-func (s *ConnectorService) DeleteConnector(ctx context.Context, req *pb.DeleteConnectorRequest) (*pb.DeleteConnectorReply, error) {
-	return &pb.DeleteConnectorReply{}, nil
-}
-func (s *ConnectorService) GetConnector(ctx context.Context, req *pb.GetConnectorRequest) (*pb.GetConnectorReply, error) {
-	return &pb.GetConnectorReply{}, nil
-}
-func (s *ConnectorService) ListConnector(ctx context.Context, req *pb.ListConnectorRequest) (*pb.ListConnectorReply, error) {
-	return &pb.ListConnectorReply{}, nil
+func (s *ConnectorService) Broadcast(ctx context.Context, req *pb.BroadcastReq) (*pb.BroadcastReply, error) {
+	return &pb.BroadcastReply{}, nil
 }

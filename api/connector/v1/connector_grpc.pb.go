@@ -22,11 +22,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectorClient interface {
-	CreateConnector(ctx context.Context, in *CreateConnectorRequest, opts ...grpc.CallOption) (*CreateConnectorReply, error)
-	UpdateConnector(ctx context.Context, in *UpdateConnectorRequest, opts ...grpc.CallOption) (*UpdateConnectorReply, error)
-	DeleteConnector(ctx context.Context, in *DeleteConnectorRequest, opts ...grpc.CallOption) (*DeleteConnectorReply, error)
-	GetConnector(ctx context.Context, in *GetConnectorRequest, opts ...grpc.CallOption) (*GetConnectorReply, error)
-	ListConnector(ctx context.Context, in *ListConnectorRequest, opts ...grpc.CallOption) (*ListConnectorReply, error)
+	// PushMsg push by key or mid
+	SingleSend(ctx context.Context, in *SingleSendReq, opts ...grpc.CallOption) (*SingleSendReply, error)
+	// Broadcast send to every enrity
+	GroupSend(ctx context.Context, in *GroupSendReq, opts ...grpc.CallOption) (*GroupSendReply, error)
+	// BroadcastRoom broadcast to one room
+	RoomSend(ctx context.Context, in *RoomSendReq, opts ...grpc.CallOption) (*RoomSendReply, error)
+	// Rooms get all rooms
+	Broadcast(ctx context.Context, in *BroadcastReq, opts ...grpc.CallOption) (*BroadcastReply, error)
 }
 
 type connectorClient struct {
@@ -37,45 +40,36 @@ func NewConnectorClient(cc grpc.ClientConnInterface) ConnectorClient {
 	return &connectorClient{cc}
 }
 
-func (c *connectorClient) CreateConnector(ctx context.Context, in *CreateConnectorRequest, opts ...grpc.CallOption) (*CreateConnectorReply, error) {
-	out := new(CreateConnectorReply)
-	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/CreateConnector", in, out, opts...)
+func (c *connectorClient) SingleSend(ctx context.Context, in *SingleSendReq, opts ...grpc.CallOption) (*SingleSendReply, error) {
+	out := new(SingleSendReply)
+	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/SingleSend", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *connectorClient) UpdateConnector(ctx context.Context, in *UpdateConnectorRequest, opts ...grpc.CallOption) (*UpdateConnectorReply, error) {
-	out := new(UpdateConnectorReply)
-	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/UpdateConnector", in, out, opts...)
+func (c *connectorClient) GroupSend(ctx context.Context, in *GroupSendReq, opts ...grpc.CallOption) (*GroupSendReply, error) {
+	out := new(GroupSendReply)
+	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/GroupSend", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *connectorClient) DeleteConnector(ctx context.Context, in *DeleteConnectorRequest, opts ...grpc.CallOption) (*DeleteConnectorReply, error) {
-	out := new(DeleteConnectorReply)
-	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/DeleteConnector", in, out, opts...)
+func (c *connectorClient) RoomSend(ctx context.Context, in *RoomSendReq, opts ...grpc.CallOption) (*RoomSendReply, error) {
+	out := new(RoomSendReply)
+	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/RoomSend", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *connectorClient) GetConnector(ctx context.Context, in *GetConnectorRequest, opts ...grpc.CallOption) (*GetConnectorReply, error) {
-	out := new(GetConnectorReply)
-	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/GetConnector", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *connectorClient) ListConnector(ctx context.Context, in *ListConnectorRequest, opts ...grpc.CallOption) (*ListConnectorReply, error) {
-	out := new(ListConnectorReply)
-	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/ListConnector", in, out, opts...)
+func (c *connectorClient) Broadcast(ctx context.Context, in *BroadcastReq, opts ...grpc.CallOption) (*BroadcastReply, error) {
+	out := new(BroadcastReply)
+	err := c.cc.Invoke(ctx, "/api.connector.v1.Connector/Broadcast", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -86,11 +80,14 @@ func (c *connectorClient) ListConnector(ctx context.Context, in *ListConnectorRe
 // All implementations must embed UnimplementedConnectorServer
 // for forward compatibility
 type ConnectorServer interface {
-	CreateConnector(context.Context, *CreateConnectorRequest) (*CreateConnectorReply, error)
-	UpdateConnector(context.Context, *UpdateConnectorRequest) (*UpdateConnectorReply, error)
-	DeleteConnector(context.Context, *DeleteConnectorRequest) (*DeleteConnectorReply, error)
-	GetConnector(context.Context, *GetConnectorRequest) (*GetConnectorReply, error)
-	ListConnector(context.Context, *ListConnectorRequest) (*ListConnectorReply, error)
+	// PushMsg push by key or mid
+	SingleSend(context.Context, *SingleSendReq) (*SingleSendReply, error)
+	// Broadcast send to every enrity
+	GroupSend(context.Context, *GroupSendReq) (*GroupSendReply, error)
+	// BroadcastRoom broadcast to one room
+	RoomSend(context.Context, *RoomSendReq) (*RoomSendReply, error)
+	// Rooms get all rooms
+	Broadcast(context.Context, *BroadcastReq) (*BroadcastReply, error)
 	mustEmbedUnimplementedConnectorServer()
 }
 
@@ -98,20 +95,17 @@ type ConnectorServer interface {
 type UnimplementedConnectorServer struct {
 }
 
-func (UnimplementedConnectorServer) CreateConnector(context.Context, *CreateConnectorRequest) (*CreateConnectorReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateConnector not implemented")
+func (UnimplementedConnectorServer) SingleSend(context.Context, *SingleSendReq) (*SingleSendReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SingleSend not implemented")
 }
-func (UnimplementedConnectorServer) UpdateConnector(context.Context, *UpdateConnectorRequest) (*UpdateConnectorReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateConnector not implemented")
+func (UnimplementedConnectorServer) GroupSend(context.Context, *GroupSendReq) (*GroupSendReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GroupSend not implemented")
 }
-func (UnimplementedConnectorServer) DeleteConnector(context.Context, *DeleteConnectorRequest) (*DeleteConnectorReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteConnector not implemented")
+func (UnimplementedConnectorServer) RoomSend(context.Context, *RoomSendReq) (*RoomSendReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomSend not implemented")
 }
-func (UnimplementedConnectorServer) GetConnector(context.Context, *GetConnectorRequest) (*GetConnectorReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetConnector not implemented")
-}
-func (UnimplementedConnectorServer) ListConnector(context.Context, *ListConnectorRequest) (*ListConnectorReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListConnector not implemented")
+func (UnimplementedConnectorServer) Broadcast(context.Context, *BroadcastReq) (*BroadcastReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Broadcast not implemented")
 }
 func (UnimplementedConnectorServer) mustEmbedUnimplementedConnectorServer() {}
 
@@ -126,92 +120,74 @@ func RegisterConnectorServer(s grpc.ServiceRegistrar, srv ConnectorServer) {
 	s.RegisterService(&Connector_ServiceDesc, srv)
 }
 
-func _Connector_CreateConnector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateConnectorRequest)
+func _Connector_SingleSend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleSendReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ConnectorServer).CreateConnector(ctx, in)
+		return srv.(ConnectorServer).SingleSend(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.connector.v1.Connector/CreateConnector",
+		FullMethod: "/api.connector.v1.Connector/SingleSend",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConnectorServer).CreateConnector(ctx, req.(*CreateConnectorRequest))
+		return srv.(ConnectorServer).SingleSend(ctx, req.(*SingleSendReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Connector_UpdateConnector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateConnectorRequest)
+func _Connector_GroupSend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GroupSendReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ConnectorServer).UpdateConnector(ctx, in)
+		return srv.(ConnectorServer).GroupSend(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.connector.v1.Connector/UpdateConnector",
+		FullMethod: "/api.connector.v1.Connector/GroupSend",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConnectorServer).UpdateConnector(ctx, req.(*UpdateConnectorRequest))
+		return srv.(ConnectorServer).GroupSend(ctx, req.(*GroupSendReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Connector_DeleteConnector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteConnectorRequest)
+func _Connector_RoomSend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoomSendReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ConnectorServer).DeleteConnector(ctx, in)
+		return srv.(ConnectorServer).RoomSend(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.connector.v1.Connector/DeleteConnector",
+		FullMethod: "/api.connector.v1.Connector/RoomSend",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConnectorServer).DeleteConnector(ctx, req.(*DeleteConnectorRequest))
+		return srv.(ConnectorServer).RoomSend(ctx, req.(*RoomSendReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Connector_GetConnector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConnectorRequest)
+func _Connector_Broadcast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BroadcastReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ConnectorServer).GetConnector(ctx, in)
+		return srv.(ConnectorServer).Broadcast(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.connector.v1.Connector/GetConnector",
+		FullMethod: "/api.connector.v1.Connector/Broadcast",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConnectorServer).GetConnector(ctx, req.(*GetConnectorRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Connector_ListConnector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListConnectorRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ConnectorServer).ListConnector(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/api.connector.v1.Connector/ListConnector",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConnectorServer).ListConnector(ctx, req.(*ListConnectorRequest))
+		return srv.(ConnectorServer).Broadcast(ctx, req.(*BroadcastReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -224,24 +200,20 @@ var Connector_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ConnectorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateConnector",
-			Handler:    _Connector_CreateConnector_Handler,
+			MethodName: "SingleSend",
+			Handler:    _Connector_SingleSend_Handler,
 		},
 		{
-			MethodName: "UpdateConnector",
-			Handler:    _Connector_UpdateConnector_Handler,
+			MethodName: "GroupSend",
+			Handler:    _Connector_GroupSend_Handler,
 		},
 		{
-			MethodName: "DeleteConnector",
-			Handler:    _Connector_DeleteConnector_Handler,
+			MethodName: "RoomSend",
+			Handler:    _Connector_RoomSend_Handler,
 		},
 		{
-			MethodName: "GetConnector",
-			Handler:    _Connector_GetConnector_Handler,
-		},
-		{
-			MethodName: "ListConnector",
-			Handler:    _Connector_ListConnector_Handler,
+			MethodName: "Broadcast",
+			Handler:    _Connector_Broadcast_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

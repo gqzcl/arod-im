@@ -7,24 +7,45 @@ option java_multiple_files = true;
 option java_package = "api.connector.v1";
 
 service Connector {
-	rpc CreateConnector (CreateConnectorRequest) returns (CreateConnectorReply);
-	rpc UpdateConnector (UpdateConnectorRequest) returns (UpdateConnectorReply);
-	rpc DeleteConnector (DeleteConnectorRequest) returns (DeleteConnectorReply);
-	rpc GetConnector (GetConnectorRequest) returns (GetConnectorReply);
-	rpc ListConnector (ListConnectorRequest) returns (ListConnectorReply);
+	// PushMsg push by key or mid
+	rpc SingleSend(SingleSendReq) returns (SingleSendReply);
+	// Broadcast send to every enrity
+	rpc GroupSend(GroupSendReq) returns (GroupSendReply);
+	// BroadcastRoom broadcast to one room
+	rpc RoomSend(RoomSendReq) returns (RoomSendReply);
+	// Rooms get all rooms
+	rpc Broadcast(BroadcastReq) returns (BroadcastReply);
 }
 
-message CreateConnectorRequest {}
-message CreateConnectorReply {}
+message Proto {
+	int32 ver = 1; // 版本号
+	int32 op = 2; // 操作符
+	int32 seq = 3; // 序列号
+	bytes body = 4; // 消息体
+}
 
-message UpdateConnectorRequest {}
-message UpdateConnectorReply {}
+message SingleSendReq {
+	string address = 1;
+	bytes msg = 2;
+}
+message SingleSendReply {
+	string reply = 1;
+}
 
-message DeleteConnectorRequest {}
-message DeleteConnectorReply {}
+message GroupSendReq{
+	int32 protoOp = 1;
+	Proto proto = 2;
+	int32 speed = 3;
+}
+message GroupSendReply{}
 
-message GetConnectorRequest {}
-message GetConnectorReply {}
+message RoomSendReq {
+	string roomID = 1;
+	Proto proto = 2;
+}
+message RoomSendReply{}
 
-message ListConnectorRequest {}
-message ListConnectorReply {}
+message BroadcastReq{}
+message BroadcastReply {
+	map<string,bool> rooms = 1;
+}
