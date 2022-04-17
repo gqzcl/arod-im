@@ -12,13 +12,7 @@ const (
 )
 
 // 判断Transport是否实现了接口Transporter
-var _ Transporter = &Transport{}
-
-type Transporter interface {
-	transport.Transporter
-	Request() *http.Request
-	PathTemplate() string
-}
+var _ transport.Transporter = &Transport{}
 
 // Transport is a websocket transport.
 type Transport struct {
@@ -45,11 +39,6 @@ func (tr *Transport) Operation() string {
 	return tr.operation
 }
 
-// Request returns the HTTP request.
-func (tr *Transport) Request() *http.Request {
-	return tr.request
-}
-
 // RequestHeader returns the request header.
 func (tr *Transport) RequestHeader() transport.Header {
 	return tr.reqHeader
@@ -58,6 +47,11 @@ func (tr *Transport) RequestHeader() transport.Header {
 // ReplyHeader returns the reply header.
 func (tr *Transport) ReplyHeader() transport.Header {
 	return tr.replyHeader
+}
+
+// Request returns the HTTP request.
+func (tr *Transport) Request() *http.Request {
+	return tr.request
 }
 
 // PathTemplate returns the http path template.

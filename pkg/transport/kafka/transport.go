@@ -10,6 +10,7 @@ const (
 	KindKafka transport.Kind = "kafka"
 )
 
+// 判断Transport是否实现了接口transport.Transporter
 var _ transport.Transporter = &Transport{}
 
 // Transport is a Kafka transport.

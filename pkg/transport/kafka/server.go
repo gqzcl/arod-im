@@ -1,11 +1,10 @@
 package kafka
 
 import (
-	"arod-im/pkg/broker"
-	"arod-im/pkg/broker/kafka"
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport"
+	"github.com/segmentio/kafka-go"
 
 	"net/url"
 	"strings"
@@ -17,23 +16,16 @@ var (
 	_ transport.Endpointer = (*Server)(nil)
 )
 
-type SubscriberMap map[string]broker.Subscriber
-
-type SubscribeOption struct {
-	handler broker.Handler
-	opts    []broker.SubscribeOption
-}
-type SubscribeOptionMap map[string]*SubscribeOption
+type Handler func(ctx context.Context, message kafka.Message) error
 
 type Server struct {
-	broker.Broker
-	bOpts []broker.Option
-
-	subscribers    SubscriberMap
-	subscriberOpts SubscribeOptionMap
+	handler Handler
 
 	sync.RWMutex
 	started bool
+
+	reader       *kafka.Reader
+	readerConfig kafka.ReaderConfig
 
 	log     *log.Helper
 	baseCtx context.Context
@@ -42,16 +34,13 @@ type Server struct {
 
 func NewServer(opts ...ServerOption) *Server {
 	srv := &Server{
-		baseCtx:        context.Background(),
-		log:            log.NewHelper(log.GetLogger()),
-		subscribers:    SubscriberMap{},
-		subscriberOpts: SubscribeOptionMap{},
-		bOpts:          []broker.Option{},
-		started:        false,
+		baseCtx: context.Background(),
+		log:     log.NewHelper(log.GetLogger()),
+		started: false,
 	}
 
 	srv.init(opts...)
-	srv.Broker = kafka.NewBroker(srv.bOpts...)
+	srv.reader = kafka.NewReader(srv.readerConfig)
 
 	return srv
 }
@@ -66,20 +55,33 @@ func (s *Server) Name() string {
 	return "kafka"
 }
 
+func (s *Server) Consumer(ctx context.Context) {
+	for {
+		m, err := s.reader.ReadMessage(ctx)
+		err = s.handler(ctx, m)
+		if err != nil {
+			s.log.WithContext(ctx).Error(err)
+		}
+		// TODO 如果配置了不自动提交，则在成功操作后进行提交offset
+	}
+}
+
+// Endpoint 实现transport.Endpointer接口
 func (s *Server) Endpoint() (*url.URL, error) {
 	if s.err != nil {
 		return nil, s.err
 	}
 
-	addr := s.Address()
+	addr := s.readerConfig.Brokers[0]
 	if !strings.HasPrefix(addr, "tcp://") {
 		addr = "tcp://" + addr
 	}
-
 	return url.Parse(addr)
 }
 
+// Start 实现transport.Server接口
 func (s *Server) Start(ctx context.Context) error {
+	// TODO
 	if s.err != nil {
 		return s.err
 	}
@@ -88,67 +90,24 @@ func (s *Server) Start(ctx context.Context) error {
 		return nil
 	}
 
-	s.err = s.Connect()
-	if s.err != nil {
-		return s.err
-	}
+	s.log.Infof("[kafka] comsumer listening on: %s", s.readerConfig.Brokers)
 
-	s.log.Infof("[kafka] server listening on: %s", s.Address())
-
-	s.err = s.doRegisterSubscriberMap()
 	if s.err != nil {
 		return s.err
 	}
 
 	s.baseCtx = ctx
 	s.started = true
-
+	go s.Consumer(ctx)
 	return nil
 }
 
+// Stop 实现transport.Server接口
 func (s *Server) Stop(_ context.Context) error {
 	if s.started == false {
 		return nil
 	}
 	s.log.Info("[kafka] server stopping")
 
-	for _, v := range s.subscribers {
-		_ = v.Unsubscribe()
-	}
-	s.subscribers = SubscriberMap{}
-	s.subscriberOpts = SubscribeOptionMap{}
-
-	s.started = false
-	return s.Disconnect()
-}
-
-func (s *Server) RegisterSubscriber(topic string, h broker.Handler, opts ...broker.SubscribeOption) error {
-	s.Lock()
-	defer s.Unlock()
-
-	if s.started {
-		return s.doRegisterSubscriber(topic, h, opts...)
-	} else {
-		s.subscriberOpts[topic] = &SubscribeOption{handler: h, opts: opts}
-	}
-	return nil
-}
-
-func (s *Server) doRegisterSubscriber(topic string, h broker.Handler, opts ...broker.SubscribeOption) error {
-	sub, err := s.Subscribe(topic, h, opts...)
-	if err != nil {
-		return err
-	}
-
-	s.subscribers[topic] = sub
-
-	return nil
-}
-
-func (s *Server) doRegisterSubscriberMap() error {
-	for topic, opt := range s.subscriberOpts {
-		_ = s.doRegisterSubscriber(topic, opt.handler, opt.opts...)
-	}
-	s.subscriberOpts = SubscribeOptionMap{}
-	return nil
+	return s.reader.Close()
 }

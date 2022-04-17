@@ -2,13 +2,10 @@ package service
 
 import (
 	v1 "arod-im/api/job/v1"
-	logicV1 "arod-im/api/logic/v1"
 	"arod-im/app/job/internal/biz"
 	"context"
-	"encoding/json"
-	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tx7do/kratos-transport/broker"
+	"github.com/segmentio/kafka-go"
 	"net/http"
 )
 
@@ -16,8 +13,6 @@ import (
 type JobService struct {
 	*http.Server
 	v1.UnimplementedJobServer
-
-	kb  broker.Broker
 	jc  *biz.JobUsecase
 	log *log.Helper
 }
@@ -29,26 +24,26 @@ func NewJobService(jc *biz.JobUsecase, logger log.Logger) *JobService {
 		jc:  jc,
 		log: log.NewHelper(logger),
 	}
-	go j.GetMsg(context.Background())
 	return j
 }
 
-func (j *JobService) SetKafkaBroker(b broker.Broker) {
-	j.kb = b
-}
-
-func (j *JobService) NewConsumer(event broker.Event) error {
-	fmt.Println("NewConsumer() Topic: ", event.Topic(), " Payload: ", string(event.Message().Body))
-	var m []*logicV1.SingleSendRequest_MsgBody
-	err := json.Unmarshal(event.Message().Body, &m)
-	j.log.Info(err)
-	//j.GetService()
-	if err != nil {
-		return err
-	}
-	j.log.Info(m[0].MsgType, m[0].MsgContent)
+func (j *JobService) OnMessage(ctx context.Context, message kafka.Message) error {
+	j.log.WithContext(ctx).Infof("message at topic/partition/offset %v/%v/%v: %s = %s\n", message.Topic, message.Partition, message.Offset, string(message.Key), string(message.Value))
 	return nil
 }
+
+//func (j *JobService) NewConsumer(event broker.Event) error {
+//	fmt.Println("NewConsumer() Topic: ", event.Topic(), " Payload: ", string(event.Message().Body))
+//	var m []*logicV1.SingleSendRequest_MsgBody
+//	err := json.Unmarshal(event.Message().Body, &m)
+//	j.log.Info(err)
+//	//j.GetService()
+//	if err != nil {
+//		return err
+//	}
+//	j.log.Info(m[0].MsgType, m[0].MsgContent)
+//	return nil
+//}
 
 // SayHello implements helloworld.GreeterServer.
 func (j *JobService) GetMsg(ctx context.Context) {

@@ -29,7 +29,8 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	jobUsecase := biz.NewJobUsecase(jobRepo, logger)
 	jobService := service.NewJobService(jobUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, jobService, logger)
-	app := newApp(logger, grpcServer, registry)
+	kafkaServer := server.NewKafkaServer(confServer, jobService)
+	app := newApp(logger, grpcServer, kafkaServer, registry)
 	return app, func() {
 		cleanup()
 	}, nil

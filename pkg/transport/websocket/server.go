@@ -37,6 +37,7 @@ type Server struct {
 	err       error
 	network   string
 	address   string
+	path      string
 	connected int64
 	timeout   time.Duration
 
@@ -44,7 +45,6 @@ type Server struct {
 
 	onMessageHandler OnMessageHandler
 	onCloseHandler   OnCloseHandler
-	path             string
 
 	upgrader *ws.Upgrader
 }

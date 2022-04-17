@@ -26,12 +26,10 @@ func NewJobRepo(data *Data, r *nacos.Registry, logger log.Logger) biz.JobRepo {
 	ctx := context.Background()
 	conn, _ := grpc.DialContext(ctx, "127.0.0.1:9000",
 		[]grpc.DialOption{
-			grpc.WithInsecure(),
 			grpc.WithInitialWindowSize(grpcInitialWindowSize),
 			grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
 			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize)),
 			grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
-			grpc.WithBackoffMaxDelay(grpcBackoffMaxDelay),
 			grpc.WithKeepaliveParams(keepalive.ClientParameters{
 				Time:                grpcKeepAliveTime,
 				Timeout:             grpcKeepAliveTimeout,

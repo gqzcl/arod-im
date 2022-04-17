@@ -2,6 +2,7 @@ package main
 
 import (
 	"arod-im/app/job/internal/conf"
+	"arod-im/pkg/transport/kafka"
 	"flag"
 	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	"os"
@@ -31,7 +32,7 @@ func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
-func newApp(logger log.Logger, gs *grpc.Server, r *nacos.Registry) *kratos.App {
+func newApp(logger log.Logger, gs *grpc.Server, ks *kafka.Server, r *nacos.Registry) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
 		kratos.Name("arod-im-job"),
@@ -40,6 +41,7 @@ func newApp(logger log.Logger, gs *grpc.Server, r *nacos.Registry) *kratos.App {
 		kratos.Logger(logger),
 		kratos.Server(
 			gs,
+			ks,
 		),
 		kratos.Registrar(r),
 		kratos.RegistrarTimeout(time.Duration(5000)),

@@ -7,8 +7,9 @@ server:
     addr: 0.0.0.0:9001
     timeout: 1s
   kafka:
-    addrs:
+    brokers:
       - 101.43.63.229:9092
+    topic: arod-im-push-topic
   register:
     address: 101.43.63.229
     port: 8848
