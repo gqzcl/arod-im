@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+var _ biz.JobRepo = (*jobRepo)(nil)
+
 type MsgBody struct {
 }
 
@@ -61,6 +63,18 @@ const (
 	grpcInitialWindowSize     = 1 << 24
 	grpcInitialConnWindowSize = 1 << 24
 )
+
+func (j *jobRepo) SingleSend(ctx context.Context, msg []byte) {
+	// TODO 处理消息内容
+	sendReply, err := j.client.SingleSend(ctx, &v1.SingleSendReq{
+		Address: "",
+		Msg:     nil,
+	})
+	if err != nil {
+		return
+	}
+	j.log.WithContext(ctx).Info(sendReply)
+}
 
 func (j *jobRepo) Consumer(ctx context.Context) error {
 	m, err := j.data.consumer.ReadMessage(ctx)

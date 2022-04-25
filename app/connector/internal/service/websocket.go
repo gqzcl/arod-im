@@ -1,9 +1,12 @@
 package service
 
 import (
+	v1 "arod-im/api/logic/v1"
 	"arod-im/pkg/transport/websocket"
+	"context"
 	"encoding/json"
-
+	"github.com/gobwas/ws"
+	"github.com/gobwas/ws/wsutil"
 	"github.com/panjf2000/gnet/v2"
 )
 
@@ -23,17 +26,37 @@ func (s ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 	address := c.RemoteAddr().String()
 	s.log.Infof("[%s] Payload: %s\n", c.RemoteAddr().String(), string(message))
 
-	var proto WebsocketProto
-	if err := json.Unmarshal(message, &proto); err != nil {
+	wsutil.WriteServerMessage(c, ws.OpText, []byte("receive success!"))
+
+	var cookie WebsocketProto
+	if err := json.Unmarshal(message, &cookie); err != nil {
 		s.log.Error("Error unmarshalling proto json %v", err)
 		return nil
 	}
-	s.bc.AddCh(address, c)
-	// TODO 将地址存入redis
-	bufProto, _ := json.Marshal(&proto)
+	// TODO 处理心跳
+	// note： 初次连接，鉴权，将地址存入redis
+	connect, err := s.LogicClient[0].Connect(context.Background(), &v1.ConnectReq{
+		Server:  s.Address,
+		Uid:     cookie.Uid,
+		Address: address,
+		Token:   nil,
+	})
+	if err != nil {
+		return err
+	}
+
+	if !connect.Success {
+		// TODO 连接操作失败
+	} else {
+		// 存储连接
+		s.bc.AddCh(address, c)
+	}
+
+	bufProto, _ := json.Marshal(&cookie)
 	var msg websocket.Message
 	msg.Body = bufProto
-	s.log.Info("msgBody is ", proto.Uid, "+", proto.GroupId)
+	s.log.Info("msgBody is ", cookie.Uid, "+", cookie.GroupId)
+
 	return nil
 }
 

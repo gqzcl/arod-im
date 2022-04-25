@@ -31,5 +31,5 @@ func NewNacosRegister(c *conf.Server) *nacos.Registry {
 	if err != nil {
 		panic(err)
 	}
-	return nacos.New(namingClient)
+	return nacos.New(namingClient, nacos.WithGroup("arod-im"))
 }

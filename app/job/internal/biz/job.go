@@ -13,28 +13,24 @@ var (
 	ErrUserNotFound = errors.NotFound(v1.ErrorReason_USER_NOT_FOUND.String(), "user not found")
 )
 
-// GreeterRepo is a Greater repo.
+// JobRepo  is a Job repo.
 type JobRepo interface {
 	Consumer(ctx context.Context) error
+	SingleSend(ctx context.Context, msg []byte)
 }
 
-// GreeterUsecase is a Greeter usecase.
+// JobUsecase is a Job usecase.
 type JobUsecase struct {
 	job JobRepo
 	log *log.Helper
 }
 
-// NewGreeterUsecase new a Greeter usecase.
+// NewJobUsecase  new a Job usecase.
 func NewJobUsecase(job JobRepo, logger log.Logger) *JobUsecase {
 	return &JobUsecase{job: job, log: log.NewHelper(logger)}
 }
 
-// CreateGreeter creates a Greeter, and returns the new Greeter.
-func (uc *JobUsecase) Consumer(ctx context.Context) (err error) {
-	for {
-		err := uc.job.Consumer(ctx)
-		if err != nil {
-			return err
-		}
-	}
+// PushMsg push msg to connector
+func (uc *JobUsecase) PushMsg(ctx context.Context, msg []byte) (err error) {
+	return nil
 }

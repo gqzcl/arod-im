@@ -17,6 +17,7 @@ func NewNacosRegister(c *conf.Server) *nacos.Registry {
 		NotLoadCacheAtStart: true,
 		LogDir:              "/tmp/nacos/log",
 		CacheDir:            "/tmp/nacos/cache",
+		BeatInterval:        30000,
 		LogLevel:            c.Register.LogLevel,
 	}
 	sc := []constant.ServerConfig{
@@ -33,7 +34,5 @@ func NewNacosRegister(c *conf.Server) *nacos.Registry {
 	}
 
 	//namingClient.GetService()
-	return nacos.New(namingClient,
-
-	)
+	return nacos.New(namingClient, nacos.WithGroup("arod-im"))
 }

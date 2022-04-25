@@ -37,7 +37,7 @@ func newApp(logger log.Logger, gs *grpc.Server, ws *websocket.Server, r *nacos.R
 		kratos.ID(id),
 		kratos.Name("arod-im-connector"),
 		kratos.Version("v1"),
-		kratos.Metadata(map[string]string{}),
+		kratos.Metadata(map[string]string{"preserved.heart.beat.interval": "300000"}),
 		kratos.Logger(logger),
 		kratos.Server(
 			gs,

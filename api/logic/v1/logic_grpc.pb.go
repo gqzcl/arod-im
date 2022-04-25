@@ -29,6 +29,10 @@ type LogicClient interface {
 	GroupRecall(ctx context.Context, in *GroupRecallRequest, opts ...grpc.CallOption) (*RecallReplay, error)
 	RoomSend(ctx context.Context, in *GroupSendRequest, opts ...grpc.CallOption) (*SendReplay, error)
 	RoomBroadcast(ctx context.Context, in *GroupSendRequest, opts ...grpc.CallOption) (*SendReplay, error)
+	// Connect
+	Connect(ctx context.Context, in *ConnectReq, opts ...grpc.CallOption) (*ConnectReply, error)
+	// Disconnect
+	Disconnect(ctx context.Context, in *DisConnectReq, opts ...grpc.CallOption) (*DisConnectReply, error)
 }
 
 type logicClient struct {
@@ -102,6 +106,24 @@ func (c *logicClient) RoomBroadcast(ctx context.Context, in *GroupSendRequest, o
 	return out, nil
 }
 
+func (c *logicClient) Connect(ctx context.Context, in *ConnectReq, opts ...grpc.CallOption) (*ConnectReply, error) {
+	out := new(ConnectReply)
+	err := c.cc.Invoke(ctx, "/api.logic.v1.Logic/Connect", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *logicClient) Disconnect(ctx context.Context, in *DisConnectReq, opts ...grpc.CallOption) (*DisConnectReply, error) {
+	out := new(DisConnectReply)
+	err := c.cc.Invoke(ctx, "/api.logic.v1.Logic/Disconnect", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LogicServer is the server API for Logic service.
 // All implementations must embed UnimplementedLogicServer
 // for forward compatibility
@@ -113,6 +135,10 @@ type LogicServer interface {
 	GroupRecall(context.Context, *GroupRecallRequest) (*RecallReplay, error)
 	RoomSend(context.Context, *GroupSendRequest) (*SendReplay, error)
 	RoomBroadcast(context.Context, *GroupSendRequest) (*SendReplay, error)
+	// Connect
+	Connect(context.Context, *ConnectReq) (*ConnectReply, error)
+	// Disconnect
+	Disconnect(context.Context, *DisConnectReq) (*DisConnectReply, error)
 	mustEmbedUnimplementedLogicServer()
 }
 
@@ -140,6 +166,12 @@ func (UnimplementedLogicServer) RoomSend(context.Context, *GroupSendRequest) (*S
 }
 func (UnimplementedLogicServer) RoomBroadcast(context.Context, *GroupSendRequest) (*SendReplay, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoomBroadcast not implemented")
+}
+func (UnimplementedLogicServer) Connect(context.Context, *ConnectReq) (*ConnectReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Connect not implemented")
+}
+func (UnimplementedLogicServer) Disconnect(context.Context, *DisConnectReq) (*DisConnectReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Disconnect not implemented")
 }
 func (UnimplementedLogicServer) mustEmbedUnimplementedLogicServer() {}
 
@@ -280,6 +312,42 @@ func _Logic_RoomBroadcast_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Logic_Connect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LogicServer).Connect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.logic.v1.Logic/Connect",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LogicServer).Connect(ctx, req.(*ConnectReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Logic_Disconnect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisConnectReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LogicServer).Disconnect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.logic.v1.Logic/Disconnect",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LogicServer).Disconnect(ctx, req.(*DisConnectReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Logic_ServiceDesc is the grpc.ServiceDesc for Logic service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +382,14 @@ var Logic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RoomBroadcast",
 			Handler:    _Logic_RoomBroadcast_Handler,
+		},
+		{
+			MethodName: "Connect",
+			Handler:    _Logic_Connect_Handler,
+		},
+		{
+			MethodName: "Disconnect",
+			Handler:    _Logic_Disconnect_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

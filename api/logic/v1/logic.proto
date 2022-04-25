@@ -53,6 +53,10 @@ service Logic {
 			body: "*",
 		};
 	}
+	// Connect
+	rpc Connect(ConnectReq) returns (ConnectReply);
+	// Disconnect
+	rpc Disconnect(DisConnectReq) returns (DisConnectReply);
 }
 
 enum MsgType{
@@ -143,3 +147,26 @@ message GroupRecallRequest{
 	string msg_seq = 2;
 }
 
+// 连接请求
+message ConnectReq{
+	string server = 1;
+	string uid = 2;
+	// format: ip:port
+	string address = 3;
+	bytes token = 4;
+}
+
+message ConnectReply{
+	bool success = 1;
+}
+
+message DisConnectReq {
+	string uid = 1;
+	// format: ip:port
+	string address = 2;
+	string server = 3;
+}
+
+message DisConnectReply {
+	bool success = 1;
+}
