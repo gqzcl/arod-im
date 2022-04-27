@@ -25,7 +25,7 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	}
 	bucketRepo := data.NewBucketRepo(dataData, logger)
 	bucketUsecase := biz.NewBucketUsecase(bucketRepo, logger)
-	connectorService := service.NewConnectorService(bucketUsecase, logger)
+	connectorService := service.NewConnectorService(confServer, bucketUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, connectorService, logger)
 	websocketServer := server.NewWebsocketServer(confServer, connectorService)
 	registry := server.NewNacosRegister(confServer)

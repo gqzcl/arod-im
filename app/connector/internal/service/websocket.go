@@ -11,9 +11,9 @@ import (
 )
 
 // SetWebsocketServer 初始化ws server
-func (s *ConnectorService) SetWebsocketServer(ws *websocket.Server) {
-	s.ws = ws
-}
+//func (s *ConnectorService) SetWebsocketServer(ws *websocket.Server) {
+//	s.ws = ws
+//}
 
 type WebsocketProto struct {
 	Uid     string `json:"uid"`
@@ -21,6 +21,8 @@ type WebsocketProto struct {
 	RoomId  string `json:"room_id"`
 }
 
+// TODO 处理只建立了连接没有鉴权的情况（清理掉）
+// idea 定时五秒没有接收到鉴权消息则关闭连接
 // OnMessageHandle  接收ws对端的消息，由websocket server调用
 func (s ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 	address := c.RemoteAddr().String()
@@ -34,19 +36,24 @@ func (s ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 		return nil
 	}
 	// TODO 处理心跳
+	// TODO 添加一个错误原因，如鉴权失败则断开连接
 	// note： 初次连接，鉴权，将地址存入redis
-	connect, err := s.LogicClient[0].Connect(context.Background(), &v1.ConnectReq{
+	// c.Close(nil)
+	connect, err := s.LogicClient.Connect(context.Background(), &v1.ConnectReq{
 		Server:  s.Address,
 		Uid:     cookie.Uid,
 		Address: address,
 		Token:   nil,
 	})
+	c.Context().(*websocket.WsContext).Uid = cookie.Uid
+	s.log.Infof("成功连接")
 	if err != nil {
 		return err
 	}
 
 	if !connect.Success {
 		// TODO 连接操作失败
+		c.Close(nil)
 	} else {
 		// 存储连接
 		s.bc.AddCh(address, c)
@@ -61,11 +68,20 @@ func (s ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 }
 
 func (s *ConnectorService) OnCloseHandler(c gnet.Conn) {
-	_ = c.RemoteAddr().String()
-	//s.log.Info("id", address, register)
-	//if register {
-	//} else {
-	//	s.log.Infof("Connection with ID %s was removed", address)
-	//	s.bc.DeleteCh(address)
-	//}
+	address := c.RemoteAddr().String()
+	uid := c.Context().(*websocket.WsContext).Uid
+	connect, _ := s.LogicClient.Disconnect(context.Background(), &v1.DisConnectReq{
+		Server: s.Address,
+		// TODO how 获得uid
+		Uid:     uid,
+		Address: address,
+	})
+	s.log.Infof("成功关闭连接")
+
+	if !connect.Success {
+		// TODO 关闭连接操作失败
+	} else {
+		// 存储连接
+		s.bc.DeleteCh(address)
+	}
 }

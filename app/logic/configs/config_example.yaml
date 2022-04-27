@@ -7,7 +7,7 @@ server:
     addr: 0.0.0.0:9003
     timeout: 1s
   register:
-   address : 101.43.63.229
+   address : ip
    port : 8848
    namespaceId: public
    accessKey: nacos
@@ -17,11 +17,11 @@ server:
 data:
   kafka:
     topic: "logic-single"
-    brokers: ["101.43.63.229:9092"]
+    brokers: ["ip:port"]
   redis:
     network: tcp
-    addr: gqzcl-redis.redis.cn-chengdu.rds.aliyuncs.com:6379
-    auth: Systemlogin123
+    addr: ip:port
+    auth: password
     active: 10
     idle: 100
     dail_timeout: 1s

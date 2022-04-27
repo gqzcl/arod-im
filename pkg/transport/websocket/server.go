@@ -22,8 +22,9 @@ var (
 	_ transport.Endpointer = (*Server)(nil)
 )
 
-type wsCodec struct {
-	ws bool
+type WsContext struct {
+	ws  bool
+	Uid string
 }
 
 type Server struct {

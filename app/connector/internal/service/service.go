@@ -4,10 +4,12 @@ import (
 	pb "arod-im/api/connector/v1"
 	logicV1 "arod-im/api/logic/v1"
 	"arod-im/app/connector/internal/biz"
+	"arod-im/app/connector/internal/conf"
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/keepalive"
 	"time"
 )
@@ -36,24 +38,26 @@ type ConnectorService struct {
 	bc  *biz.BucketUsecase
 	log *log.Helper
 	//ws          *websocket.Server
-	LogicClient []logicV1.LogicClient
+	LogicClient logicV1.LogicClient
 
 	// server ip
 	Address string
 }
 
-func NewConnectorService(bc *biz.BucketUsecase, logger log.Logger) *ConnectorService {
+func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.Logger) *ConnectorService {
 	c := &ConnectorService{
-		bc:  bc,
-		log: log.NewHelper(log.With(logger, "module", "connector")),
+		bc:      bc,
+		log:     log.NewHelper(log.With(logger, "module", "connector")),
+		Address: config.Grpc.Addr,
 	}
 	ctx := context.Background()
-	conn, _ := grpc.DialContext(ctx, "127.0.0.1:9003",
+	conn, err := grpc.DialContext(ctx, "127.0.0.1:9003",
 		[]grpc.DialOption{
 			grpc.WithInitialWindowSize(grpcInitialWindowSize),
 			grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
 			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize)),
 			grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
 			grpc.WithKeepaliveParams(keepalive.ClientParameters{
 				Time:                grpcKeepAliveTime,
 				Timeout:             grpcKeepAliveTimeout,
@@ -61,6 +65,9 @@ func NewConnectorService(bc *biz.BucketUsecase, logger log.Logger) *ConnectorSer
 			}),
 		}...,
 	)
-	c.LogicClient = append(c.LogicClient, logicV1.NewLogicClient(conn))
+	if err != nil {
+		c.log.Error("Grpc 连接失败", err)
+	}
+	c.LogicClient = logicV1.NewLogicClient(conn)
 	return c
 }

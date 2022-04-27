@@ -15,7 +15,7 @@ func (s *Server) OnBoot(eng gnet.Engine) gnet.Action {
 }
 
 func (s *Server) OnOpen(c gnet.Conn) ([]byte, gnet.Action) {
-	c.SetContext(new(wsCodec))
+	c.SetContext(new(WsContext))
 	atomic.AddInt64(&s.connected, 1)
 	return nil, gnet.None
 }
@@ -31,14 +31,14 @@ func (s *Server) OnClose(c gnet.Conn, err error) (action gnet.Action) {
 }
 
 func (s *Server) OnTraffic(c gnet.Conn) gnet.Action {
-	if !c.Context().(*wsCodec).ws {
+	if !c.Context().(*WsContext).ws {
 		_, err := s.upgrader.Upgrade(c)
 		s.log.Infof("conn[%v] upgrade websocket protocol", c.RemoteAddr().String())
 		if err != nil {
 			s.log.Infof("conn[%v] [err=%v]", c.RemoteAddr().String(), err.Error())
 			return gnet.Close
 		}
-		c.Context().(*wsCodec).ws = true
+		c.Context().(*WsContext).ws = true
 	} else {
 		msg, op, err := wsutil.ReadClientData(c)
 		if err != nil {
