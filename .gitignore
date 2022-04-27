@@ -7,6 +7,9 @@
 out
 gen
 ### Go template
+# Config
+config.yaml
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
