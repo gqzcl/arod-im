@@ -1,6 +1,8 @@
 package sender
 
 import (
+	jobV1 "arod-im/api/job/v1"
+	"encoding/json"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 	"github.com/panjf2000/gnet/v2"
@@ -23,8 +25,16 @@ func NewChannel(conn gnet.Conn) *Channel {
 	}
 }
 
-func (r *Channel) Push(msg []byte) {
-	wsutil.WriteServerMessage(r.conn, ws.OpBinary, msg)
+func (r *Channel) Push(msg []*jobV1.MsgBody) error {
+	m, err := json.Marshal(msg)
+	if err != nil {
+		return err
+	}
+	err = wsutil.WriteServerMessage(r.conn, ws.OpBinary, m)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 //// Watch watch a operation.

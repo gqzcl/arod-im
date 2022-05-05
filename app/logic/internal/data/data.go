@@ -38,6 +38,7 @@ func NewKafkaPub(c *conf.Data) kafka.SyncProducer {
 	if err != nil {
 		panic(err)
 	}
+
 	return pub
 }
 

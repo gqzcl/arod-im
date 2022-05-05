@@ -9,7 +9,6 @@ import (
 func (s *ConnectorService) SingleSend(ctx context.Context, req *pb.SingleSendReq) (*pb.SingleSendReply, error) {
 	s.log.WithContext(ctx).Info("成功收到消息！！！", req.Address, req.Msg)
 	s.bc.SingleSend(req.Address, req.Msg)
-
 	return &pb.SingleSendReply{Reply: "成功收到消息！！！"}, nil
 }
 func (s *ConnectorService) GroupSend(ctx context.Context, req *pb.GroupSendReq) (*pb.GroupSendReply, error) {

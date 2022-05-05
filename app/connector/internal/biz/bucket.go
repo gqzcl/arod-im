@@ -1,6 +1,7 @@
 package biz
 
 import (
+	jobV1 "arod-im/api/job/v1"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/panjf2000/gnet/v2"
 	"sync"
@@ -10,7 +11,7 @@ import (
 type BucketRepo interface {
 	RemoveCh(address string)
 	AddCh(address string, c gnet.Conn)
-	SingleSend(address string, msg []byte)
+	SingleSend(address string, msg []*jobV1.MsgBody)
 }
 
 // BucketUsecase  is a Bucket usecase.
@@ -35,7 +36,7 @@ func (b *BucketUsecase) AddCh(address string, c gnet.Conn) {
 	b.bucket.AddCh(address, c)
 }
 
-func (b *BucketUsecase) SingleSend(address string, msg []byte) {
+func (b *BucketUsecase) SingleSend(address string, msg []*jobV1.MsgBody) {
 	b.bucket.SingleSend(address, msg)
 }
 

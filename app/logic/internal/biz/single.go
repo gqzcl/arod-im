@@ -1,6 +1,7 @@
 package biz
 
 import (
+	jobV1 "arod-im/api/job/v1"
 	v1 "arod-im/api/logic/v1"
 	"arod-im/pkg/rambler"
 	"context"
@@ -16,15 +17,16 @@ var (
 type Greeter struct {
 }
 
-// MessageBody  is a Message model.
-type MessageBody struct {
-	msgType    string
-	msgContent []byte
-}
+//// MessageBody  is a Message model.
+//type MessageBody struct {
+//	Address map[string]string `json:"address"`
+//	Body    []*v1.MsgBody     `json:"body"`
+//}
 
 // SingleRepo is a Single repo.
 type SingleRepo interface {
-	Push(ctx context.Context, sessionId string, msg []*v1.SingleSendRequest_MsgBody) (err error)
+	Push(ctx context.Context, sessionId string, msg *v1.SendMsg) (err error)
+	GetUserAddress(ctx context.Context, uid string) (map[string]string, error)
 }
 
 // SingleUsecase is a Single usecase.
@@ -40,19 +42,15 @@ func NewSingleUsecase(single SingleRepo, logger log.Logger) *SingleUsecase {
 }
 
 // PushMsg push a msg to data.
-func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*v1.SingleSendRequest_MsgBody) (string, error) {
+func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*jobV1.MsgBody) (string, error) {
 	seq := sc.rambler.GetSeqID([]byte(uid + cid))
-
-	//m := make([]*MessageBody, 0)
-	//for i := range msg {
-	//	b, err := msg[i].GetMsgContent().MarshalJSON()
-	//	if err != nil {
-	//		sc.log.WithContext(ctx).Infof("err: %v", err)
-	//		return "", err
-	//	}
-	//	m = append(m, &MessageBody{msgType: msg[i].MsgType.String(), msgContent: b})
-	//}
-	if err := sc.single.Push(ctx, uid+cid, msg); err != nil {
+	addrs, _ := sc.single.GetUserAddress(ctx, cid)
+	message := &v1.SendMsg{
+		Address: addrs,
+		Seq:     seq,
+		Msg:     msg,
+	}
+	if err := sc.single.Push(ctx, uid+cid, message); err != nil {
 		sc.log.WithContext(ctx).Info("Error in PushMsg() : ", err)
 		return "", err
 	}

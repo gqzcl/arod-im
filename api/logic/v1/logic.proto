@@ -3,8 +3,8 @@ syntax = "proto3";
 package api.logic.v1;
 
 import "google/api/annotations.proto";
-import "google/protobuf/any.proto";
-import "google/protobuf/struct.proto";
+//import "google/protobuf/struct.proto";
+import "job/v1/job.proto";
 
 option go_package = "arod-im/api/logic/v1;v1";
 option java_multiple_files = true;
@@ -59,6 +59,12 @@ service Logic {
 	rpc Disconnect(DisConnectReq) returns (DisConnectReply);
 }
 
+message SendMsg{
+	map<string,string> address = 1;
+	string  seq = 2;
+	repeated job.v1.MsgBody msg = 3;
+}
+
 enum MsgType{
 	text = 0; // 文本消息
 	image = 1; // 图片消息
@@ -68,7 +74,13 @@ enum MsgType{
 	sound = 5; // 音频消息
 }
 
-// 消息返回响应
+//message MsgBody {
+//	string msg_type = 1;
+//	// 根据不同消息类型有不同的消息内容
+//	google.protobuf.Struct msg_content = 2;
+//}
+
+	// 消息返回响应
 message  SendReplay{
 	string action_status = 1; // 请求结果
 	string error_info = 2; // 错误信息
@@ -86,16 +98,9 @@ message  RecallReplay{
 
 // 单聊发送消息请求
 message SingleSendRequest{
-	// 消息体
-	message MsgBody {
-		MsgType msg_type = 1;
-		// 根据不同消息类型有不同的消息内容
-		google.protobuf.Struct msg_content = 2;
-	}
-
 	string uid = 1;
 	string cid = 2;
-	repeated MsgBody msg_body = 3;
+	repeated job.v1.MsgBody msg_body = 3;
 }
 
 // 单聊撤回消息请求
@@ -107,27 +112,13 @@ message SingleRecallRequest{
 
 // 群聊发送消息请求
 message GroupSendRequest{
-	// 消息体
-	message MsgBody {
-		string msg_type = 1;
-		// 根据不同消息类型有不同的消息内容
-		google.protobuf.Any msg_content = 2;
-	}
-
 	string uid = 1;
 	string group_id = 2;
-	repeated MsgBody msg_body = 3;
+	repeated job.v1.MsgBody msg_body = 3;
 }
 
 // 群聊@消息请求
 message GroupSendMentionRequest{
-	// 消息体
-	message MsgBody {
-		string msg_type = 1;
-		// 根据不同消息类型有不同的消息内容
-		google.protobuf.Any msg_content = 2;
-	}
-
 	message GroupAtInfo {
 		// 标志为1时表示@全体，为0时为@指定用户
 		uint32 group_at_flag = 1;
@@ -136,7 +127,7 @@ message GroupSendMentionRequest{
 
 	string Uid = 1;
 	string GroupId = 2;
-	repeated MsgBody msg_body = 3;
+	repeated job.v1.MsgBody msg_body = 3;
 	repeated GroupAtInfo group_at_info = 4;
 }
 

@@ -1,6 +1,7 @@
 package data
 
 import (
+	jobV1 "arod-im/api/job/v1"
 	"arod-im/app/connector/internal/biz"
 	"arod-im/app/connector/internal/data/sender"
 	"github.com/go-kratos/kratos/v2/log"
@@ -33,12 +34,16 @@ func (b *bucketRepo) AddCh(address string, c gnet.Conn) {
 	b.data.channel[address] = sender.NewChannel(c)
 }
 
-func (b *bucketRepo) SingleSend(address string, msg []byte) {
+func (b *bucketRepo) SingleSend(address string, msg []*jobV1.MsgBody) {
 	if c, ok := b.data.channel[address]; ok {
-		c.Push(msg)
+		err := c.Push(msg)
+		if err != nil {
+			b.log.Error(err, "in SingleSend in bucket")
+		}
+		b.log.Debug("成功发送消息")
 		return
 	}
-	b.log.Warnf("消息发送失败")
+	b.log.Warnf("消息发送失败:", address)
 	//b.data.channel[address].Push(msg)
 }
 

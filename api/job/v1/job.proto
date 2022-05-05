@@ -1,12 +1,17 @@
 syntax = "proto3";
 
 package api.job.v1;
+import "google/protobuf/struct.proto";
 
 option go_package = "arod-im/api/job/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.job.v1";
 
-
+message MsgBody {
+  string msg_type = 1;
+  // 根据不同消息类型有不同的消息内容
+  google.protobuf.Struct msg_content = 2;
+}
 
 service Job {
 }

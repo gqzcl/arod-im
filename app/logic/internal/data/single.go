@@ -4,15 +4,11 @@ import (
 	v1 "arod-im/api/logic/v1"
 	"arod-im/app/logic/internal/biz"
 	"context"
-	"encoding/json"
+	"github.com/golang/protobuf/proto"
 	"gopkg.in/Shopify/sarama.v1"
 
 	"github.com/go-kratos/kratos/v2/log"
 )
-
-type Message struct {
-	messages []*biz.MessageBody
-}
 
 type singleRepo struct {
 	data *Data
@@ -27,9 +23,10 @@ func NewSingleRepo(data *Data, logger log.Logger) biz.SingleRepo {
 	}
 }
 
-func (r *singleRepo) Push(ctx context.Context, sessionId string, msg []*v1.SingleSendRequest_MsgBody) (err error) {
+func (r *singleRepo) Push(ctx context.Context, sessionId string, msg *v1.SendMsg) (err error) {
 	pushMsg := msg
-	p, err := json.Marshal(pushMsg)
+	p, err := proto.Marshal(pushMsg)
+	r.log.WithContext(ctx).Debugf("msg in Push :%s", p)
 	m := &sarama.ProducerMessage{
 		Key:   sarama.StringEncoder(sessionId),
 		Topic: "arod-im-push-topic",
@@ -40,4 +37,10 @@ func (r *singleRepo) Push(ctx context.Context, sessionId string, msg []*v1.Singl
 		return err
 	}
 	return err
+}
+
+func (r *singleRepo) GetUserAddress(ctx context.Context, uid string) (addrs map[string]string, err error) {
+	addrs, err = r.data.GetUserAddress(ctx, uid)
+	// TODO deal err
+	return
 }

@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package api.connector.v1;
+import "job/v1/job.proto";
 
 option go_package = "arod-im/api/connector/v1;v1";
 option java_multiple_files = true;
@@ -17,31 +18,34 @@ service Connector {
 	rpc Broadcast(BroadcastReq) returns (BroadcastReply);
 }
 
-message Proto {
-	int32 ver = 1; // 版本号
-	int32 op = 2; // 操作符
-	int32 seq = 3; // 序列号
-	bytes body = 4; // 消息体
-}
+//message Proto {
+//	int32 ver = 1; // 版本号
+//	int32 op = 2; // 操作符
+//	int32 seq = 3; // 序列号
+//	bytes body = 4; // 消息体
+//}
+
+//message MsgBody {
+//	string msg_type = 1;
+//	// 根据不同消息类型有不同的消息内容
+//	google.protobuf.Struct msg_content = 2;
+//}
 
 message SingleSendReq {
 	string address = 1;
-	bytes msg = 2;
+	string seq = 2;
+	repeated job.v1.MsgBody msg = 3;
 }
 message SingleSendReply {
 	string reply = 1;
 }
 
 message GroupSendReq{
-	int32 protoOp = 1;
-	Proto proto = 2;
-	int32 speed = 3;
 }
 message GroupSendReply{}
 
 message RoomSendReq {
-	string roomID = 1;
-	Proto proto = 2;
+
 }
 message RoomSendReply{}
 
