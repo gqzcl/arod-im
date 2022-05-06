@@ -45,20 +45,12 @@ func (j *JobService) OnMessage(ctx context.Context, message kafka.Message) error
 
 	m := new(logicV1.SendMsg)
 	err := proto.Unmarshal(message.Value, m)
-	//err := json.Unmarshal(message.Value, &m)
 	if err != nil {
 		j.log.WithContext(ctx).Error(err)
 	}
 
 	if message.Offset > 38 {
 		j.log.Debug(m.Msg)
-
-		//msg, err := proto.Marshal(m.Msg)
-		//if err != nil {
-		//	j.log.WithContext(ctx).Error(err)
-		//}
-		//j.log.Infof(string(msg))
-
 		for i := range m.Address {
 			err := j.jc.PushMsg(ctx, m.Address[i], i, m.Seq, m.Msg)
 			if err != nil {

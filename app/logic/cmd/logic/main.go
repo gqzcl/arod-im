@@ -36,7 +36,8 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, r *nacos.Regist
 		kratos.ID(id),
 		kratos.Name("arod-im-logic"),
 		kratos.Version("v0.1.0"),
-		kratos.Metadata(map[string]string{"preserved.heart.beat.interval": "300000"}),
+		// 心跳时间30s
+		kratos.Metadata(map[string]string{"preserved.heart.beat.interval": "30000"}),
 		kratos.Logger(logger),
 		kratos.Server(
 			hs,

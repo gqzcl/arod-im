@@ -1,21 +1,13 @@
-package service
+package data
 
 import (
-	pb "arod-im/api/connector/v1"
-	logicV1 "arod-im/api/logic/v1"
-	"arod-im/app/connector/internal/biz"
-	"arod-im/app/connector/internal/conf"
+	v1 "arod-im/api/connector/v1"
 	"context"
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/wire"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/keepalive"
 	"time"
 )
-
-// ProviderSet is service providers.
-var ProviderSet = wire.NewSet(NewConnectorService)
 
 var (
 	// grpc options
@@ -32,32 +24,29 @@ const (
 	grpcInitialConnWindowSize = 1 << 24
 )
 
-type ConnectorService struct {
-	pb.UnimplementedConnectorServer
-
-	bc  *biz.BucketUsecase
-	log *log.Helper
-	//ws          *websocket.Server
-	LogicClient logicV1.LogicClient
-
-	// server ip
-	Address string
+type ConnectClient struct {
+	serverID string
+	client   v1.ConnectorClient
 }
 
-func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.Logger) *ConnectorService {
-	c := &ConnectorService{
-		bc:      bc,
-		log:     log.NewHelper(log.With(logger, "module", "connector")),
-		Address: "172.30.105.114:9000",
+func NewConnectClient(address string) (*ConnectClient, error) {
+	cc := &ConnectClient{
+		serverID: address,
 	}
-	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "127.0.0.1:9003",
+	cc.client, _ = NewConnectorClient(address)
+	return cc, nil
+}
+
+func NewConnectorClient(address string) (v1.ConnectorClient, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Second*2))
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, address,
 		[]grpc.DialOption{
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
 			grpc.WithInitialWindowSize(grpcInitialWindowSize),
 			grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
 			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize)),
 			grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
-			grpc.WithTransportCredentials(insecure.NewCredentials()),
 			grpc.WithKeepaliveParams(keepalive.ClientParameters{
 				Time:                grpcKeepAliveTime,
 				Timeout:             grpcKeepAliveTimeout,
@@ -66,8 +55,12 @@ func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.
 		}...,
 	)
 	if err != nil {
-		c.log.Error("Grpc 连接失败", err)
+		panic("grpc 初始化失败")
 	}
-	c.LogicClient = logicV1.NewLogicClient(conn)
-	return c
+	client := v1.NewConnectorClient(conn)
+	return client, nil
+}
+
+func (cc *ConnectClient) GetClient() v1.ConnectorClient {
+	return cc.client
 }
