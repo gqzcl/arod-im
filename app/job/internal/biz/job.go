@@ -1,3 +1,6 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package biz
 
 import (
@@ -14,7 +17,7 @@ var (
 
 // JobRepo  is a Job repo.
 type JobRepo interface {
-	SingleSend(ctx context.Context, server, address, seq string, msg []*jobV1.MsgBody)
+	SingleSend(ctx context.Context, server, address, senderId, seq string, msg []*jobV1.MsgBody) error
 }
 
 // JobUsecase is a Job usecase.
@@ -29,8 +32,13 @@ func NewJobUsecase(job JobRepo, logger log.Logger) *JobUsecase {
 }
 
 // PushMsg push msg to connector
-func (uc *JobUsecase) PushMsg(ctx context.Context, server, address, seq string, msg []*jobV1.MsgBody) (err error) {
-	uc.log.WithContext(ctx).Debugf("Push Msg to %s->%s ,the content is %s", server, address, msg)
-	uc.job.SingleSend(ctx, server, address, seq, msg)
+func (uc *JobUsecase) PushMsg(ctx context.Context, msg *jobV1.SingleSendMsg) (err error) {
+	uc.log.WithContext(ctx).Debugf("Push Msg the content is %s", msg)
+	for server := range msg.Address {
+		err := uc.job.SingleSend(ctx, server, msg.Address[server], msg.SenderId, msg.Seq, msg.Msg)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }

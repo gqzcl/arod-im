@@ -1,3 +1,6 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package biz
 
 import (
@@ -25,7 +28,7 @@ type Greeter struct {
 
 // SingleRepo is a Single repo.
 type SingleRepo interface {
-	Push(ctx context.Context, sessionId string, msg *v1.SendMsg) (err error)
+	Push(ctx context.Context, sessionId string, msg *jobV1.SingleSendMsg) (err error)
 	GetUserAddress(ctx context.Context, uid string) (map[string]string, error)
 }
 
@@ -45,7 +48,7 @@ func NewSingleUsecase(single SingleRepo, logger log.Logger) *SingleUsecase {
 func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*jobV1.MsgBody) (string, error) {
 	seq := sc.rambler.GetSeqID([]byte(uid + cid))
 	addrs, _ := sc.single.GetUserAddress(ctx, cid)
-	message := &v1.SendMsg{
+	message := &jobV1.SingleSendMsg{
 		Address: addrs,
 		Seq:     seq,
 		Msg:     msg,

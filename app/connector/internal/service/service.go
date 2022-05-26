@@ -1,3 +1,6 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package service
 
 import (
@@ -5,7 +8,9 @@ import (
 	logicV1 "arod-im/api/logic/v1"
 	"arod-im/app/connector/internal/biz"
 	"arod-im/app/connector/internal/conf"
+	"arod-im/pkg/ips"
 	"context"
+	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	"google.golang.org/grpc"
@@ -45,10 +50,11 @@ type ConnectorService struct {
 }
 
 func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.Logger) *ConnectorService {
+	ip := ips.InternalIP()
 	c := &ConnectorService{
 		bc:      bc,
 		log:     log.NewHelper(log.With(logger, "module", "connector")),
-		Address: "172.30.105.114:9000",
+		Address: fmt.Sprintf("%s:9000", ip),
 	}
 	ctx := context.Background()
 	conn, err := grpc.DialContext(ctx, "127.0.0.1:9003",

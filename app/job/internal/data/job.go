@@ -1,3 +1,6 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package data
 
 import (
@@ -17,48 +20,31 @@ type jobRepo struct {
 
 // NewJobRepo NewGreeterRepo .
 func NewJobRepo(data *Data, logger log.Logger) biz.JobRepo {
-	//ctx := context.Background()
-	//conn, err := grpc.DialContext(ctx, "172.30.105.114:9000",
-	//	[]grpc.DialOption{
-	//		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	//		grpc.WithInitialWindowSize(grpcInitialWindowSize),
-	//		grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
-	//		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize)),
-	//		grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
-	//		grpc.WithKeepaliveParams(keepalive.ClientParameters{
-	//			Time:                grpcKeepAliveTime,
-	//			Timeout:             grpcKeepAliveTimeout,
-	//			PermitWithoutStream: true,
-	//		}),
-	//	}...,
-	//)
-	//if err != nil {
-	//	panic("grpc 初始化失败")
-	//}
-	//_ = v1.NewConnectorClient(conn)
-	//j.log.WithContext(ctx).Info("成功建立grpc连接")
 	return &jobRepo{
 		data: data,
 		log:  log.NewHelper(logger),
 	}
 }
 
-func (j *jobRepo) SingleSend(ctx context.Context, server, address, seq string, msg []*jobV1.MsgBody) {
-	// TODO 处理消息内容
-	j.log.Debugf("成功开始发送消息")
+func (j *jobRepo) SingleSend(ctx context.Context, server, address, senderId, seq string, msg []*jobV1.MsgBody) error {
+	j.log.WithContext(ctx).Debug("开始发送消息")
+
 	if connector, ok := j.data.clients[server]; ok {
 		client := connector.GetClient()
+		// TODO 为client加入环形队列，进行缓存
 		sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
-			Address: address,
-			Seq:     seq,
-			Msg:     msg,
+			Address:  address,
+			SenderId: senderId,
+			Seq:      seq,
+			Msg:      msg,
 		})
 		if err != nil {
 			j.log.WithContext(ctx).Error(err)
 		}
-		j.log.WithContext(ctx).Info(sendReply)
+		j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
 	} else {
-		j.log.WithContext(ctx).Info("Connector 服务地址不存在:", server)
+		j.log.WithContext(ctx).Infof("Connector server : %s Service address does not exist:", server)
+		// TODO return 自定义错误
 	}
-
+	return nil
 }

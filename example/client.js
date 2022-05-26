@@ -1,3 +1,8 @@
+/**
+ * Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+ * Use of this source code is governed by a MIT style
+ */
+
 (function(win) {
     function connect() {
         //var ws = new WebSocket('ws://sh.tony.wiki:3102/sub');

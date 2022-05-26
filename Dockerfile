@@ -1,3 +1,6 @@
+# Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+# Use of this source code is governed by a MIT style
+
 FROM golang:1.18 AS builder
 
 COPY . /src

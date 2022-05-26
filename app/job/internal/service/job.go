@@ -1,9 +1,10 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package service
 
 import (
 	jobV1 "arod-im/api/job/v1"
-	v1 "arod-im/api/job/v1"
-	logicV1 "arod-im/api/logic/v1"
 	"arod-im/app/job/internal/biz"
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -13,7 +14,7 @@ import (
 
 // JobService  is a Job service.
 type JobService struct {
-	v1.UnimplementedJobServer
+	jobV1.UnimplementedJobServer
 	jc  *biz.JobUsecase
 	log *log.Helper
 }
@@ -43,20 +44,16 @@ func (j *JobService) OnMessage(ctx context.Context, message kafka.Message) error
 	j.log.WithContext(ctx).Debugf("message at topic/partition/offset %v/%v/%v: %s = %s\n",
 		message.Topic, message.Partition, message.Offset, string(message.Key), string(message.Value))
 
-	m := new(logicV1.SendMsg)
+	m := new(jobV1.SingleSendMsg)
 	err := proto.Unmarshal(message.Value, m)
 	if err != nil {
 		j.log.WithContext(ctx).Error(err)
 	}
 
-	if message.Offset > 38 {
-		j.log.Debug(m.Msg)
-		for i := range m.Address {
-			err := j.jc.PushMsg(ctx, m.Address[i], i, m.Seq, m.Msg)
-			if err != nil {
-				j.log.WithContext(ctx).Error(err)
-			}
-		}
+	j.log.Debug(m.Msg)
+	err = j.jc.PushMsg(ctx, m)
+	if err != nil {
+		j.log.WithContext(ctx).Error(err)
 	}
 
 	// TODO 回复ack

@@ -1,87 +1,88 @@
 GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
-INTERNAL_PROTO_FILES1=$(shell find app/logic/internal -name *.proto)
-INTERNAL_PROTO_FILES2=$(shell find app/job/internal -name *.proto)
-INTERNAL_PROTO_FILES3=$(shell find app/connector/internal -name *.proto)
-API_PROTO_FILES=$(shell find api -name *.proto)
+COMMON_SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+ifeq ($(origin ROOT_DIR),undefined)
+ROOT_DIR := $(abspath $(shell cd $(COMMON_SELF_DIR) && pwd -P))
+endif
 
+# -------------------------------------------------------------------------
+# Includes
+
+include scripts/make-rules/tools.mk
+include scripts/make-rules/init.mk
+include scripts/make-rules/gen_config.mk
+include scripts/make-rules/gen_api.mk
+include scripts/make-rules/gen_wire.mk
+include scripts/make-rules/run.mk
+include scripts/make-rules/copyright.mk
+
+
+# -------------------------------------------------------------------------
+
+## all: generate all
+.PHONY: all
+all: init api config generate
+
+## init: Initialize project dependencies
 .PHONY: init
-# init env
 init:
-	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-	go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
-	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
-	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+	@$(MAKE) init.install
 
+## config: Generate Configuration Files and You can use such as [ make config.job ] to generate the configuration file of a module separately
 .PHONY: config
-# generate internal proto
 config:
-	protoc --proto_path=./app/logic/internal \
-	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./app/logic/internal \
-	       $(INTERNAL_PROTO_FILES1)
-	protoc --proto_path=./app/job/internal \
-    	   --proto_path=./third_party \
-     	   --go_out=paths=source_relative:./app/job/internal \
-    	   $(INTERNAL_PROTO_FILES2)
-	protoc --proto_path=./app/connector/internal \
-    	   --proto_path=./third_party \
-     	   --go_out=paths=source_relative:./app/connector/internal \
-    	   $(INTERNAL_PROTO_FILES3)
+	@$(MAKE) config.all
 
-
+## api: Generate proto file of API
 .PHONY: api
-# generate api proto
 api:
-	protoc --proto_path=./api \
-	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./api \
- 	       --go-http_out=paths=source_relative:./api \
- 	       --go-grpc_out=paths=source_relative:./api \
- 	       --openapi_out==paths=source_relative:. \
-	       $(API_PROTO_FILES)
+	@$(MAKE) api.all
 
-.PHONY: build
-# build
-build:
-	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
-
+## generate: generate
 .PHONY: generate
-# generate
 generate:
 	go mod tidy
 	go get github.com/google/wire/cmd/wire@latest
 	go generate ./...
 
-.PHONY: all
-# generate all
-all:
-	make api;
-	make config;
-	make generate;
-
-# wire
+## wire: Generate dependency injection file and You can use such as [ make wire.job ] to generate the injection file of a module separately
+.PHONY: wire
 wire:
-	cd app/logic/cmd/logic && wire
-	cd app/job/cmd/job && wire
-	cd app/connector/cmd/connector && wire
+	@$(MAKE) wire.all
 
-# show help
-help:
-	@echo ''
-	@echo 'Usage:'
-	@echo ' make [target]'
-	@echo ''
-	@echo 'Targets:'
-	@awk '/^[a-zA-Z\-\_0-9]+:/ { \
-	helpMessage = match(lastLine, /^# (.*)/); \
-		if (helpMessage) { \
-			helpCommand = substr($$1, 0, index($$1, ":")-1); \
-			helpMessage = substr(lastLine, RSTART + 2, RLENGTH); \
-			printf "\033[36m%-22s\033[0m %s\n", helpCommand,helpMessage; \
-		} \
-	} \
-	{ lastLine = $$0 }' $(MAKEFILE_LIST)
+## run: Start the service using such as the [ make run.job ] command
 
+## build: Build executable
+.PHONY: build
+build:
+	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
+
+
+## tools: install dependent tools,such as < make tools.install.swagger >
+.PHONY: tools
+tools:
+	@$(MAKE) tools.install
+
+## copyright-verify: Verify whether all files have copyright added.
+.PHONY: copyright-verify
+copyright-verify:
+	@$(MAKE) copyright.verify
+
+## copyright-add: Ensures source code files have copyright license headers.
+.PHONY: copyright-add
+copyright-add:
+	@$(MAKE) copyright.add
+
+
+
+## help: show help
+.PHONY: help
+help: Makefile
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@sed -n 's/^##//p' $< | column -t -s ':' | sed -e 's/^/ /'
+	@echo "$$USAGE_OPTIONS"
+
+# 如果没有指定目标，则构建help目标
 .DEFAULT_GOAL := help

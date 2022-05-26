@@ -1,3 +1,6 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package data
 
 import (
@@ -14,11 +17,11 @@ func TestData_GetUserAddress(t *testing.T) {
 		MaxActive:   int(10),
 		IdleTimeout: time.Second,
 		Dial: func() (redis.Conn, error) {
-			conn, err := redis.Dial("tcp", "===",
+			conn, err := redis.Dial("tcp", "---",
 				redis.DialConnectTimeout(time.Second*5),
 				redis.DialReadTimeout(time.Second),
 				redis.DialWriteTimeout(time.Second),
-				redis.DialPassword("==="),
+				redis.DialPassword("---"),
 			)
 			if err != nil {
 				panic(err)

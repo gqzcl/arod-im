@@ -1,3 +1,6 @@
+// Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+
 package data
 
 import (
@@ -13,13 +16,11 @@ var (
 	// grpc options
 	grpcKeepAliveTime    = time.Duration(10) * time.Second
 	grpcKeepAliveTimeout = time.Duration(3) * time.Second
-	grpcBackoffMaxDelay  = time.Duration(3) * time.Second
 	grpcMaxSendMsgSize   = 1 << 24
 	grpcMaxCallMsgSize   = 1 << 24
 )
 
 const (
-	// grpc options
 	grpcInitialWindowSize     = 1 << 24
 	grpcInitialConnWindowSize = 1 << 24
 )
