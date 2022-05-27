@@ -16,43 +16,43 @@ option java_package = "api.logic.v1";
 service Logic {
 	rpc SingleSend(SingleSendRequest) returns(SendReplay){
 		option (google.api.http)={
-			post: "/single/send",
+			post: "v1/single/send",
 			body: "*",
 		};
 	}
 	rpc SingleRecall(SingleRecallRequest) returns(RecallReplay){
 		option (google.api.http)={
-			post: "/single/recall",
+			post: "v1/single/recall",
 			body: "*",
 		};
 	}
 	rpc GroupSend(GroupSendRequest) returns(SendReplay){
 		option (google.api.http)={
-			post: "/group/send",
+			post: "v1/group/send",
 			body: "*",
 		};
 	}
 	rpc GroupSendMention(GroupSendMentionRequest) returns(SendReplay){
 		option (google.api.http)={
-			post: "/group/send_mention",
+			post: "v1/group/send_mention",
 			body: "*",
 		};
 	}
 	rpc GroupRecall(GroupRecallRequest) returns(RecallReplay){
 		option (google.api.http)={
-			post: "/group/recall",
+			post: "v1/group/recall",
 			body: "*",
 		};
 	}
 	rpc RoomSend(GroupSendRequest) returns(SendReplay){
 		option (google.api.http)={
-			post: "/room/send",
+			post: "v1/room/send",
 			body: "*",
 		};
 	}
 	rpc RoomBroadcast(GroupSendRequest) returns(SendReplay){
 		option (google.api.http)={
-			post: "/room/broadcast",
+			post: "v1/room/broadcast",
 			body: "*",
 		};
 	}

@@ -293,3 +293,25 @@
 2022-05-26T11:34:36.042+0800	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55865
 2022-05-26T11:34:36.042+0800	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /home/gqzcl/workspace/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
 2022-05-26T11:34:36.104+0800	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-05-27T06:06:21.521Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/arod-im/app/logic/cmd/logic/cache>
+2022-05-27T06:06:21.526Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55476
+2022-05-27T06:06:21.526Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-05-27T06:06:59.559Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/arod-im/app/logic/cmd/logic/cache>
+2022-05-27T06:06:59.559Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55362
+2022-05-27T06:06:59.559Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-05-27T06:08:59.946Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/arod-im/app/logic/cmd/logic/cache>
+2022-05-27T06:08:59.946Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55023
+2022-05-27T06:08:59.946Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-05-27T06:09:00.088Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-05-27T06:15:07.858Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/arod-im/app/logic/cmd/logic/cache>
+2022-05-27T06:15:07.859Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55870
+2022-05-27T06:15:07.859Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-05-27T06:15:08.002Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-05-27T06:15:19.853Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/arod-im/app/logic/cmd/logic/cache>
+2022-05-27T06:15:19.853Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55060
+2022-05-27T06:15:19.853Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-05-27T06:15:19.989Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-05-27T13:32:32.447Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/arod-im/app/logic/cmd/logic/cache>
+2022-05-27T13:32:32.447Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55007
+2022-05-27T13:32:32.447Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-05-27T13:32:32.602Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>

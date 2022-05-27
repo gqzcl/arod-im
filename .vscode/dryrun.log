@@ -1,0 +1,9 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/workspaces/arod-im'
+echo "Usage: make [target]"
+echo ""
+echo "Targets:"
+sed -n 's/^##//p' Makefile | column -t -s ':' | sed -e 's/^/ /'
+echo "$USAGE_OPTIONS"
+make: Leaving directory '/workspaces/arod-im'
+ 
