@@ -1,5 +1,4 @@
-<p align="center"><a><img width="200px" src="https://cdn.jsdelivr.net/gh/gqzcl/blog_image/blog/arod-im.png"/></a></p>
-<p align="center">
+<p align="center"><a><img width="200px" src="https://raw.githubusercontent.com/gqzcl/blog_image/master/20220607232316.png"/></a></p><p align="center">
 <img src="https://img.shields.io/badge/arod--im-im-green">
 <img src="https://img.shields.io/github/go-mod/go-version/gqzcl/arod-im">
 <img src="https://img.shields.io/github/license/gqzcl/arod-im">

@@ -27,6 +27,7 @@ func NewConnectUsecase(connect ConnectRepo, logger log.Logger) *ConnectUsecase {
 }
 
 func (cc *ConnectUsecase) Connect(ctx context.Context, uid string, address string, server string) {
+
 	cc.log.WithContext(ctx).Infof("uid:%s,address:%s,server:%s", uid, address, server)
 	cc.connect.Connect(ctx, uid, address, server)
 }
