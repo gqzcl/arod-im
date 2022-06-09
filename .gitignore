@@ -28,3 +28,4 @@ config.yaml
 
 
 dist/
+.goreleaser.yaml
