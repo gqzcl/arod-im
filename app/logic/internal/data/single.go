@@ -7,6 +7,7 @@ import (
 	jobV1 "arod-im/api/job/v1"
 	"arod-im/app/logic/internal/biz"
 	"context"
+
 	"github.com/golang/protobuf/proto"
 	"gopkg.in/Shopify/sarama.v1"
 
@@ -29,7 +30,9 @@ func NewSingleRepo(data *Data, logger log.Logger) biz.SingleRepo {
 func (r *singleRepo) Push(ctx context.Context, sessionId string, msg *jobV1.SingleSendMsg) (err error) {
 	pushMsg := msg
 	p, err := proto.Marshal(pushMsg)
+
 	r.log.WithContext(ctx).Debugf("msg in Push :%s", p)
+
 	m := &sarama.ProducerMessage{
 		Key:   sarama.StringEncoder(sessionId),
 		Topic: "arod-im-push-topic",

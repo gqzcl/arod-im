@@ -5,12 +5,14 @@ package data
 
 import (
 	"arod-im/app/logic/internal/conf"
+	"fmt"
+
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/gomodule/redigo/redis"
 	"github.com/google/wire"
 	kafka "gopkg.in/Shopify/sarama.v1"
-	"time"
 )
 
 // ProviderSet is data providers.
@@ -37,11 +39,11 @@ func NewKafkaPub(c *conf.Data) kafka.SyncProducer {
 	kc.Producer.RequiredAcks = kafka.WaitForAll
 	kc.Producer.Retry.Max = 10 // 重试次数10
 	kc.Producer.Return.Successes = true
-	pub, err := kafka.NewSyncProducer([]string{"101.43.63.229:9092"}, kc)
+	pub, err := kafka.NewSyncProducer(c.Kafka.Brokers, kc)
 	if err != nil {
 		panic(err)
 	}
-
+	fmt.Println("Connect Kafka to ", c.Kafka.Brokers)
 	return pub
 }
 

@@ -1,5 +1,5 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-# make[1]: Entering directory '/workspaces/arod-im'
+# make[1]: Entering directory '/workspaces/gqzcl-docker/arod-im'
  
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
@@ -7,8 +7,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Fri May 27 15:43:03 2022
+# Make data base, printed on Sat Jun 11 05:41:23 2022
 
 # Variables
 
@@ -33,15 +34,15 @@ JAVA_ROOT = /home/codespace/.java
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /workspaces/arod-im
+CURDIR := /workspaces/gqzcl-docker/arod-im
 # environment
 DOCKER_BUILDKIT = 1
 # environment
 PYTHON_ROOT = /home/codespace/.python
 # makefile (from 'Makefile', line 5)
-ROOT_DIR := /workspaces/arod-im
+ROOT_DIR := /workspaces/gqzcl-docker/arod-im
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-CN","availableLanguages":{}}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4d12339779e8282869a6d44b7af3df1e.zh-cn","_translationsConfigFile":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/tcf.json","_cacheRoot":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn","_resolvedLanguagePackCoreLocation":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/corrupted.info","_languagePackSupport":true}
 # makefile (from 'scripts/make-rules/gen_config.mk', line 1)
 INTERNAL_PROTO_FILES1 = $(shell find app/logic/internal -name *.proto)
 # environment
@@ -49,7 +50,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_CSiRVReKP9tIbV6kP0yjFVVzzT15U53cyzZq
+GITHUB_TOKEN = ghu_DQ1VzoqgU4yM60JNvIStrXeEKYmo3A39vbG5
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -93,7 +94,7 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-3cfb7a09-fe2e-483c-b827-661d7e981270.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-9f967efa-392f-4c8a-8aac-a5795084ce6d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -165,7 +166,7 @@ JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBDYCGN6FPP2SGBDI5ITCSGL4DANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBDZ4MQ2MBK7VNTYEU5TCUTJ2PANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -202,6 +203,7 @@ PHP_ROOT = /home/codespace/.php
 RepositoryName = null
 # environment
 NVS_HOME = /home/codespace/.nvs
+ 
 # environment
 VSCODE_HANDLES_SIGPIPE = true
 # environment
@@ -215,7 +217,7 @@ MAKEFILES :=
 # environment
 GITHUB_API_URL = https://api.github.com
 # environment
-PWD = /workspaces/arod-im
+PWD = /workspaces/gqzcl-docker/arod-im
 # environment
 LC_ALL = C
 # environment
@@ -295,7 +297,6 @@ install.gsemver:
 # Not a target:
 scripts/make-rules/gen_wire.mk:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
 #  Successfully updated.
@@ -391,6 +392,7 @@ Makefile:
 #  Successfully updated.
 
 api.all:
+ 
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -549,6 +551,7 @@ init.install:
 	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 	go install github.com/panjf2000/gnet/v2
+	go install github.com/google/wire/cmd/wire@latest
 
 copyright-verify:
 #  Phony target (prerequisite of .PHONY).
@@ -583,12 +586,11 @@ copyright.verify: tools.verify.addlicense
 #  recipe to execute (from 'scripts/make-rules/copyright.mk', line 3):
 	@echo "===================================> Verifying all files"
 	@addlicense --check -f $(ROOT_DIR)/scripts/copyright.txt $(ROOT_DIR) --skip-dirs=third_party,vendor,_output
- 
 
 # Not a target:
 scripts/make-rules/init.mk:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-26 15:16:24.337065435
+#  Last modified 2022-06-09 10:51:02.84817185
 #  File has been updated.
 #  Successfully updated.
 
@@ -669,9 +671,10 @@ tools.verify.addlicense:
 # strcache performance: lookups = 222 / hit rate = 71%
 # hash-table stats:
 # Load=64/8192=1%, Rehash=0, Collisions=1/222=0%
-# Finished Make data base on Fri May 27 15:43:03 2022
+# Finished Make data base on Sat Jun 11 05:41:23 2022
 
-# make[1]: Leaving directory '/workspaces/arod-im'
+# make[1]: Leaving directory '/workspaces/gqzcl-docker/arod-im'
+ 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -679,7 +682,7 @@ tools.verify.addlicense:
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 27 15:43:03 2022
+# Make data base, printed on Sat Jun 11 05:41:23 2022
 
 # Variables
 
@@ -704,7 +707,7 @@ JAVA_ROOT = /home/codespace/.java
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /workspaces/arod-im
+CURDIR := /workspaces/gqzcl-docker/arod-im
 # environment
 DOCKER_BUILDKIT = 1
 # environment
@@ -712,9 +715,9 @@ GOPROXY = https://proxy.golang.org,direct
 # environment
 PYTHON_ROOT = /home/codespace/.python
 # makefile (from 'Makefile', line 5)
-ROOT_DIR := /workspaces/arod-im
+ROOT_DIR := /workspaces/gqzcl-docker/arod-im
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-CN","availableLanguages":{}}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4d12339779e8282869a6d44b7af3df1e.zh-cn","_translationsConfigFile":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/tcf.json","_cacheRoot":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn","_resolvedLanguagePackCoreLocation":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"/home/codespace/.vscode-remote/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/corrupted.info","_languagePackSupport":true}
 # makefile (from 'scripts/make-rules/gen_config.mk', line 1)
 INTERNAL_PROTO_FILES1 = $(shell find app/logic/internal -name *.proto)
 # environment
@@ -722,7 +725,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_CSiRVReKP9tIbV6kP0yjFVVzzT15U53cyzZq
+GITHUB_TOKEN = ghu_DQ1VzoqgU4yM60JNvIStrXeEKYmo3A39vbG5
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -740,6 +743,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 VSCODE_CWD = /vscode/bin/linux-x64/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
+ 
 NUGET_PACKAGES = /var/nuget
 # environment
 DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
@@ -766,7 +770,7 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-3cfb7a09-fe2e-483c-b827-661d7e981270.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-9f967efa-392f-4c8a-8aac-a5795084ce6d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -836,7 +840,7 @@ JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBDYCGN6FPP2SGBDI5ITCSGL4DANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBDZ4MQ2MBK7VNTYEU5TCUTJ2PANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -886,7 +890,7 @@ MAKEFILES :=
 # environment
 GITHUB_API_URL = https://api.github.com
 # environment
-PWD = /workspaces/arod-im
+PWD = /workspaces/gqzcl-docker/arod-im
 # environment
 LC_ALL = C
 # environment
@@ -904,9 +908,9 @@ GIT_COMMITTER_EMAIL = noreply@github.com
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
 # environment
- 
 DEBIAN_FLAVOR = focal-scm
 # makefile (from 'Makefile', line 3)
+ 
 COMMON_SELF_DIR := ./
 # default
 .RECIPEPREFIX := 
@@ -1057,6 +1061,7 @@ run.connector:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
@@ -1202,6 +1207,7 @@ init.install:
 	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 	go install github.com/panjf2000/gnet/v2
+	go install github.com/google/wire/cmd/wire@latest
 
 copyright-verify:
 #  Phony target (prerequisite of .PHONY).
@@ -1221,7 +1227,6 @@ config.connector:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'scripts/make-rules/gen_config.mk', line 25):
 	protoc --proto_path=./app/connector/internal \
@@ -1241,7 +1246,7 @@ copyright.verify: tools.verify.addlicense
 # Not a target:
 scripts/make-rules/init.mk:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-26 15:16:24.337065435
+#  Last modified 2022-06-09 10:51:02.84817185
 #  File has been updated.
 #  Successfully updated.
 
@@ -1310,6 +1315,7 @@ run.logic:
 tools:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+ 
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 64):
@@ -1342,6 +1348,6 @@ tools.verify.addlicense:
 # strcache performance: lookups = 222 / hit rate = 71%
 # hash-table stats:
 # Load=64/8192=1%, Rehash=0, Collisions=1/222=0%
-# Finished Make data base on Fri May 27 15:43:03 2022
+# Finished Make data base on Sat Jun 11 05:41:23 2022
 
  
