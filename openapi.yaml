@@ -265,9 +265,8 @@ components:
                     format: uint32
                 accessToken:
                     type: string
-                accessExpire:
-                    type: integer
-                    format: int64
+                refreshToken:
+                    type: string
             description: LoginReplay 登录响应
         LoginReq:
             type: object

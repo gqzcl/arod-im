@@ -5,15 +5,16 @@ package main
 
 import (
 	"arod-im/app/connector/internal/conf"
+	nacosConfig "arod-im/pkg/config"
 	"arod-im/pkg/transport/websocket"
 	"flag"
-	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	"os"
 	"time"
 
+	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
+
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
-	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
@@ -65,7 +66,9 @@ func main() {
 	)
 	c := config.New(
 		config.WithSource(
-			file.NewSource(flagconf),
+			// 后面的会覆盖前面的
+			nacosConfig.NewLocalConfigSource(flagconf),
+			nacosConfig.NewNacosConfigSource("localhost", 8848, "arod-im-connector-1.yaml"),
 		),
 	)
 	defer c.Close()

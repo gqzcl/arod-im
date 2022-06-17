@@ -184,5 +184,6 @@ message LoginReplay {
 	string error_info = 2; // 错误信息
 	uint32 error_code = 3; // 错误码
 	string access_token = 4; // token
-	int64 access_expire = 5; // 过期时间
+	string refresh_token =5; // refresh token
+	// int64 access_expire = 5; // 过期时间
 }

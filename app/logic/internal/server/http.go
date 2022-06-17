@@ -32,15 +32,6 @@ func NewHTTPServer(c *conf.Server, greeter *service.MessageService, logger log.L
 		http.Middleware(
 			recovery.Recovery(),
 			selector.Server(JWTAuth()).Match(SkipRouterMatch()).Build(),
-			// jwt.Server(
-			// 	func(token *jwtv4.Token) (interface{}, error) {
-			// 		return []byte(c.SecretKey), nil
-			// 	},
-			// 	jwt.WithClaims(func() jwtv4.Claims {
-			// 		return &jwtv4.StandardClaims{}
-			// 	}),
-			// 	jwt.WithSigningMethod(jwtv4.SigningMethodES256),
-			// ),
 		),
 	}
 	if c.Http.Network != "" {

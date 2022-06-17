@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"io/ioutil"
-	"time"
 
 	"github.com/go-kratos/kratos/v2/middleware"
 	"github.com/go-kratos/kratos/v2/transport"
@@ -41,12 +40,7 @@ func JWTAuth() middleware.Middleware {
 				if tokenClaims != nil {
 					if Claims, ok := tokenClaims.Claims.(jwt.MapClaims); ok && tokenClaims.Valid {
 						// spew.Dump("成功获取Claims")
-						// 检查token是否过期
-						if Claims["exp"].(float64) < float64(time.Now().Unix()) {
-							return nil, errors.New("token has expired")
-						}
 						ctx = context.WithValue(ctx, authKey{}, Claims)
-
 					}
 				}
 			}

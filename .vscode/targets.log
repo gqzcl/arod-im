@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun 17 00:57:38 2022
+# Make data base, printed on Fri Jun 17 09:50:19 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_O52ayDAxZBkhcnAjJqTjzBacNBo68k1O0tLf
+GITHUB_TOKEN = ghu_H6FKE1cfBWu4cFMN4fBvA2DT7YbWXi3ducHP
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -93,7 +93,7 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-e62f9ccc-f964-4dd3-bba2-21cfeedf27a6.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d1c27ae5-ea53-48eb-941d-b1a1df617f24.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -165,7 +165,7 @@ JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBD5U7S4S6TTPCMLMLFTCVR5BBANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBD57VMPU3ICKXOUKLHDCVS2EJANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -257,9 +257,9 @@ ContainerVersion = 12
 
 # Directories
 
-# . (device 1792, inode 1310870): 21 files, no impossibilities.
+# . (device 1792, inode 1310870): 22 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -278,6 +278,7 @@ tools.verify.%:
 
 wire.job:
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -289,7 +290,6 @@ install.gsemver:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
 #  recipe to execute (from 'scripts/make-rules/tools.mk', line 22):
 	@go install github.com/arnaud-deprez/gsemver@latest
 
@@ -444,7 +444,6 @@ scripts/make-rules/run.mk:
 #  Implicit rule search has been done.
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
- 
 #  Successfully updated.
 
 # Not a target:
@@ -578,6 +577,7 @@ config.connector:
     	   $(INTERNAL_PROTO_FILES3)
 
 copyright.verify: tools.verify.addlicense
+ 
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -585,7 +585,6 @@ copyright.verify: tools.verify.addlicense
 #  recipe to execute (from 'scripts/make-rules/copyright.mk', line 3):
 	@echo "===================================> Verifying all files"
 	@addlicense --check -f $(ROOT_DIR)/scripts/copyright.txt $(ROOT_DIR) --skip-dirs=third_party,vendor,_output
- 
 
 # Not a target:
 scripts/make-rules/init.mk:
@@ -640,7 +639,6 @@ tools:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 64):
 	@$(MAKE) tools.install
@@ -666,25 +664,23 @@ tools.verify.addlicense:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 66 / storage = 812 B / avg = 12 B
-# current buf: size = 8162 B / used = 812 B / count = 66 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 67 / storage = 820 B / avg = 12 B
+# current buf: size = 8162 B / used = 820 B / count = 67 / avg = 12 B
 
-# strcache performance: lookups = 224 / hit rate = 70%
+# strcache performance: lookups = 225 / hit rate = 70%
 # hash-table stats:
-# Load=66/8192=1%, Rehash=0, Collisions=1/224=0%
-# Finished Make data base on Fri Jun 17 00:57:38 2022
+# Load=67/8192=1%, Rehash=0, Collisions=1/225=0%
+# Finished Make data base on Fri Jun 17 09:50:19 2022
 
 # make[1]: Leaving directory '/workspaces/gqzcl-docker/arod-im'
- 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Fri Jun 17 00:57:38 2022
+# Make data base, printed on Fri Jun 17 09:50:19 2022
 
 # Variables
 
@@ -727,7 +723,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_O52ayDAxZBkhcnAjJqTjzBacNBo68k1O0tLf
+GITHUB_TOKEN = ghu_H6FKE1cfBWu4cFMN4fBvA2DT7YbWXi3ducHP
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -771,7 +767,7 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-e62f9ccc-f964-4dd3-bba2-21cfeedf27a6.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d1c27ae5-ea53-48eb-941d-b1a1df617f24.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -814,7 +810,6 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 +F = $(notdir $+)
 # environment
 ORYX_PREFER_USER_INSTALLED_SDKS = true
- 
 # environment
 PYTHONIOENCODING = UTF-8
 # environment
@@ -842,7 +837,7 @@ JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBD5U7S4S6TTPCMLMLFTCVR5BBANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBD57VMPU3ICKXOUKLHDCVS2EJANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -874,6 +869,7 @@ SHELL = /bin/sh
 # environment
 BROWSER = /vscode/bin/linux-x64/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/helpers/browser.sh
 # environment
+ 
 PHP_ROOT = /home/codespace/.php
 # environment
 RepositoryName = null
@@ -929,15 +925,14 @@ ContainerVersion = 12
 # Load=118/1024=12%, Rehash=0, Collisions=17/179=9%
 
 # Pattern-specific Variable Values
- 
 
 # No pattern-specific variable values.
 
 # Directories
 
-# . (device 1792, inode 1310870): 21 files, no impossibilities.
+# . (device 1792, inode 1310870): 22 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -1001,7 +996,6 @@ config:
 	@$(MAKE) config.all
 
 all: init api config generate
- 
 #  Phony target (prerequisite of .PHONY).
 #  Command line target.
 #  Implicit rule search has not been done.
@@ -1077,7 +1071,6 @@ api.all:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'scripts/make-rules/gen_api.mk', line 5):
- 
 	protoc --proto_path=./api \
 	       --proto_path=./third_party \
  	       --go_out=paths=source_relative:./api \
@@ -1167,9 +1160,9 @@ install.addlicense:
 
 config.job:
 #  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'scripts/make-rules/gen_config.mk', line 18):
 	protoc --proto_path=./app/job/internal \
@@ -1296,7 +1289,6 @@ wire.logic:
 #  recipe to execute (from 'scripts/make-rules/gen_wire.mk', line 10):
 	cd app/logic/cmd/logic && wire
 
- 
 tools.install:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -1346,12 +1338,12 @@ tools.verify.addlicense:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 66 / storage = 812 B / avg = 12 B
-# current buf: size = 8162 B / used = 812 B / count = 66 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 67 / storage = 820 B / avg = 12 B
+# current buf: size = 8162 B / used = 820 B / count = 67 / avg = 12 B
 
-# strcache performance: lookups = 224 / hit rate = 70%
+# strcache performance: lookups = 225 / hit rate = 70%
 # hash-table stats:
-# Load=66/8192=1%, Rehash=0, Collisions=1/224=0%
-# Finished Make data base on Fri Jun 17 00:57:38 2022
+# Load=67/8192=1%, Rehash=0, Collisions=1/225=0%
+# Finished Make data base on Fri Jun 17 09:50:19 2022
 
  

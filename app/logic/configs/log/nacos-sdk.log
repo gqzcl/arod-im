@@ -1,0 +1,18 @@
+2022-06-17T10:03:10.870Z	[34mINFO[0m	config_client/config_client.go:255	Cancel listen config DataId:arod-im-logic-1 Group:arod-im
+2022-06-17T10:09:22.012Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T10:09:22.015Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T10:09:22.016Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T10:09:22.018Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T10:09:22.019Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T10:09:22.024Z	[34mINFO[0m	config_client/config_client.go:255	Cancel listen config DataId:arod-im-logic-1.yaml Group:arod-im
+2022-06-17T10:10:01.256Z	[34mINFO[0m	config_client/config_client.go:255	Cancel listen config DataId:arod-im-logic-1 Group:arod-im
+2022-06-17T10:14:40.818Z	[34mINFO[0m	config_client/config_client.go:255	Cancel listen config DataId:arod-im-logic-1 Group:arod-im
+2022-06-17T10:15:15.051Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-17T10:45:31.314Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>

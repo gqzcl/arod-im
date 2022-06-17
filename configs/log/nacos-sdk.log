@@ -1,0 +1,156 @@
+2022-06-17T09:13:02.635Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:02.640Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:02.643Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:02.643Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:13:02.643Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:13:28.381Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:28.385Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:28.392Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:28.392Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:13:28.392Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:13:43.578Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:43.581Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:43.583Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:13:43.583Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:13:43.583Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:14:17.591Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:14:17.595Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:14:17.597Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:14:17.597Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:14:17.597Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:14:57.330Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:14:57.333Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:14:57.335Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:14:57.335Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:14:57.335Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:15:19.888Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:19.890Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:19.892Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:19.892Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:15:19.892Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:15:24.960Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:24.962Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:24.965Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:24.965Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:15:24.965Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:15:29.207Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:29.210Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:29.213Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:29.213Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:15:29.213Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:15:34.238Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:34.240Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:34.242Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:34.242Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:15:34.242Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:15:51.930Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:51.933Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:51.934Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:15:51.934Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:15:51.935Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:16:21.429Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:16:21.432Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:16:21.436Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:16:21.437Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:16:21.437Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:16:45.662Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:16:45.667Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:16:45.673Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:16:45.673Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:16:45.673Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .
+2022-06-17T09:22:42.625Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:22:42.631Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:22:42.633Z	[31mERROR[0m	nacos_server/nacos_server.go:194	api</v1/cs/configs>,method:<GET>, params:<{"dataId":"arod-im-logic-1.yaml","group":"arod-im"}>, call domain error:<[404] config data not exist
+> , result:<config data not exist
+>
+2022-06-17T09:22:42.633Z	[31mERROR[0m	config_client/config_client.go:191	get config from server error:[404] config data not exist
+ 
+2022-06-17T09:22:42.633Z	[33mWARN[0m	config_client/config_client.go:196	[client.GetConfig] config not found, dataId: arod-im-logic-1.yaml, group: arod-im, namespaceId: .

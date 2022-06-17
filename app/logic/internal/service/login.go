@@ -32,11 +32,11 @@ func GenerateToken(uid string) (string, error) {
 
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
 		"uid": uid,
-		"iat": time.Now().Unix(),                      // Token颁发时间
-		"nbf": time.Now().Unix(),                      // Token生效时间
-		"exp": time.Now().Add(time.Second * 6).Unix(), // Token过期时间，目前是6小时
-		"iss": "arod-im",                              // 颁发者
-		"sub": "AuthToken",                            // 主题
+		"iat": time.Now().Unix(),                    // Token颁发时间
+		"nbf": time.Now().Unix(),                    // Token生效时间
+		"exp": time.Now().Add(time.Hour * 6).Unix(), // Token过期时间，目前是6小时
+		"iss": "arod-im",                            // 颁发者
+		"sub": "AuthToken",                          // 主题
 		// "role": uid,                                 // 角色（附加）
 	})
 
@@ -73,7 +73,7 @@ func (s *MessageService) Login(ctx context.Context, req *v1.LoginReq) (*v1.Login
 	token, err := GenerateToken(uid)
 	if err != nil {
 		return &v1.LoginReplay{
-			ActionStatus: "Fail",
+			ActionStatus: "FAIL",
 			ErrorInfo:    err.Error(),
 			ErrorCode:    90001,
 		}, err
@@ -81,6 +81,5 @@ func (s *MessageService) Login(ctx context.Context, req *v1.LoginReq) (*v1.Login
 	return &v1.LoginReplay{
 		ActionStatus: "OK",
 		AccessToken:  token,
-		AccessExpire: 1,
 	}, nil
 }

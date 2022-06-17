@@ -5,6 +5,7 @@ package main
 
 import (
 	"arod-im/app/logic/internal/conf"
+	nacosConfig "arod-im/pkg/config"
 	"flag"
 	"os"
 
@@ -12,7 +13,6 @@ import (
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
-	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
@@ -64,7 +64,9 @@ func main() {
 	)
 	c := config.New(
 		config.WithSource(
-			file.NewSource(flagconf),
+			// 后面的会覆盖前面的
+			nacosConfig.NewLocalConfigSource(flagconf),
+			nacosConfig.NewNacosConfigSource("localhost", 8848, "arod-im-logic-1.yaml"),
 		),
 	)
 	defer c.Close()

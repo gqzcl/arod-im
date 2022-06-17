@@ -1,0 +1,36 @@
+# Copyright 2022 gqzcl <gqzcl@qq.com>. All rights reserved.
+# Use of this source code is governed by a MIT style
+
+server:
+  http:
+    network: tcp
+    addr: 0.0.0.0:8003
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:9003
+    timeout: 1s
+  register:
+   address : 0.0.0.0
+   port : 8848
+   namespaceId: public
+   accessKey: nacos
+   secretKey: nacos
+   timeoutMs: 5000
+   logLevel: debug
+  secret_key: testKey
+data:
+  kafka:
+    topic: "arod-im-push-topic"
+    brokers: ["0.0.0.0:9092"]
+    # brokers: ["101.43.63.229:9092"]
+  redis:
+    network: tcp
+    addr: 0.0.0.0:6379
+    auth: 
+    active: 10
+    idle: 100
+    dail_timeout: 1s
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+    idle_timeout: 2s
+    expire: 10s
