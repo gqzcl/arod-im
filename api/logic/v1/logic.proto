@@ -56,12 +56,19 @@ service Logic {
 			body: "*",
 		};
 	}
+	rpc Login(LoginReq) returns(LoginReplay){
+		option (google.api.http)={
+			post: "v1/login",
+			body: "*",
+		};
+	}
 	// Connect
 	rpc Connect(ConnectReq) returns (ConnectReply);
 	// Disconnect
 	rpc Disconnect(DisConnectReq) returns (DisConnectReply);
 }
 
+// MsgType 消息类型
 enum MsgType{
 	text = 0; // 文本消息
 	image = 1; // 图片消息
@@ -77,7 +84,7 @@ enum MsgType{
 //	google.protobuf.Struct msg_content = 2;
 //}
 
-	// 消息返回响应
+// SendReplay 消息返回响应
 message  SendReplay{
 	string action_status = 1; // 请求结果
 	string error_info = 2; // 错误信息
@@ -86,35 +93,35 @@ message  SendReplay{
 	string msg_seq = 5; // 消息序列号
 }
 
-// 撤回消息返回响应
+// RecallReplay 撤回消息返回响应
 message  RecallReplay{
 	string action_status = 1; // 请求结果
 	string error_info = 2; // 错误信息
 	uint32 error_code = 3; // 错误码
 }
 
-// 单聊发送消息请求
+// SingleSendRequest 单聊发送消息请求
 message SingleSendRequest{
 	string uid = 1;
 	string cid = 2;
 	repeated job.v1.MsgBody msg_body = 3;
 }
 
-// 单聊撤回消息请求
+// SingleRecallRequest 单聊撤回消息请求
 message SingleRecallRequest{
 	string uid = 1;
 	string cid = 2;
 	string msg_key =3;
 }
 
-// 群聊发送消息请求
+// GroupSendRequest 群聊发送消息请求
 message GroupSendRequest{
 	string uid = 1;
 	string group_id = 2;
 	repeated job.v1.MsgBody msg_body = 3;
 }
 
-// 群聊@消息请求
+// GroupSendMentionRequest 群聊@消息请求
 message GroupSendMentionRequest{
 	message GroupAtInfo {
 		// 标志为1时表示@全体，为0时为@指定用户
@@ -129,32 +136,53 @@ message GroupSendMentionRequest{
 }
 
 
-// 群聊撤回消息请求
+// GroupRecallRequest 群聊撤回消息请求
 message GroupRecallRequest{
 	string group_id = 1;
 	string msg_seq = 2;
 }
 
-// 连接请求
+// ConnectReq 连接请求
 message ConnectReq{
 	string server = 1;
 	string uid = 2;
-	// format: ip:port
-	string address = 3;
+	string address = 3; // format: ip:port
 	bytes token = 4;
 }
 
+// ConnectReply 连接响应
 message ConnectReply{
-	bool success = 1;
+	string action_status = 1; // 请求结果
+	string error_info = 2; // 错误信息
+	uint32 error_code = 3; // 错误码
+	bool success = 4; 
 }
 
+// DisConnectReq 断开连接请求
 message DisConnectReq {
 	string uid = 1;
-	// format: ip:port
-	string address = 2;
+	string address = 2; // format: ip:port
 	string server = 3;
 }
 
+// DisConnectReply 断开连接响应
 message DisConnectReply {
-	bool success = 1;
+	string action_status = 1; // 请求结果
+	string error_info = 2; // 错误信息
+	uint32 error_code = 3; // 错误码
+	bool success = 4;
+}
+
+// LoginReq 登录请求
+message LoginReq {
+	string uid = 1; 
+}
+
+// LoginReplay 登录响应
+message LoginReplay {
+	string action_status = 1; // 请求结果
+	string error_info = 2; // 错误信息
+	uint32 error_code = 3; // 错误码
+	string access_token = 4; // token
+	int64 access_expire = 5; // 过期时间
 }

@@ -5,7 +5,6 @@ package data
 
 import (
 	"arod-im/app/logic/internal/conf"
-	"fmt"
 
 	"time"
 
@@ -16,7 +15,7 @@ import (
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewKafkaPub, NewRedis, NewSingleRepo, NewGroupRepo, NewRoomRepo, NewConnectRepo)
+var ProviderSet = wire.NewSet(NewData, NewKafkaPub, NewRedis, NewSingleRepo, NewGroupRepo, NewRoomRepo, NewConnectRepo, NewLoginRepo)
 
 // Data .
 type Data struct {
@@ -43,7 +42,6 @@ func NewKafkaPub(c *conf.Data) kafka.SyncProducer {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Connect Kafka to ", c.Kafka.Brokers)
 	return pub
 }
 

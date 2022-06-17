@@ -6,6 +6,5 @@ echo ""
 echo "Targets:"
 sed -n 's/^##//p' Makefile | column -t -s ':' | sed -e 's/^/ /'
 echo "$USAGE_OPTIONS"
- 
 make: Leaving directory '/workspaces/gqzcl-docker/arod-im'
  

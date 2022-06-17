@@ -6,7 +6,7 @@ info:
     title: Logic API
     version: 0.0.1
 paths:
-    /group/recall:
+    v1/group/recall:
         post:
             tags:
                 - Logic
@@ -30,7 +30,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /group/send:
+    v1/group/send:
         post:
             tags:
                 - Logic
@@ -54,7 +54,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /group/send_mention:
+    v1/group/send_mention:
         post:
             tags:
                 - Logic
@@ -78,7 +78,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /room/broadcast:
+    v1/login:
+        post:
+            tags:
+                - Logic
+            operationId: Logic_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LoginReplay'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    v1/room/broadcast:
         post:
             tags:
                 - Logic
@@ -102,7 +126,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /room/send:
+    v1/room/send:
         post:
             tags:
                 - Logic
@@ -126,7 +150,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /single/recall:
+    v1/single/recall:
         post:
             tags:
                 - Logic
@@ -150,7 +174,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /single/send:
+    v1/single/send:
         post:
             tags:
                 - Logic
@@ -191,7 +215,7 @@ components:
                     type: string
                 msgSeq:
                     type: string
-            description: 群聊撤回消息请求
+            description: GroupRecallRequest 群聊撤回消息请求
         GroupSendMentionRequest:
             type: object
             properties:
@@ -207,7 +231,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/GroupSendMentionRequest_GroupAtInfo'
-            description: 群聊@消息请求
+            description: GroupSendMentionRequest 群聊@消息请求
         GroupSendMentionRequest_GroupAtInfo:
             type: object
             properties:
@@ -228,7 +252,29 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MsgBody'
-            description: 群聊发送消息请求
+            description: GroupSendRequest 群聊发送消息请求
+        LoginReplay:
+            type: object
+            properties:
+                actionStatus:
+                    type: string
+                errorInfo:
+                    type: string
+                errorCode:
+                    type: integer
+                    format: uint32
+                accessToken:
+                    type: string
+                accessExpire:
+                    type: integer
+                    format: int64
+            description: LoginReplay 登录响应
+        LoginReq:
+            type: object
+            properties:
+                uid:
+                    type: string
+            description: LoginReq 登录请求
         MsgBody:
             type: object
             properties:
@@ -247,7 +293,7 @@ components:
                 errorCode:
                     type: integer
                     format: uint32
-            description: 撤回消息返回响应
+            description: RecallReplay 撤回消息返回响应
         SendReplay:
             type: object
             properties:
@@ -263,7 +309,7 @@ components:
                     format: int64
                 msgSeq:
                     type: string
-            description: 消息返回响应
+            description: SendReplay 消息返回响应
         SingleRecallRequest:
             type: object
             properties:
@@ -273,7 +319,7 @@ components:
                     type: string
                 msgKey:
                     type: string
-            description: 单聊撤回消息请求
+            description: SingleRecallRequest 单聊撤回消息请求
         SingleSendRequest:
             type: object
             properties:
@@ -285,7 +331,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MsgBody'
-            description: 单聊发送消息请求
+            description: SingleSendRequest 单聊发送消息请求
         Status:
             type: object
             properties:

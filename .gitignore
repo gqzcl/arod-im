@@ -29,4 +29,6 @@ config.yaml
 
 dist/
 .goreleaser.yaml
-dist/
+
+# Public and private keys
+*.key
