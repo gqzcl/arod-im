@@ -7,6 +7,7 @@ import (
 	"context"
 
 	jobV1 "arod-im/api/job/v1"
+
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -17,7 +18,7 @@ var (
 
 // JobRepo  is a Job repo.
 type JobRepo interface {
-	SingleSend(ctx context.Context, server, address, senderId, seq string, msg []*jobV1.MsgBody) error
+	SingleSend(ctx context.Context, address, server, senderId, seq string, msg []*jobV1.MsgBody) error
 }
 
 // JobUsecase is a Job usecase.
@@ -34,8 +35,8 @@ func NewJobUsecase(job JobRepo, logger log.Logger) *JobUsecase {
 // PushMsg push msg to connector
 func (uc *JobUsecase) PushMsg(ctx context.Context, msg *jobV1.SingleSendMsg) (err error) {
 	uc.log.WithContext(ctx).Debugf("Push Msg the content is %s", msg)
-	for server := range msg.Address {
-		err := uc.job.SingleSend(ctx, server, msg.Address[server], msg.SenderId, msg.Seq, msg.Msg)
+	for address := range msg.Server {
+		err := uc.job.SingleSend(ctx, address, msg.Server[address], msg.SenderId, msg.Seq, msg.Msg)
 		if err != nil {
 			return err
 		}

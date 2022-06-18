@@ -8,6 +8,7 @@ import (
 	v1 "arod-im/api/logic/v1"
 	"arod-im/pkg/rambler"
 	"context"
+
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/go-kratos/kratos/v2/log"
 )
@@ -49,9 +50,9 @@ func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*jo
 	seq := sc.rambler.GetSeqID([]byte(uid + cid))
 	addrs, _ := sc.single.GetUserAddress(ctx, cid)
 	message := &jobV1.SingleSendMsg{
-		Address: addrs,
-		Seq:     seq,
-		Msg:     msg,
+		Server: addrs,
+		Seq:    seq,
+		Msg:    msg,
 	}
 	if err := sc.single.Push(ctx, uid+cid, message); err != nil {
 		sc.log.WithContext(ctx).Info("Error in PushMsg() : ", err)

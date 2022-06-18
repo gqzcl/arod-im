@@ -8,6 +8,7 @@ import (
 	jobV1 "arod-im/api/job/v1"
 	"arod-im/app/job/internal/biz"
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -26,7 +27,7 @@ func NewJobRepo(data *Data, logger log.Logger) biz.JobRepo {
 	}
 }
 
-func (j *jobRepo) SingleSend(ctx context.Context, server, address, senderId, seq string, msg []*jobV1.MsgBody) error {
+func (j *jobRepo) SingleSend(ctx context.Context, address, server, senderId, seq string, msg []*jobV1.MsgBody) error {
 	j.log.WithContext(ctx).Debug("开始发送消息")
 
 	if connector, ok := j.data.clients[server]; ok {

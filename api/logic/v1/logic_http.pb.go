@@ -17,14 +17,14 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
-const OperationLogicSingleSend = "/api.logic.v1.Logic/SingleSend"
-const OperationLogicSingleRecall = "/api.logic.v1.Logic/SingleRecall"
+const OperationLogicGroupRecall = "/api.logic.v1.Logic/GroupRecall"
 const OperationLogicGroupSend = "/api.logic.v1.Logic/GroupSend"
 const OperationLogicGroupSendMention = "/api.logic.v1.Logic/GroupSendMention"
-const OperationLogicGroupRecall = "/api.logic.v1.Logic/GroupRecall"
-const OperationLogicRoomSend = "/api.logic.v1.Logic/RoomSend"
-const OperationLogicRoomBroadcast = "/api.logic.v1.Logic/RoomBroadcast"
 const OperationLogicLogin = "/api.logic.v1.Logic/Login"
+const OperationLogicRoomBroadcast = "/api.logic.v1.Logic/RoomBroadcast"
+const OperationLogicRoomSend = "/api.logic.v1.Logic/RoomSend"
+const OperationLogicSingleRecall = "/api.logic.v1.Logic/SingleRecall"
+const OperationLogicSingleSend = "/api.logic.v1.Logic/SingleSend"
 
 type LogicHTTPServer interface {
 	GroupRecall(context.Context, *GroupRecallRequest) (*RecallReplay, error)

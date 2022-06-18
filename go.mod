@@ -21,7 +21,12 @@ require (
 )
 
 require (
+	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/google/subcommands v1.0.1 // indirect
+	github.com/gorilla/handlers v1.5.1 // indirect
+	go.opentelemetry.io/otel/exporters/jaeger v1.7.0 // indirect
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.7.0 // indirect
+	go.opentelemetry.io/otel/sdk v1.7.0 // indirect
 	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/tools v0.1.5 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect

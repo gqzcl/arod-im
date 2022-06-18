@@ -17,7 +17,7 @@ message MsgBody {
 }
 
 message SingleSendMsg{
-  map<string,string> address = 1;
+  map<string,string> server = 1;
   string  senderId =2;
   string  seq = 3;
   repeated MsgBody msg = 4;

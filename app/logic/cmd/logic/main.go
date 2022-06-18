@@ -10,6 +10,11 @@ import (
 	"os"
 
 	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/sdk/resource"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
@@ -22,9 +27,9 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name string
+	Name = "logic"
 	// Version is the version of the compiled software.
-	Version string
+	Version = "0.1.0"
 	// flagconf is the config flag.
 	flagconf string
 
@@ -51,8 +56,39 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, r *nacos.Regist
 	)
 }
 
+// Set global trace provider
+func setTracerProvider(url string) (*tracesdk.TracerProvider, error) {
+	// Create the Jaeger exporter
+	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+	if err != nil {
+		return nil, err
+	}
+
+	tp := tracesdk.NewTracerProvider(
+		tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(1.0))),
+		// Always be sure to batch in production.
+		tracesdk.WithBatcher(exp),
+		// Record information about this application in an Resource.
+		tracesdk.WithResource(resource.NewSchemaless(
+			semconv.ServiceNameKey.String(Name),
+			attribute.String("env", "dev"),
+			attribute.Int64("ID", 1),
+		)),
+		// tracesdk.WithResource(resource.NewWithAttributes(
+		// 	semconv.SchemaURL,
+		// 	semconv.ServiceNameKey.String(Name),
+		// 	semconv.ServiceVersionKey.String(Version),
+		// 	attribute.String("environment", "dev"),
+		// )),
+	)
+
+	//otel.SetTracerProvider(tp)
+	return tp, nil
+}
+
 func main() {
 	flag.Parse()
+	// 日志格式
 	logger := log.With(log.NewStdLogger(os.Stdout),
 		"ts", log.DefaultTimestamp,
 		"caller", log.DefaultCaller,
@@ -62,6 +98,7 @@ func main() {
 		"trace.id", tracing.TraceID(),
 		"span.id", tracing.SpanID(),
 	)
+
 	c := config.New(
 		config.WithSource(
 			// 后面的会覆盖前面的
@@ -79,6 +116,14 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+
+	// trace
+	// url:=conf.
+	// url := "http://127.0.0.1:5000/api/traces"
+	// err := setTracerProvider(url)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {

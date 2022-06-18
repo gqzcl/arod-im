@@ -1,4 +1,5 @@
-<p align="center"><a><img width="200px" src="https://raw.githubusercontent.com/gqzcl/blog_image/master/20220607232316.png"/></a></p><p align="center">
+<p align="center"><a><img width="200px" src="https://raw.githubusercontent.com/gqzcl/blog_image/master/20220607232316.png"/></a></p>
+<p align="center">
 <img src="https://img.shields.io/badge/arod--im-im-green">
 <img src="https://img.shields.io/github/go-mod/go-version/gqzcl/arod-im">
 <img src="https://img.shields.io/github/license/gqzcl/arod-im">
@@ -6,70 +7,123 @@
 
 # 关于 arod-im
 
-arod-im 是一个通用的 IM 框架，通过高度抽象IM基本功能，可以自由组装实现不同业务场景下的IM服务
-- 消息可靠性
-- 离线消息
-- 水平扩展
-- 性能优化
-- 拉取消息-批量拉取
-- 组件式设计
-- 指标监控，链路追踪，日志存储
+arod-im 是一个使用golang实现的微服务架构（MSA）的分布式即时通信server，通过HTTP接口接收请求并通过Websocket推送消息，各服务间使用GRPC协议通信。
 
-通用性的设计，可以适应不同场景的需求，高度抽象，提供接口，根据业务需要自由扩展。
-底层的性能优化，为消息通信保驾护航。
+本项目使用[Kratos](https://github.com/go-kratos/kratos)作为微服务框架，使用[gnet](https://github.com/panjf2000/gnet)作为网络框架，构建了一个高性能，高可靠，高可用的IM应用。
 
-# 架构设计 
+arod-im 支持用户多端登录，支持私聊，群聊，聊天室等应用场景，也可以用作直播间的弹幕服务。
 
-**项目介绍**：arod-im是基于websocket协议，采用golang开发的分布式的即时通讯系统，使用微服务框架kratos作为基础，将系统拆分为连接层Connector，逻辑处理层Logic以及流处理层Job。其支持用户多端登录，支持单聊群聊和聊天室形式的群聊，也可以用作直播间的弹幕服务。
-* 使用Redis存储会话信息，保证了一致性，使用Kafka进行异步消息推送，同时可以有效的进行流量削峰。
-* 负载均衡，使用nacos进行服务注册与发现，并通过权值分配Connector节点，同时可以对各层进行解耦。
-* 并发优化，在job层进行消息聚合，同时在消息通道内部使用环形队列去锁，在连接层通过哈希桶的形式打散全局锁减少锁竞争。
-* 模块优化，各层之间低耦合高内聚，各层可以独立运行，使用微服务框架kratos来管理各模块，降低部署难度。
-* 连接优化，使用基于事件驱动的网络框架gnet进行连接的调度，其具备内置的goroutine池且整个生命周期无锁。
+## 特性
 
+* 高可靠、高可用、实时性、有序性
+* 水平扩展
+* 性能优化
+* 拉取消息-批量拉取
+* 组件式设计
+* 指标监控，链路追踪
+* 分布式事务
+* 超时控制
+* 注册中心、配置中心
 
+通用性的设计，可以适应不同场景的需求，高度抽象，提供接口，根据业务需要自由扩展。底层的性能优化，为消息通信保驾护航。
 
-## Comet 连接层
+## 快速开始
 
-Comet维持与用户的长连接，仅负责将消息推送到用户和接收用户发送的消息
-Comet将接收到的消息发送至Logic处理，同时也接收来自Job的消息
+### 项目依赖
 
-连接user
+在开始前需要先安装好以下开源组件：
 
-可靠性: 
-消息发送成功：
-消息送达：私聊-群聊-广播不做保证
+* [Nacos](https://github.com/alibaba/nacos) 用作服务注册中心以及配置中心
+* [Redis](https://redis.io/) 用作会话信息存储
+* [Kafka](https://kafka.apache.org/) 用作消息异步分发
+* [protobuf](https://github.com/protocolbuffers/protobuf/releases)
 
-## Logic 业务处理层
+### 快速部署
 
-负责处理
+#### 通过Docker部署
 
-## Job 异步消息消费层
+* [ ] TODO
 
-Job从MQ捞取到消息后发送给对应Comet，Comet再将消息发送给对应用户
+#### 手动部署
 
-## 数据存储层
+在开始前需要保证以及安装好上述组件并能正常使用。
 
-内存存储（redis），存储会话信息，在线状态等
+首先将本项目clone到您的服务器
 
-持久化存储（Mysql），存储离线消息
+```bash
+git clone https://github.com/gqzcl/arod-im.git
+```
 
-# 实体
+进入项目目录下，初始化项目
 
-## 群消息
+```bash
+cd ./arod-im
+export GOPROXY=https://goproxy.cn,direct
+make init
+make generate
+```
 
+然后修改配置文件，配置redis、nacos、kafka地址。
+
+启动Logic服务
+
+```bash
+make run.logic
+```
+
+启动Connector服务
+
+```bash
+make run.connector
+```
+
+启动Job服务
+
+```bash
+make run.job
+```
+
+### 接口测试
+
+[接口测试分享](https://www.eolink.com/share/index?shareCode=lSCXTf)
+
+## 架构设计
+
+"事件驱动架构设计"[^1]
+
+## 实体
+
+### 群消息
 
 group_members(gid, uid, last_ack_msgid);
 
 group_msgs(msgid,gid,sender_uid,time,content);
 
-## 数据传输格式
+### 数据传输格式
 
 数据传输格式选择的是 protobuf，原因如下：
 
-- 易于使用，多语言支持，方便扩展
-- 灵活（方便接口更新），高效，一条消息数据，用protobuf序列化后的大小是json的10分之一，xml格式的20分之一，是二进制序列化的10分之一，
+* 易于使用，多语言支持，方便扩展
+* 灵活（方便接口更新），高效，一条消息数据，用protobuf序列化后的大小是json的10分之一，xml格式的20分之一，是二进制序列化的10分之一，
+
+## TODO
+
+* [ ] 添加refresh token机制，添加refresh-token接口
+* [ ] 添加获取连接服务地址的接口
+* [ ] 为部分接口添加幂等逻辑
+* [ ] 添加Promentheus的指标监控
+* [ ] 添加服务链路追踪
+* [ ] 添加服务间的超时控制
+* [ ] 增加消息的两阶段确认机制
+
+## 如何贡献
+
+
+## 项目文档
+
 
 ## License
 
 arod-im is open-sourced software licensed under the [MIT license](./LICENSE).
+
+[^1]: # 事件驱动架构设计
