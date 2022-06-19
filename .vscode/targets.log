@@ -7,8 +7,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sat Jun 18 13:45:28 2022
+# Make data base, printed on Sun Jun 19 06:26:33 2022
 
 # Variables
 
@@ -49,7 +50,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_ZyZw0ucagGOOr3yYVhx6KdtXoATLdD1feI7l
+GITHUB_TOKEN = ghu_yob97NWIeDGPHopzIKFMeGBIrfdkTF4QqxGJ
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -93,7 +94,7 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-c70ee19a-e8bb-4285-b2d8-adc984b00f53.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d31aae91-e443-47a1-a6d7-06ed54c2a948.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -164,8 +165,9 @@ MAVEN_ROOT = /home/codespace/.maven
 JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
+ 
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBD6CVP6TQDRCDNESGM3CVZZ27ANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBD3E64DYJE4AXRIB56TCV5VDRANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -280,7 +282,6 @@ wire.job:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'scripts/make-rules/gen_wire.mk', line 6):
 	cd app/job/cmd/job && wire
@@ -327,6 +328,7 @@ all: init api config generate
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 
 .PHONY: tools.install tools.install.% tools.verify.% install.swagger install.gsemver install.addlicense init.install config.all config.logic config.job config.connector api.all wire.all wire.job wire.logic wire.connector run.all run.logic run.job run.connector copyright.verify copyright.add all init config api generate wire build tools copyright-verify copyright-add help
@@ -485,6 +487,7 @@ install.addlicense:
 
 config.job:
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -636,9 +639,9 @@ run.logic:
 
 tools:
 #  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 64):
 	@$(MAKE) tools.install
@@ -670,9 +673,10 @@ tools.verify.addlicense:
 # strcache performance: lookups = 225 / hit rate = 70%
 # hash-table stats:
 # Load=67/8192=1%, Rehash=0, Collisions=1/225=0%
-# Finished Make data base on Sat Jun 18 13:45:28 2022
+# Finished Make data base on Sun Jun 19 06:26:33 2022
 
 # make[1]: Leaving directory '/workspaces/gqzcl-docker/arod-im'
+ 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -680,7 +684,7 @@ tools.verify.addlicense:
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 18 13:45:28 2022
+# Make data base, printed on Sun Jun 19 06:26:33 2022
 
 # Variables
 
@@ -723,7 +727,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_ZyZw0ucagGOOr3yYVhx6KdtXoATLdD1feI7l
+GITHUB_TOKEN = ghu_yob97NWIeDGPHopzIKFMeGBIrfdkTF4QqxGJ
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -767,7 +771,7 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-c70ee19a-e8bb-4285-b2d8-adc984b00f53.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d31aae91-e443-47a1-a6d7-06ed54c2a948.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -798,6 +802,7 @@ RVM_PATH = /usr/local/rvm
 NPM_GLOBAL = /home/codespace/.npm-global
 # environment
 ORYX_PATHS = /opt/oryx:/opt/nodejs/lts/bin:/opt/dotnet/lts:/opt/python/latest/bin:/opt/php/lts/bin:/opt/php-composer:/opt/yarn/stable/bin:/opt/hugo/lts::/opt/java/lts/bin:/opt/maven/lts/bin:/opt/ruby/lts/bin
+ 
 # environment
 NVM_SYMLINK_CURRENT = true
 # environment
@@ -837,7 +842,7 @@ JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBD6CVP6TQDRCDNESGM3CVZZ27ANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBD3E64DYJE4AXRIB56TCV5VDRANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -914,7 +919,6 @@ COMMON_SELF_DIR := ./
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 RAILS_DEVELOPMENT_HOSTS = .githubpreview.dev
- 
 # environment
 LANG = C
 # environment
@@ -945,6 +949,7 @@ tools.verify.%:
 #  recipe to execute (from 'scripts/make-rules/tools.mk', line 14):
 	@if ! which $* &>/dev/null; then $(MAKE) tools.install.$*; fi
 
+ 
 # 2 implicit rules, 0 (0.0%) terminal.
 
 # Files
@@ -1020,6 +1025,7 @@ wire.connector:
 # Not a target:
 scripts/make-rules/tools.mk:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
 #  Successfully updated.
@@ -1127,6 +1133,7 @@ scripts/make-rules/gen_config.mk:
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
 #  Successfully updated.
+ 
 
 help: Makefile
 #  Phony target (prerequisite of .PHONY).
@@ -1201,7 +1208,6 @@ init.install:
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 	go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
 	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
- 
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 	go install github.com/panjf2000/gnet/v2
 	go install github.com/google/wire/cmd/wire@latest
@@ -1241,6 +1247,7 @@ copyright.verify: tools.verify.addlicense
 	@addlicense --check -f $(ROOT_DIR)/scripts/copyright.txt $(ROOT_DIR) --skip-dirs=third_party,vendor,_output
 
 # Not a target:
+ 
 scripts/make-rules/init.mk:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 10:51:02.84817185
@@ -1343,7 +1350,8 @@ tools.verify.addlicense:
 
 # strcache performance: lookups = 225 / hit rate = 70%
 # hash-table stats:
+ 
 # Load=67/8192=1%, Rehash=0, Collisions=1/225=0%
-# Finished Make data base on Sat Jun 18 13:45:28 2022
+# Finished Make data base on Sun Jun 19 06:26:33 2022
 
  

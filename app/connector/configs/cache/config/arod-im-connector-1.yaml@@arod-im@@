@@ -20,6 +20,7 @@ server:
     addr: "7700"
     timeout: 1s
     path: /
+  jaeger_addr: http://localhost:14268/api/traces
 data:
   database:
     driver: mysql

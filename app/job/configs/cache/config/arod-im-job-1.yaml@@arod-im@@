@@ -21,6 +21,7 @@ server:
     secretKey: nacos
     timeoutMs: 5000
     logLevel: debug
+  jaeger_addr: http://localhost:14268/api/traces
 data:
   kafka:
     topic: "arod-im-push-topic"

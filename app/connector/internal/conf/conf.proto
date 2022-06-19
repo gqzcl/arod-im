@@ -48,6 +48,7 @@ message Server {
   GRPC grpc = 2;
   Register register = 3;
   Websocket websocket =4;
+  string jaeger_addr = 5;
 }
 
 message Data {

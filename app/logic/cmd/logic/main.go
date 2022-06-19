@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
@@ -56,12 +57,12 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, r *nacos.Regist
 	)
 }
 
-// Set global trace provider
-func setTracerProvider(url string) (*tracesdk.TracerProvider, error) {
+// setTracerProvider Set global trace provider
+func setTracerProvider(url string) error {
 	// Create the Jaeger exporter
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	tp := tracesdk.NewTracerProvider(
@@ -71,19 +72,14 @@ func setTracerProvider(url string) (*tracesdk.TracerProvider, error) {
 		// Record information about this application in an Resource.
 		tracesdk.WithResource(resource.NewSchemaless(
 			semconv.ServiceNameKey.String(Name),
-			attribute.String("env", "dev"),
+			semconv.ServiceVersionKey.String(Version),
+			attribute.String("environment", "dev"),
 			attribute.Int64("ID", 1),
 		)),
-		// tracesdk.WithResource(resource.NewWithAttributes(
-		// 	semconv.SchemaURL,
-		// 	semconv.ServiceNameKey.String(Name),
-		// 	semconv.ServiceVersionKey.String(Version),
-		// 	attribute.String("environment", "dev"),
-		// )),
 	)
 
-	//otel.SetTracerProvider(tp)
-	return tp, nil
+	otel.SetTracerProvider(tp)
+	return nil
 }
 
 func main() {
@@ -99,6 +95,7 @@ func main() {
 		"span.id", tracing.SpanID(),
 	)
 
+	// config
 	c := config.New(
 		config.WithSource(
 			// 后面的会覆盖前面的
@@ -112,18 +109,19 @@ func main() {
 		panic(err)
 	}
 
+	// 解析config
 	var bc conf.Bootstrap
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
 
 	// trace
-	// url:=conf.
-	// url := "http://127.0.0.1:5000/api/traces"
-	// err := setTracerProvider(url)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	// url := "http://localhost:14268/api/traces"
+	url := bc.Server.JaegerAddr
+	err := setTracerProvider(url)
+	if err != nil {
+		panic(err)
+	}
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {

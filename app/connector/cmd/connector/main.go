@@ -29,9 +29,9 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name string
+	Name = "arod-im-connector"
 	// Version is the version of the compiled software.
-	Version string
+	Version = "0.1.0"
 	// flagconf is the config flag.
 	flagconf string
 
@@ -45,8 +45,8 @@ func init() {
 func newApp(logger log.Logger, gs *grpc.Server, ws *websocket.Server, r *nacos.Registry) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
-		kratos.Name("arod-im-connector"),
-		kratos.Version("v1"),
+		kratos.Name(Name),
+		kratos.Version(Version),
 		// 服务发现心跳时间30s
 		kratos.Metadata(map[string]string{"preserved.heart.beat.interval": "30000"}),
 		kratos.Logger(logger),
@@ -59,13 +59,14 @@ func newApp(logger log.Logger, gs *grpc.Server, ws *websocket.Server, r *nacos.R
 	)
 }
 
-// Set global trace provider
+// setTracerProvider Set global trace provider
 func setTracerProvider(url string) error {
 	// Create the Jaeger exporter
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
 		return err
 	}
+
 	tp := tracesdk.NewTracerProvider(
 		tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(1.0))),
 		// Always be sure to batch in production.
@@ -73,7 +74,9 @@ func setTracerProvider(url string) error {
 		// Record information about this application in an Resource.
 		tracesdk.WithResource(resource.NewSchemaless(
 			semconv.ServiceNameKey.String(Name),
-			attribute.String("env", "dev"),
+			semconv.ServiceVersionKey.String(Version),
+			attribute.String("environment", "dev"),
+			attribute.Int64("ID", 1),
 		)),
 	)
 	otel.SetTracerProvider(tp)
@@ -92,12 +95,6 @@ func main() {
 		"span.id", tracing.SpanID(),
 	)
 
-	url := "http://127.0.0.1:5000/api/traces"
-	err := setTracerProvider(url)
-	if err != nil {
-		panic(err)
-	}
-
 	c := config.New(
 		config.WithSource(
 			// 后面的会覆盖前面的
@@ -113,6 +110,14 @@ func main() {
 
 	var bc conf.Bootstrap
 	if err := c.Scan(&bc); err != nil {
+		panic(err)
+	}
+
+	// trace
+	// url := "http://localhost:14268/api/traces"
+	url := bc.Server.JaegerAddr
+	err := setTracerProvider(url)
+	if err != nil {
 		panic(err)
 	}
 

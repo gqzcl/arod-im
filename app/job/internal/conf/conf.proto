@@ -41,6 +41,7 @@ message Server {
   GRPC grpc = 2;
   Kafka kafka = 3;
   Register register = 4;
+  string jaeger_addr = 5;
 }
 
 message Data {
