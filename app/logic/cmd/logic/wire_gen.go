@@ -39,7 +39,7 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	messageService := service.NewMessageService(singleUsecase, groupUsecase, roomUsecase, connectUsecase, loginUsecase, logger)
 	httpServer := server.NewHTTPServer(confServer, messageService, logger)
 	grpcServer := server.NewGRPCServer(confServer, messageService, logger)
-	registry := server.NewNacosRegister(confServer)
+	registry := server.NewNacosRegister(confServer, dataData)
 	app := newApp(logger, httpServer, grpcServer, registry)
 	return app, func() {
 		cleanup()

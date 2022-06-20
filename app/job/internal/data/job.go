@@ -30,22 +30,35 @@ func NewJobRepo(data *Data, logger log.Logger) biz.JobRepo {
 func (j *jobRepo) SingleSend(ctx context.Context, address, server, senderId, seq string, msg []*jobV1.MsgBody) error {
 	j.log.WithContext(ctx).Debug("开始发送消息")
 
-	if connector, ok := j.data.clients[server]; ok {
-		client := connector.GetClient()
-		// TODO 为client加入环形队列，进行缓存
-		sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
-			Address:  address,
-			SenderId: senderId,
-			Seq:      seq,
-			Msg:      msg,
-		})
-		if err != nil {
-			j.log.WithContext(ctx).Error(err)
-		}
-		j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
-	} else {
-		j.log.WithContext(ctx).Infof("Connector server : %s Service address does not exist:", server)
-		// TODO return 自定义错误
+	//connector:=j.data.discovery.GetClient(server)
+	client := j.data.discovery.GetClient(server)
+	// TODO 为client加入环形队列，进行缓存
+	sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
+		Address:  address,
+		SenderId: senderId,
+		Seq:      seq,
+		Msg:      msg,
+	})
+	if err != nil {
+		j.log.WithContext(ctx).Error(err)
 	}
+	j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
+	// if connector, ok := j.data.clients[server]; ok {
+	// 	client := connector.GetClient()
+	// 	// TODO 为client加入环形队列，进行缓存
+	// 	sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
+	// 		Address:  address,
+	// 		SenderId: senderId,
+	// 		Seq:      seq,
+	// 		Msg:      msg,
+	// 	})
+	// 	if err != nil {
+	// 		j.log.WithContext(ctx).Error(err)
+	// 	}
+	// 	j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
+	// } else {
+	// 	j.log.WithContext(ctx).Infof("Connector server : %s Service address does not exist:", server)
+	// 	// TODO return 自定义错误
+	// }
 	return nil
 }

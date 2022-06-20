@@ -9,7 +9,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sun Jun 19 06:26:33 2022
+# Make data base, printed on Mon Jun 20 12:11:36 2022
 
 # Variables
 
@@ -50,7 +50,7 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_yob97NWIeDGPHopzIKFMeGBIrfdkTF4QqxGJ
+GITHUB_TOKEN = ghu_lvoeGPjAGHG7V4JNRfEMZp4kHrKl6D0J8WtL
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
@@ -85,16 +85,18 @@ GITHUB_SERVER_URL = https://github.com
 PIPX_BIN_DIR = /usr/local/py-utils/bin
 # environment
 PIPX_HOME = /usr/local/py-utils
+ 
 # environment
 SDKMAN_DIR = /usr/local/sdkman
 # makefile (from 'Makefile', line 1)
 GOPATH := /go
 # environment
+ 
 VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d31aae91-e443-47a1-a6d7-06ed54c2a948.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-e714c5e3-a73a-464f-adf0-d36299ef402d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -157,6 +159,7 @@ MAKE = $(MAKE_COMMAND)
 HUGO_ROOT = /home/codespace/.hugo
 # default
 MAKECMDGOALS := init.install
+ 
 # environment
 RUBY_ROOT = /home/codespace/.ruby
 # environment
@@ -165,9 +168,8 @@ MAVEN_ROOT = /home/codespace/.maven
 JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
- 
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBD3E64DYJE4AXRIB56TCV5VDRANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBD5ZIVJ4PRFXRYDC27TCWEGJNANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -225,6 +227,7 @@ GIT_COMMITTER_NAME = GitHub
 # environment
 INTERNAL_VSCS_TARGET_URL = https://southeastasia.online.visualstudio.com
 # environment
+ 
 GITHUB_REPOSITORY = gqzcl/arod-im
 # automatic
 ^F = $(notdir $^)
@@ -328,7 +331,6 @@ all: init api config generate
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 
 .PHONY: tools.install tools.install.% tools.verify.% install.swagger install.gsemver install.addlicense init.install config.all config.logic config.job config.connector api.all wire.all wire.job wire.logic wire.connector run.all run.logic run.job run.connector copyright.verify copyright.add all init config api generate wire build tools copyright-verify copyright-add help
@@ -345,6 +347,7 @@ wire.connector:
 	cd app/connector/cmd/connector && wire
 
 # Not a target:
+ 
 scripts/make-rules/tools.mk:
 #  Implicit rule search has been done.
 #  Last modified 2022-05-26 15:16:24.337065435
@@ -487,7 +490,6 @@ install.addlicense:
 
 config.job:
 #  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -584,6 +586,7 @@ copyright.verify: tools.verify.addlicense
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'scripts/make-rules/copyright.mk', line 3):
 	@echo "===================================> Verifying all files"
 	@addlicense --check -f $(ROOT_DIR)/scripts/copyright.txt $(ROOT_DIR) --skip-dirs=third_party,vendor,_output
@@ -641,7 +644,6 @@ tools:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 64):
 	@$(MAKE) tools.install
@@ -673,7 +675,7 @@ tools.verify.addlicense:
 # strcache performance: lookups = 225 / hit rate = 70%
 # hash-table stats:
 # Load=67/8192=1%, Rehash=0, Collisions=1/225=0%
-# Finished Make data base on Sun Jun 19 06:26:33 2022
+# Finished Make data base on Mon Jun 20 12:11:36 2022
 
 # make[1]: Leaving directory '/workspaces/gqzcl-docker/arod-im'
  
@@ -683,8 +685,9 @@ tools.verify.addlicense:
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sun Jun 19 06:26:33 2022
+# Make data base, printed on Mon Jun 20 12:11:36 2022
 
 # Variables
 
@@ -727,8 +730,9 @@ GITHUB_GRAPHQL_URL = https://api.github.com/graphql
 # environment
 RUBY_HOME = /opt/ruby/lts
 # environment
-GITHUB_TOKEN = ghu_yob97NWIeDGPHopzIKFMeGBIrfdkTF4QqxGJ
+GITHUB_TOKEN = ghu_lvoeGPjAGHG7V4JNRfEMZp4kHrKl6D0J8WtL
 # makefile (from 'scripts/make-rules/gen_config.mk', line 2)
+ 
 INTERNAL_PROTO_FILES2 = $(shell find app/job/internal -name *.proto)
 # makefile (from 'scripts/make-rules/copyright.mk', line 1)
 MAKEFILE_LIST :=  Makefile scripts/make-rules/tools.mk scripts/make-rules/init.mk scripts/make-rules/gen_config.mk scripts/make-rules/gen_api.mk scripts/make-rules/gen_wire.mk scripts/make-rules/run.mk scripts/make-rules/copyright.mk
@@ -771,11 +775,12 @@ VSCODE_LOG_STACK = false
 # environment
 NUGET_XMLDOC_MODE = skip
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d31aae91-e443-47a1-a6d7-06ed54c2a948.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-e714c5e3-a73a-464f-adf0-d36299ef402d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
 CODESPACES = true
+ 
 # environment
 CODESPACE_NAME = gqzcl-arod-im-jwxq4ppr3p446
 # automatic
@@ -802,7 +807,6 @@ RVM_PATH = /usr/local/rvm
 NPM_GLOBAL = /home/codespace/.npm-global
 # environment
 ORYX_PATHS = /opt/oryx:/opt/nodejs/lts/bin:/opt/dotnet/lts:/opt/python/latest/bin:/opt/php/lts/bin:/opt/php-composer:/opt/yarn/stable/bin:/opt/hugo/lts::/opt/java/lts/bin:/opt/maven/lts/bin:/opt/ruby/lts/bin
- 
 # environment
 NVM_SYMLINK_CURRENT = true
 # environment
@@ -815,6 +819,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 +F = $(notdir $+)
 # environment
 ORYX_PREFER_USER_INSTALLED_SDKS = true
+ 
 # environment
 PYTHONIOENCODING = UTF-8
 # environment
@@ -842,7 +847,7 @@ JAVA_HOME = /opt/java/lts
 # default
 MAKE_VERSION := 4.2.1
 # environment
-GITHUB_CODESPACE_TOKEN = AKJRBD3E64DYJE4AXRIB56TCV5VDRANCNFSM4ABRTB3Q
+GITHUB_CODESPACE_TOKEN = AKJRBD5ZIVJ4PRFXRYDC27TCWEGJNANCNFSM4ABRTB3Q
 # makefile (from 'Makefile', line 88)
 .DEFAULT_GOAL := help
 # environment
@@ -868,6 +873,7 @@ MFLAGS = -pqrR
 # environment
 NVM_DIR = /home/codespace/.nvm
 # automatic
+ 
 +D = $(patsubst %/,%,$(dir $+))
 # makefile
 SHELL = /bin/sh
@@ -903,6 +909,7 @@ INTERNAL_VSCS_TARGET_URL = https://southeastasia.online.visualstudio.com
 GITHUB_REPOSITORY = gqzcl/arod-im
 # automatic
 ^F = $(notdir $^)
+ 
 # default
 SUFFIXES := 
 # environment
@@ -913,6 +920,7 @@ GIT_COMMITTER_EMAIL = noreply@github.com
 DEBIAN_FLAVOR = focal-scm
 # makefile (from 'Makefile', line 3)
 COMMON_SELF_DIR := ./
+ 
 # default
 .RECIPEPREFIX := 
 # default
@@ -949,7 +957,6 @@ tools.verify.%:
 #  recipe to execute (from 'scripts/make-rules/tools.mk', line 14):
 	@if ! which $* &>/dev/null; then $(MAKE) tools.install.$*; fi
 
- 
 # 2 implicit rules, 0 (0.0%) terminal.
 
 # Files
@@ -966,6 +973,7 @@ install.gsemver:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'scripts/make-rules/tools.mk', line 22):
 	@go install github.com/arnaud-deprez/gsemver@latest
@@ -973,6 +981,7 @@ install.gsemver:
 # Not a target:
 scripts/make-rules/gen_wire.mk:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
 #  Successfully updated.
@@ -1025,13 +1034,13 @@ wire.connector:
 # Not a target:
 scripts/make-rules/tools.mk:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
 #  Successfully updated.
 
 config.all: config.logic config.job config.connector
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -1133,7 +1142,6 @@ scripts/make-rules/gen_config.mk:
 #  Last modified 2022-05-26 15:16:24.337065435
 #  File has been updated.
 #  Successfully updated.
- 
 
 help: Makefile
 #  Phony target (prerequisite of .PHONY).
@@ -1180,6 +1188,7 @@ wire:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 51):
 	@$(MAKE) wire.all
@@ -1247,7 +1256,6 @@ copyright.verify: tools.verify.addlicense
 	@addlicense --check -f $(ROOT_DIR)/scripts/copyright.txt $(ROOT_DIR) --skip-dirs=third_party,vendor,_output
 
 # Not a target:
- 
 scripts/make-rules/init.mk:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 10:51:02.84817185
@@ -1350,8 +1358,7 @@ tools.verify.addlicense:
 
 # strcache performance: lookups = 225 / hit rate = 70%
 # hash-table stats:
- 
 # Load=67/8192=1%, Rehash=0, Collisions=1/225=0%
-# Finished Make data base on Sun Jun 19 06:26:33 2022
+# Finished Make data base on Mon Jun 20 12:11:36 2022
 
  

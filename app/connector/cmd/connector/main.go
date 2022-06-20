@@ -5,7 +5,7 @@ package main
 
 import (
 	"arod-im/app/connector/internal/conf"
-	nacosConfig "arod-im/pkg/config"
+	nacosConfig "arod-im/pkg/nacos/config"
 	"arod-im/pkg/transport/websocket"
 	"flag"
 	"os"

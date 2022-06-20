@@ -5,7 +5,7 @@ package main
 
 import (
 	"arod-im/app/job/internal/conf"
-	nacosConfig "arod-im/pkg/config"
+	nacosConfig "arod-im/pkg/nacos/config"
 	"arod-im/pkg/transport/kafka"
 	"flag"
 	"os"

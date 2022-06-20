@@ -5,12 +5,14 @@ package data
 
 import (
 	"arod-im/app/logic/internal/conf"
+	"arod-im/app/logic/internal/data/discover"
 
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/gomodule/redigo/redis"
 	"github.com/google/wire"
+	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	kafka "gopkg.in/Shopify/sarama.v1"
 )
 
@@ -19,6 +21,9 @@ var ProviderSet = wire.NewSet(NewData, NewKafkaPub, NewRedis, NewSingleRepo, New
 
 // Data .
 type Data struct {
+	naming    naming_client.INamingClient
+	discovery discover.Discovery
+
 	// TODO wrapped database client
 	kafkaPub    kafka.SyncProducer
 	redis       *redis.Pool
@@ -64,4 +69,10 @@ func NewRedis(c *conf.Data) *redis.Pool {
 		},
 	}
 	return r
+}
+
+// SetNaming init the nacos naming client of Data
+func (d *Data) SetNaming(naming naming_client.INamingClient) {
+	d.naming = naming
+	d.discovery = *discover.NewDiscovery(d.naming)
 }

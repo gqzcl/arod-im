@@ -8,6 +8,7 @@ import (
 	"arod-im/pkg/transport/websocket"
 	"context"
 	"encoding/json"
+
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 	"github.com/panjf2000/gnet/v2"
@@ -27,7 +28,7 @@ type WebsocketProto struct {
 // TODO 处理只建立了连接没有鉴权的情况（清理掉）
 // idea 定时五秒没有接收到鉴权消息则关闭连接
 // OnMessageHandle  接收ws对端的消息，由websocket server调用
-func (s ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
+func (s *ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 	address := c.RemoteAddr().String()
 	s.log.Infof("[%s] Payload: %s\n", c.RemoteAddr().String(), string(message))
 
@@ -42,19 +43,15 @@ func (s ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 	// TODO 添加一个错误原因，如鉴权失败则断开连接
 	// note： 初次连接，鉴权，将地址存入redis
 	// c.Close(nil)
-	connect, err := s.LogicClient.Connect(context.Background(), &v1.ConnectReq{
-		Server:  s.Address,
-		Uid:     cookie.Uid,
-		Address: address,
-		Token:   nil,
-	})
+	success, err := s.StoreConnect(cookie.Uid, address)
+	// 存储uid，关联uid与ws连接
 	c.Context().(*websocket.WsContext).Uid = cookie.Uid
 	s.log.Infof("成功连接")
 	if err != nil {
 		return err
 	}
 
-	if !connect.Success {
+	if !success {
 		// TODO 连接操作失败
 		c.Close(nil)
 	} else {

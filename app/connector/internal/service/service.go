@@ -11,12 +11,13 @@ import (
 	"arod-im/pkg/ips"
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/keepalive"
-	"time"
 )
 
 // ProviderSet is service providers.
@@ -51,12 +52,17 @@ type ConnectorService struct {
 
 func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.Logger) *ConnectorService {
 	ip := ips.InternalIP()
-	c := &ConnectorService{
+	s := &ConnectorService{
 		bc:      bc,
 		log:     log.NewHelper(log.With(logger, "module", "connector")),
 		Address: fmt.Sprintf("%s:9000", ip),
 	}
 	ctx := context.Background()
+	s.DailLogic(ctx)
+	return s
+}
+
+func (s *ConnectorService) DailLogic(ctx context.Context) {
 	conn, err := grpc.DialContext(ctx, "127.0.0.1:9003",
 		[]grpc.DialOption{
 			grpc.WithInitialWindowSize(grpcInitialWindowSize),
@@ -72,8 +78,11 @@ func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.
 		}...,
 	)
 	if err != nil {
-		c.log.Error("Grpc 连接失败", err)
+		s.log.Error("Grpc 连接失败", err)
 	}
-	c.LogicClient = logicV1.NewLogicClient(conn)
-	return c
+	s.LogicClient = logicV1.NewLogicClient(conn)
+}
+
+func update(ctx context.Context) {
+
 }

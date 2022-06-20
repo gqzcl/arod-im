@@ -8,7 +8,7 @@ import (
 	"arod-im/app/logic/internal/biz"
 	"context"
 
-	"github.com/golang/protobuf/proto"
+	"google.golang.org/protobuf/proto"
 	"gopkg.in/Shopify/sarama.v1"
 
 	"github.com/go-kratos/kratos/v2/log"

@@ -6,6 +6,7 @@ package server
 import (
 	"arod-im/app/job/internal/conf"
 	"arod-im/app/job/internal/data"
+
 	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
@@ -38,6 +39,6 @@ func NewNacosRegister(c *conf.Server, d *data.Data) *nacos.Registry {
 	}
 	d.SetNaming(namingClient)
 	d.InitClient()
-	go d.Watch()
+	//go d.Watch()
 	return nacos.New(namingClient, nacos.WithGroup("arod-im"))
 }
