@@ -55,5 +55,7 @@ func (d *Data) CloseClient() {
 }
 
 func (d *Data) InitClient() {
+
 	go d.discovery.Watch()
+	d.log.Debugf("已开始监听业务服务地址")
 }

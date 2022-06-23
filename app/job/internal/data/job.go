@@ -32,17 +32,22 @@ func (j *jobRepo) SingleSend(ctx context.Context, address, server, senderId, seq
 
 	//connector:=j.data.discovery.GetClient(server)
 	client := j.data.discovery.GetClient(server)
-	// TODO 为client加入环形队列，进行缓存
-	sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
-		Address:  address,
-		SenderId: senderId,
-		Seq:      seq,
-		Msg:      msg,
-	})
-	if err != nil {
-		j.log.WithContext(ctx).Error(err)
+	if client != nil {
+		// TODO 为client加入环形队列，进行缓存
+		sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
+			Address:  address,
+			SenderId: senderId,
+			Seq:      seq,
+			Msg:      msg,
+		})
+		if err != nil {
+			j.log.WithContext(ctx).Error(err)
+		}
+		j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
+	} else {
+		j.log.WithContext(ctx).Debugf("连接服务:%s 未上线", server)
 	}
-	j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
+
 	// if connector, ok := j.data.clients[server]; ok {
 	// 	client := connector.GetClient()
 	// 	// TODO 为client加入环形队列，进行缓存

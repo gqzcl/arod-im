@@ -4,6 +4,7 @@ import (
 	logicV1 "arod-im/api/logic/v1"
 	"arod-im/pkg/nacos/discover"
 	"context"
+	"fmt"
 
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 )
@@ -34,10 +35,11 @@ func (c *Discovery) GetClient(address string) logicV1.LogicClient {
 
 func (dis *Discovery) Watch() {
 	for {
+		fmt.Println("正在监听。。。")
 		select {
 		case <-dis.watcher.Ctx.Done():
 			return
-		case <-dis.watcher.WatchChan:
+		case <-dis.watcher.NoticeChan:
 		}
 		dis.UpdateClinets(dis.watcher.Instances)
 	}
@@ -55,6 +57,7 @@ func (dis *Discovery) UpdateClinets(ins []*discover.ServiceInstance) {
 			}
 		}
 	}
+	fmt.Println("已连接客户端：", dis.Clients)
 }
 
 func (dis *Discovery) Close() {

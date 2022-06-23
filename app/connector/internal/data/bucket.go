@@ -7,6 +7,7 @@ import (
 	jobV1 "arod-im/api/job/v1"
 	"arod-im/app/connector/internal/biz"
 	"arod-im/app/connector/internal/data/sender"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/panjf2000/gnet/v2"
 )
@@ -43,7 +44,7 @@ func (b *bucketRepo) SingleSend(address string, msg []*jobV1.MsgBody) {
 		if err != nil {
 			b.log.Error(err, "in SingleSend in bucket")
 		}
-		b.log.Debug("成功发送消息")
+		b.log.Debug("成功发送消息", msg)
 		return
 	}
 	b.log.Warnf("消息发送失败:", address)

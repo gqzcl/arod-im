@@ -30,7 +30,8 @@ type Watcher struct {
 	groupName   string
 	Ctx         context.Context
 	Cancel      context.CancelFunc
-	WatchChan   chan struct{}
+	watchChan   chan struct{}
+	NoticeChan  chan struct{}
 	cli         naming_client.INamingClient
 	kind        string
 	Instances   []*ServiceInstance
@@ -43,29 +44,42 @@ func NewWatcher(ctx context.Context, cli naming_client.INamingClient, serviceNam
 		serviceName: serviceName,
 		cli:         cli,
 		groupName:   groupName,
-		WatchChan:   make(chan struct{}, 1),
+		watchChan:   make(chan struct{}, 1),
+		NoticeChan:  make(chan struct{}, 1),
 	}
 	for _, opt := range opts {
 		opt(w)
 	}
+	w.GetService()
 	w.Ctx, w.Cancel = context.WithCancel(ctx)
 	e := w.cli.Subscribe(&vo.SubscribeParam{
 		ServiceName: serviceName,
 		Clusters:    w.clusters,
 		GroupName:   w.groupName,
 		SubscribeCallback: func(services []model.SubscribeService, err error) {
-			w.WatchChan <- struct{}{}
+			w.watchChan <- struct{}{}
 		},
 	})
+	go w.Update()
 	return w, e
 }
 
-func (w *Watcher) Update() error {
-	select {
-	case <-w.Ctx.Done():
-		return w.Ctx.Err()
-	case <-w.WatchChan:
+func (w *Watcher) Update() {
+	for {
+		select {
+		case <-w.Ctx.Done():
+			return
+		case <-w.watchChan:
+		}
+		err := w.GetService()
+		if err != nil {
+			return
+		}
+		w.NoticeChan <- struct{}{}
 	}
+}
+
+func (w *Watcher) GetService() error {
 	// TODO 加锁
 	res, err := w.cli.GetService(vo.GetServiceParam{
 		ServiceName: w.serviceName,
@@ -77,16 +91,17 @@ func (w *Watcher) Update() error {
 	}
 	w.Instances = make([]*ServiceInstance, 0, len(res.Hosts))
 	for _, in := range res.Hosts {
-		kind := w.kind
-		if k, ok := in.Metadata["kind"]; ok {
-			kind = k
-		}
+		// kind := w.kind
+		// if k, ok := in.Metadata["kind"]; ok {
+		// 	kind = k
+		// }
 		w.Instances = append(w.Instances, &ServiceInstance{
-			ID:        in.InstanceId,
-			Name:      res.Name,
-			Version:   in.Metadata["version"],
-			Metadata:  in.Metadata,
-			Endpoints: fmt.Sprintf("%s://%s:%d", kind, in.Ip, in.Port),
+			ID:       in.InstanceId,
+			Name:     res.Name,
+			Version:  in.Metadata["version"],
+			Metadata: in.Metadata,
+			// Endpoints: fmt.Sprintf("%s://%s:%d", kind, in.Ip, in.Port),
+			Endpoints: fmt.Sprintf("%s:%d", in.Ip, in.Port),
 		})
 	}
 	return nil

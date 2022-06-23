@@ -39,6 +39,7 @@ func (s *ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 		s.log.Error("Error unmarshalling proto json %v", err)
 		return nil
 	}
+	s.log.Debug(cookie)
 	// TODO 处理心跳
 	// TODO 添加一个错误原因，如鉴权失败则断开连接
 	// note： 初次连接，鉴权，将地址存入redis

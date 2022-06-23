@@ -39,7 +39,7 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 // SetNaming init the nacos naming client of Data
 func (d *Data) SetNaming(naming naming_client.INamingClient) {
 	d.naming = naming
-	d.discovery = *discover.NewDiscovery(d.naming)
+	d.discovery = *discover.NewDiscovery(d.naming, d.log)
 }
 
 // TODO 如何优雅退出
@@ -52,36 +52,3 @@ func (d *Data) CloseClient() {
 func (d *Data) InitClient() {
 	go d.discovery.Watch()
 }
-
-// func (d *Data) Watch() {
-// 	d.naming.Subscribe(&vo.SubscribeParam{
-// 		ServiceName: "arod-im-connector.grpc",
-// 		GroupName:   "arod-im",
-// 		SubscribeCallback: func(services []model.SubscribeService, err error) {
-// 			d.UpdateInstances()
-// 		},
-// 	})
-// }
-
-// func (d *Data) UpdateInstances() {
-// 	instances, err := d.naming.SelectInstances(vo.SelectInstancesParam{
-// 		ServiceName: "arod-im-connector.grpc",
-// 		GroupName:   "arod-im",
-// 		HealthyOnly: true,
-// 	})
-// 	if err != nil {
-// 		d.log.Error("获取服务列表失败", err)
-// 	}
-// 	// TODO 新的clinet map
-// 	for _, ins := range instances {
-// 		address := fmt.Sprintf("%s:%d", ins.Ip, ins.Port)
-// 		client, err := NewConnectClient(address)
-// 		if err != nil {
-// 			d.log.Info("grpc 连接失败 in UpdateInstance")
-// 		}
-// 		d.clients[address] = client
-// 		d.log.Info("成功连接grpc with", address)
-// 	}
-
-// 	fmt.Println("发现所有connector实例", instances)
-// }

@@ -48,7 +48,11 @@ func NewSingleUsecase(single SingleRepo, logger log.Logger) *SingleUsecase {
 // PushMsg push a msg to data.
 func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*jobV1.MsgBody) (string, error) {
 	seq := sc.rambler.GetSeqID([]byte(uid + cid))
-	addrs, _ := sc.single.GetUserAddress(ctx, cid)
+	addrs, err := sc.single.GetUserAddress(ctx, cid)
+	if err != nil {
+		sc.log.WithContext(ctx).Error(err)
+	}
+	sc.log.WithContext(ctx).Info(addrs)
 	message := &jobV1.SingleSendMsg{
 		Server: addrs,
 		Seq:    seq,

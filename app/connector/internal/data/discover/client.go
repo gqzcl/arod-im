@@ -3,6 +3,7 @@ package discover
 import (
 	logicV1 "arod-im/api/logic/v1"
 	"context"
+	"fmt"
 	"time"
 
 	"google.golang.org/grpc"
@@ -34,6 +35,7 @@ func NewServiceClient(address string) (*ServiceClient, error) {
 	lc := &ServiceClient{
 		serverID: address,
 	}
+	fmt.Println("开始建立连接", address)
 	err := lc.dailServiceClient(address)
 	if err != nil {
 		return nil, err
@@ -64,6 +66,7 @@ func (lc *ServiceClient) dailServiceClient(address string) error {
 	}
 	lc.conn = conn
 	lc.client = logicV1.NewLogicClient(conn)
+	fmt.Println("已与业务服务建立连接：", address)
 	return nil
 }
 

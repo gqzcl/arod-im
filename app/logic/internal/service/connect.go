@@ -9,7 +9,7 @@ import (
 )
 
 func (s *MessageService) Connect(ctx context.Context, req *pb.ConnectReq) (*pb.ConnectReply, error) {
-	s.log.WithContext(ctx).Info("成功收到连接消息！！！")
+	s.log.WithContext(ctx).Info("成功收到连接消息 form ", req.Uid, req.Address)
 	s.cc.Connect(ctx, req.Uid, req.Address, req.Server)
 	return &pb.ConnectReply{Success: true}, nil
 }
