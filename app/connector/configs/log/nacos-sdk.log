@@ -20,3 +20,10 @@
 2022-06-23T11:50:14.903Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
 2022-06-23T11:56:40.069Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
 2022-06-23T11:59:08.551Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-23T15:04:59.559Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-24T00:58:14.005Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-24T01:45:57.318Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-24T04:27:31.403Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-24T05:03:14.863Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-24T05:12:50.117Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>
+2022-06-24T05:17:22.317Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</tmp/nacos/log>   cacheDir:</tmp/nacos/cache>

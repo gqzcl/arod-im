@@ -26,6 +26,8 @@ config.yaml
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+# yarn
+node_modules/
 
 dist/
 .goreleaser.yaml

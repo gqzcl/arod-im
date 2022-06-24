@@ -17,6 +17,7 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationLogicGetService = "/api.logic.v1.Logic/GetService"
 const OperationLogicGroupRecall = "/api.logic.v1.Logic/GroupRecall"
 const OperationLogicGroupSend = "/api.logic.v1.Logic/GroupSend"
 const OperationLogicGroupSendMention = "/api.logic.v1.Logic/GroupSendMention"
@@ -27,6 +28,7 @@ const OperationLogicSingleRecall = "/api.logic.v1.Logic/SingleRecall"
 const OperationLogicSingleSend = "/api.logic.v1.Logic/SingleSend"
 
 type LogicHTTPServer interface {
+	GetService(context.Context, *GetServiceReq) (*GetServiceReplay, error)
 	GroupRecall(context.Context, *GroupRecallRequest) (*RecallReplay, error)
 	GroupSend(context.Context, *GroupSendRequest) (*SendReplay, error)
 	GroupSendMention(context.Context, *GroupSendMentionRequest) (*SendReplay, error)
@@ -47,6 +49,7 @@ func RegisterLogicHTTPServer(s *http.Server, srv LogicHTTPServer) {
 	r.POST("v1/room/send", _Logic_RoomSend0_HTTP_Handler(srv))
 	r.POST("v1/room/broadcast", _Logic_RoomBroadcast0_HTTP_Handler(srv))
 	r.POST("v1/login", _Logic_Login0_HTTP_Handler(srv))
+	r.GET("v1/service", _Logic_GetService0_HTTP_Handler(srv))
 }
 
 func _Logic_SingleSend0_HTTP_Handler(srv LogicHTTPServer) func(ctx http.Context) error {
@@ -201,7 +204,27 @@ func _Logic_Login0_HTTP_Handler(srv LogicHTTPServer) func(ctx http.Context) erro
 	}
 }
 
+func _Logic_GetService0_HTTP_Handler(srv LogicHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GetServiceReq
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationLogicGetService)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetService(ctx, req.(*GetServiceReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*GetServiceReplay)
+		return ctx.Result(200, reply)
+	}
+}
+
 type LogicHTTPClient interface {
+	GetService(ctx context.Context, req *GetServiceReq, opts ...http.CallOption) (rsp *GetServiceReplay, err error)
 	GroupRecall(ctx context.Context, req *GroupRecallRequest, opts ...http.CallOption) (rsp *RecallReplay, err error)
 	GroupSend(ctx context.Context, req *GroupSendRequest, opts ...http.CallOption) (rsp *SendReplay, err error)
 	GroupSendMention(ctx context.Context, req *GroupSendMentionRequest, opts ...http.CallOption) (rsp *SendReplay, err error)
@@ -218,6 +241,19 @@ type LogicHTTPClientImpl struct {
 
 func NewLogicHTTPClient(client *http.Client) LogicHTTPClient {
 	return &LogicHTTPClientImpl{client}
+}
+
+func (c *LogicHTTPClientImpl) GetService(ctx context.Context, in *GetServiceReq, opts ...http.CallOption) (*GetServiceReplay, error) {
+	var out GetServiceReplay
+	pattern := "v1/service"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationLogicGetService))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
 }
 
 func (c *LogicHTTPClientImpl) GroupRecall(ctx context.Context, in *GroupRecallRequest, opts ...http.CallOption) (*RecallReplay, error) {

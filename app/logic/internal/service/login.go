@@ -83,3 +83,22 @@ func (s *MessageService) Login(ctx context.Context, req *v1.LoginReq) (*v1.Login
 		AccessToken:  token,
 	}, nil
 }
+
+// GetService 获取连接服务地址
+func (s *MessageService) GetService(ctx context.Context, req *v1.GetServiceReq) (*v1.GetServiceReplay, error) {
+	address := s.lc.GetServiceAddress(ctx)
+	if address == "" {
+		s.log.WithContext(ctx).Debugf("暂时没有连接服务在线")
+		return &v1.GetServiceReplay{
+			ActionStatus: "FAIL",
+			ErrorInfo:    "暂时没有连接服务在线",
+			ErrorCode:    90001,
+			Address:      "",
+		}, nil
+	}
+	s.log.WithContext(ctx).Debugf("已获取到连接服务地址")
+	return &v1.GetServiceReplay{
+		ActionStatus: "OK",
+		Address:      address,
+	}, nil
+}

@@ -12,7 +12,8 @@ import (
 // SingleSend send a single message
 func (s *MessageService) SingleSend(ctx context.Context, request *v1.SingleSendRequest) (*v1.SendReplay, error) {
 
-	s.log.WithContext(ctx).Info("Single Send a msg from user", request.Uid, "content:", request.MsgBody)
+	s.log.WithContext(ctx).Debug("SingleSend receive a msg from user:", request.Uid, "content:", request.MsgBody)
+
 	seq, err := s.sc.PushMsg(ctx, request.Uid, request.Cid, request.MsgBody)
 	if err != nil {
 		return &v1.SendReplay{

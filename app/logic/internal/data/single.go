@@ -30,8 +30,12 @@ func NewSingleRepo(data *Data, logger log.Logger) biz.SingleRepo {
 func (r *singleRepo) Push(ctx context.Context, sessionId string, msg *jobV1.SingleSendMsg) (err error) {
 	pushMsg := msg
 	p, err := proto.Marshal(pushMsg)
+	if err != nil {
+		r.log.WithContext(ctx).Error(err)
+		return err
+	}
 
-	r.log.WithContext(ctx).Debugf("msg in Push :%s", p)
+	// r.log.WithContext(ctx).Debugf("msg in Push :%s", p)
 
 	m := &sarama.ProducerMessage{
 		Key:   sarama.StringEncoder(sessionId),
@@ -39,10 +43,10 @@ func (r *singleRepo) Push(ctx context.Context, sessionId string, msg *jobV1.Sing
 		Value: sarama.ByteEncoder(p),
 	}
 	if _, _, err = r.data.kafkaPub.SendMessage(m); err != nil {
-		r.log.WithContext(ctx).Info(err)
+		r.log.WithContext(ctx).Error(err)
 		return err
 	}
-	return err
+	return
 }
 
 func (r *singleRepo) GetUserAddress(ctx context.Context, uid string) (addrs map[string]string, err error) {

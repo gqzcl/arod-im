@@ -714,3 +714,35 @@
 2022-06-23T11:51:19.277Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55899
 2022-06-23T11:51:19.277Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
 2022-06-23T11:51:19.280Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-23T15:05:06.797Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-23T15:05:06.797Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55227
+2022-06-23T15:05:06.797Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-23T15:05:06.800Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T00:58:05.893Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T00:58:05.901Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55320
+2022-06-24T00:58:05.901Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T00:58:05.904Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T04:27:19.637Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T04:27:19.645Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55402
+2022-06-24T04:27:19.646Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T04:27:19.649Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T04:32:21.786Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T04:32:21.786Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55715
+2022-06-24T04:32:21.786Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T04:32:21.789Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T04:59:22.933Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T04:59:22.933Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55764
+2022-06-24T04:59:22.933Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T04:59:22.936Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T05:09:16.770Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T05:09:16.770Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55718
+2022-06-24T05:09:16.770Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T05:09:16.773Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T05:11:39.677Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T05:11:39.678Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 54974
+2022-06-24T05:11:39.678Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T05:11:39.681Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>
+2022-06-24T05:16:59.994Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/log>   cacheDir:</workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache>
+2022-06-24T05:16:59.994Z	[34mINFO[0m	naming_client/push_receiver.go:80	udp server start, port: 55901
+2022-06-24T05:16:59.994Z	[31mERROR[0m	cache/disk_cache.go:60	read cacheDir:/workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming failed!err:open /workspaces/gqzcl-docker/arod-im/app/logic/cmd/logic/cache/naming: no such file or directory
+2022-06-24T05:16:59.997Z	[34mINFO[0m	nacos_client/nacos_client.go:79	logDir:<../../configs/log>   cacheDir:<../../configs/cache>

@@ -62,6 +62,11 @@ service Logic {
 			body: "*",
 		};
 	}
+	rpc GetService(GetServiceReq) returns(GetServiceReplay){
+		option (google.api.http)={
+			get: "v1/service",
+		};
+	}
 	// Connect
 	rpc Connect(ConnectReq) returns (ConnectReply);
 	// Disconnect
@@ -186,4 +191,17 @@ message LoginReplay {
 	string access_token = 4; // token
 	string refresh_token =5; // refresh token
 	// int64 access_expire = 5; // 过期时间
+}
+
+// GetServiceReq 获取服务地址请求
+message GetServiceReq{
+
+}
+
+// GetServiceReplay 获取服务地址响应
+message GetServiceReplay{
+	string action_status = 1; // 请求结果
+	string error_info = 2; // 错误信息
+	uint32 error_code = 3; // 错误码
+	string address =4;
 }

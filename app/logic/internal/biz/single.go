@@ -45,21 +45,28 @@ func NewSingleUsecase(single SingleRepo, logger log.Logger) *SingleUsecase {
 	return &SingleUsecase{single: single, log: log.NewHelper(logger), rambler: rambler.NewRambler()}
 }
 
-// PushMsg push a msg to data.
-func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*jobV1.MsgBody) (string, error) {
-	seq := sc.rambler.GetSeqID([]byte(uid + cid))
+// PushMsg push a msg to data and return seq of msg
+func (sc *SingleUsecase) PushMsg(ctx context.Context, uid, cid string, msg []*jobV1.MsgBody) (seq string, err error) {
+	// 获取消息唯一ID
+	seq = sc.rambler.GetSeqID([]byte(uid + cid))
+
+	// 获取接收者连接会话信息
 	addrs, err := sc.single.GetUserAddress(ctx, cid)
 	if err != nil {
 		sc.log.WithContext(ctx).Error(err)
+		return "", err
 	}
-	sc.log.WithContext(ctx).Info(addrs)
+	//sc.log.WithContext(ctx).Info(addrs)
+
 	message := &jobV1.SingleSendMsg{
 		Server: addrs,
 		Seq:    seq,
 		Msg:    msg,
 	}
+
+	// uid+cid作为会话消息ID
 	if err := sc.single.Push(ctx, uid+cid, message); err != nil {
-		sc.log.WithContext(ctx).Info("Error in PushMsg() : ", err)
+		sc.log.WithContext(ctx).Error("Error in PushMsg() : ", err)
 		return "", err
 	}
 	sc.log.WithContext(ctx).Info("PushMsg Success: ", seq)

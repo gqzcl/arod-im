@@ -57,6 +57,7 @@ func NewWatcher(ctx context.Context, cli naming_client.INamingClient, serviceNam
 		Clusters:    w.clusters,
 		GroupName:   w.groupName,
 		SubscribeCallback: func(services []model.SubscribeService, err error) {
+			//TODO bug 当监听服务集群为空时，不会触发回调函数
 			w.watchChan <- struct{}{}
 		},
 	})

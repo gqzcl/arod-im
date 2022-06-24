@@ -5,6 +5,7 @@ package biz
 
 import (
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -26,12 +27,25 @@ func NewConnectUsecase(connect ConnectRepo, logger log.Logger) *ConnectUsecase {
 	return &ConnectUsecase{connect: connect, log: log.NewHelper(logger)}
 }
 
-func (cc *ConnectUsecase) Connect(ctx context.Context, uid string, address string, server string) {
+// Connect
+func (cc *ConnectUsecase) Connect(ctx context.Context, uid string, address string, server string) (err error) {
 
 	cc.log.WithContext(ctx).Infof("uid:%s,address:%s,server:%s", uid, address, server)
-	cc.connect.Connect(ctx, uid, address, server)
+	err = cc.connect.Connect(ctx, uid, address, server)
+	if err != nil {
+		cc.log.WithContext(ctx).Error(err)
+		return err
+	}
+	return nil
 }
-func (cc *ConnectUsecase) Disconnect(ctx context.Context, uid string, address string, server string) {
+
+// Disconnect 移除连接信息
+func (cc *ConnectUsecase) Disconnect(ctx context.Context, uid string, address string, server string) (err error) {
 	cc.log.WithContext(ctx).Infof("uid:%s,address:%s,server:%s", uid, address, server)
-	cc.connect.Disconnect(ctx, uid, address, server)
+	err = cc.connect.Disconnect(ctx, uid, address, server)
+	if err != nil {
+		cc.log.WithContext(ctx).Error(err)
+		return err
+	}
+	return nil
 }

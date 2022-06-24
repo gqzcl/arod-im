@@ -34,10 +34,10 @@ func NewServiceClient(address string) (*ServiceClient, error) {
 	lc := &ServiceClient{
 		serverID: address,
 	}
-	err := lc.dailServiceClient(address)
-	if err != nil {
-		return nil, err
-	}
+	// err := lc.dailServiceClient(address)
+	// if err != nil {
+	// 	return nil, err
+	// }
 	return lc, nil
 }
 
@@ -71,6 +71,6 @@ func (sc *ServiceClient) GetClient() ConnectorV1.ConnectorClient {
 	return sc.client
 }
 
-func (sc *ServiceClient) Close() {
-	sc.conn.Close()
-}
+// func (sc *ServiceClient) Close() {
+// 	sc.conn.Close()
+// }

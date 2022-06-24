@@ -6,7 +6,6 @@ package sender
 import (
 	jobV1 "arod-im/api/job/v1"
 	"encoding/json"
-	"fmt"
 
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
@@ -35,9 +34,8 @@ func (r *Channel) Push(msg []*jobV1.MsgBody) error {
 	if err != nil {
 		return err
 	}
-	//proto.Marshal(msg)
-	fmt.Println("消息json序列号完成", m)
-	err = wsutil.WriteServerMessage(r.conn, ws.OpBinary, m)
+	//fmt.Println("消息json序列号完成", m)
+	err = wsutil.WriteServerMessage(r.conn, ws.OpText, m)
 	if err != nil {
 		return err
 	}

@@ -30,6 +30,7 @@ type LogicClient interface {
 	RoomSend(ctx context.Context, in *GroupSendRequest, opts ...grpc.CallOption) (*SendReplay, error)
 	RoomBroadcast(ctx context.Context, in *GroupSendRequest, opts ...grpc.CallOption) (*SendReplay, error)
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginReplay, error)
+	GetService(ctx context.Context, in *GetServiceReq, opts ...grpc.CallOption) (*GetServiceReplay, error)
 	// Connect
 	Connect(ctx context.Context, in *ConnectReq, opts ...grpc.CallOption) (*ConnectReply, error)
 	// Disconnect
@@ -116,6 +117,15 @@ func (c *logicClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.Call
 	return out, nil
 }
 
+func (c *logicClient) GetService(ctx context.Context, in *GetServiceReq, opts ...grpc.CallOption) (*GetServiceReplay, error) {
+	out := new(GetServiceReplay)
+	err := c.cc.Invoke(ctx, "/api.logic.v1.Logic/GetService", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *logicClient) Connect(ctx context.Context, in *ConnectReq, opts ...grpc.CallOption) (*ConnectReply, error) {
 	out := new(ConnectReply)
 	err := c.cc.Invoke(ctx, "/api.logic.v1.Logic/Connect", in, out, opts...)
@@ -146,6 +156,7 @@ type LogicServer interface {
 	RoomSend(context.Context, *GroupSendRequest) (*SendReplay, error)
 	RoomBroadcast(context.Context, *GroupSendRequest) (*SendReplay, error)
 	Login(context.Context, *LoginReq) (*LoginReplay, error)
+	GetService(context.Context, *GetServiceReq) (*GetServiceReplay, error)
 	// Connect
 	Connect(context.Context, *ConnectReq) (*ConnectReply, error)
 	// Disconnect
@@ -180,6 +191,9 @@ func (UnimplementedLogicServer) RoomBroadcast(context.Context, *GroupSendRequest
 }
 func (UnimplementedLogicServer) Login(context.Context, *LoginReq) (*LoginReplay, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedLogicServer) GetService(context.Context, *GetServiceReq) (*GetServiceReplay, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetService not implemented")
 }
 func (UnimplementedLogicServer) Connect(context.Context, *ConnectReq) (*ConnectReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Connect not implemented")
@@ -344,6 +358,24 @@ func _Logic_Login_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Logic_GetService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServiceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LogicServer).GetService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.logic.v1.Logic/GetService",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LogicServer).GetService(ctx, req.(*GetServiceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Logic_Connect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ConnectReq)
 	if err := dec(in); err != nil {
@@ -418,6 +450,10 @@ var Logic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _Logic_Login_Handler,
+		},
+		{
+			MethodName: "GetService",
+			Handler:    _Logic_GetService_Handler,
 		},
 		{
 			MethodName: "Connect",

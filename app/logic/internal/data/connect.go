@@ -6,6 +6,7 @@ package data
 import (
 	"arod-im/app/logic/internal/biz"
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -25,8 +26,9 @@ func (c *connectRepo) Connect(ctx context.Context, uid string, address string, s
 	c.data.AddUserAddress(ctx, uid, address, server)
 	if err != nil {
 		c.log.Infof("Connect set receive occur error: %v", err)
+		return err
 	}
-	return err
+	return nil
 }
 func (c *connectRepo) Disconnect(ctx context.Context, uid string, address string, server string) (err error) {
 	success, err := c.data.DelUserAddress(ctx, uid, address)
@@ -34,5 +36,5 @@ func (c *connectRepo) Disconnect(ctx context.Context, uid string, address string
 		c.log.WithContext(ctx).Errorf("error in Disconnect() err:%v", err)
 		return err
 	}
-	return err
+	return nil
 }

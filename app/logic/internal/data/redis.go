@@ -12,13 +12,14 @@ import (
 // uid -> address
 // address -> server
 // 添加用户连接地址
-func (d *Data) AddUserAddress(c context.Context, uid, address, server string) {
+func (d *Data) AddUserAddress(c context.Context, uid, address, server string) (err error) {
 	conn := d.redis.Get()
 	defer conn.Close()
-	_, err := conn.Do("HSET", uid, address, server)
+	_, err = conn.Do("HSET", uid, address, server)
 	if err != nil {
-		return
+		return err
 	}
+	return
 }
 
 // 获取用户的连接地址
@@ -47,7 +48,7 @@ func (d *Data) DelUserAddress(c context.Context, uid, address string) (success b
 func (d *Data) GetAuth(c context.Context, uid, address string) (token string, err error) {
 	conn := d.redis.Get()
 	defer conn.Close()
-	_, err = conn.Do("HGET", uid, token)
+	//_, err = conn.Do("HGET", uid, token)
 	return
 }
 

@@ -2,6 +2,7 @@ package data
 
 import (
 	"arod-im/app/logic/internal/biz"
+	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
 )
@@ -24,7 +25,13 @@ func NewLoginRepo(data *Data, logger log.Logger) biz.LoginRepo {
 	}
 }
 
-func (l *loginRepo) CheckAuth(username, password string) bool {
-	l.data.redis.Get()
-	return true
+// func (l *loginRepo) CheckAuth(username, password string) bool {
+// 	l.data.redis.Get()
+// 	return true
+// }
+
+// GetServiceAddress 获取连接服务地址
+func (l *loginRepo) GetServiceAddress(ctx context.Context) string {
+	serviceAddress := l.data.discovery.GetClient()
+	return serviceAddress
 }
