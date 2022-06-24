@@ -54,7 +54,7 @@ func (dis *Discovery) Watch() {
 }
 
 func (dis *Discovery) UpdateClinets(ins []*discover.ServiceInstance) {
-	// 关闭下线的服务的连接
+	// TODO 关闭下线的服务的连接
 
 	// 与新上线的服务建立连接
 	for _, instance := range ins {
@@ -68,7 +68,7 @@ func (dis *Discovery) UpdateClinets(ins []*discover.ServiceInstance) {
 			}
 		}
 	}
-	fmt.Println("已连接客户端：", dis.Clients)
+	// fmt.Println("已连接客户端：", dis.Clients)
 	dis.log.Debug(dis.Clients)
 }
 

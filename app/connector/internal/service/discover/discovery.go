@@ -5,6 +5,8 @@ import (
 	"arod-im/pkg/nacos/discover"
 	"context"
 	"fmt"
+	"math/rand"
+	"time"
 
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 )
@@ -28,14 +30,25 @@ func NewDiscovery(cli naming_client.INamingClient) *Discovery {
 	return c
 }
 
-func (c *Discovery) GetClient(address string) logicV1.LogicClient {
-	// TODO balance
-	return c.Clients[address].GetClient()
+// TODO 实现其他负载方式
+// GetClient 使用随机负载均衡的方式获取连接服务地址
+func (dis *Discovery) GetClient() logicV1.LogicClient {
+	lens := len(dis.watcher.Instances)
+	if lens == 0 {
+		return nil
+	}
+	rand.Seed(time.Now().Unix())
+	addr := dis.watcher.Instances[rand.Intn(lens)].Endpoints
+	if c, ok := dis.Clients[addr]; !ok {
+		return nil
+	} else {
+		return c.GetClient()
+	}
 }
 
 func (dis *Discovery) Watch() {
 	for {
-		fmt.Println("正在监听。。。")
+		// fmt.Println("正在监听。。。")
 		select {
 		case <-dis.watcher.Ctx.Done():
 			return

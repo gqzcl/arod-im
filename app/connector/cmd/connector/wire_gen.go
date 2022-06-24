@@ -29,7 +29,7 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	connectorService := service.NewConnectorService(confServer, bucketUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, connectorService, logger)
 	websocketServer := server.NewWebsocketServer(confServer, connectorService)
-	registry := server.NewNacosRegister(confServer, dataData)
+	registry := server.NewNacosRegister(confServer, connectorService)
 	app := newApp(logger, grpcServer, websocketServer, registry)
 	return app, func() {
 		cleanup()

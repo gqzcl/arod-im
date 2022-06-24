@@ -34,6 +34,7 @@ func NewJobUsecase(job JobRepo, logger log.Logger) *JobUsecase {
 
 // PushMsg push msg to connector
 func (uc *JobUsecase) PushMsg(ctx context.Context, msg *jobV1.SingleSendMsg) (err error) {
+
 	uc.log.WithContext(ctx).Debugf("Push Msg the content is %s", msg)
 	for address := range msg.Server {
 		err := uc.job.SingleSend(ctx, address, msg.Server[address], msg.SenderId, msg.Seq, msg.Msg)

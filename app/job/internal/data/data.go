@@ -26,7 +26,6 @@ type Data struct {
 // NewData
 func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	d := &Data{
-		// clients: make(map[string]*ConnectClient),
 		log: log.NewHelper(logger),
 	}
 	cleanup := func() {

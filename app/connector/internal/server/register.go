@@ -5,7 +5,7 @@ package server
 
 import (
 	"arod-im/app/connector/internal/conf"
-	"arod-im/app/connector/internal/data"
+	"arod-im/app/connector/internal/service"
 
 	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	"github.com/nacos-group/nacos-sdk-go/clients"
@@ -13,7 +13,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/vo"
 )
 
-func NewNacosRegister(c *conf.Server, d *data.Data) *nacos.Registry {
+func NewNacosRegister(c *conf.Server, s *service.ConnectorService) *nacos.Registry {
 	cc := constant.ClientConfig{
 		NamespaceId:         c.Register.NamespaceId,
 		AccessKey:           c.Register.AccessKey,
@@ -36,8 +36,7 @@ func NewNacosRegister(c *conf.Server, d *data.Data) *nacos.Registry {
 	if err != nil {
 		panic(err)
 	}
-	d.SetNaming(namingClient)
-	//TODO init
-	d.InitClient()
+	s.SetNaming(namingClient)
+	s.InitClient()
 	return nacos.New(namingClient, nacos.WithGroup("arod-im"))
 }

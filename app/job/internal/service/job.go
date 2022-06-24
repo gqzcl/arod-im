@@ -7,6 +7,7 @@ import (
 	jobV1 "arod-im/api/job/v1"
 	"arod-im/app/job/internal/biz"
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/segmentio/kafka-go"
 	"google.golang.org/protobuf/proto"
@@ -41,19 +42,21 @@ type ColorGroup struct {
 
 // OnMessage message format: serverId , address , senderId , msg[ id , content]
 func (j *JobService) OnMessage(ctx context.Context, message kafka.Message) error {
-	j.log.WithContext(ctx).Debugf("message at topic/partition/offset %v/%v/%v: %s = %s\n",
+	j.log.WithContext(ctx).Debugf("Receive message at topic/partition/offset %v / %v / %v key: %s = %s\n",
 		message.Topic, message.Partition, message.Offset, string(message.Key), string(message.Value))
 
 	m := new(jobV1.SingleSendMsg)
 	err := proto.Unmarshal(message.Value, m)
 	if err != nil {
 		j.log.WithContext(ctx).Error(err)
+		return err
 	}
 
-	j.log.Debug(m.Msg)
+	// j.log.Debug(m.Msg)
 	err = j.jc.PushMsg(ctx, m)
 	if err != nil {
 		j.log.WithContext(ctx).Error(err)
+		return err
 	}
 
 	// TODO 回复ack

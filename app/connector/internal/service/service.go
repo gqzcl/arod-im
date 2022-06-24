@@ -5,19 +5,16 @@ package service
 
 import (
 	pb "arod-im/api/connector/v1"
-	logicV1 "arod-im/api/logic/v1"
 	"arod-im/app/connector/internal/biz"
 	"arod-im/app/connector/internal/conf"
+	"arod-im/app/connector/internal/service/discover"
 	"arod-im/pkg/ips"
-	"context"
 	"fmt"
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/keepalive"
+	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 )
 
 // ProviderSet is service providers.
@@ -41,10 +38,13 @@ const (
 type ConnectorService struct {
 	pb.UnimplementedConnectorServer
 
+	naming    naming_client.INamingClient
+	discovery discover.Discovery
+
 	bc  *biz.BucketUsecase
 	log *log.Helper
 	//ws          *websocket.Server
-	LogicClient logicV1.LogicClient
+	//LogicClient logicV1.LogicClient
 
 	// server ip
 	Address string
@@ -57,32 +57,49 @@ func NewConnectorService(config *conf.Server, bc *biz.BucketUsecase, logger log.
 		log:     log.NewHelper(log.With(logger, "module", "connector")),
 		Address: fmt.Sprintf("%s:9000", ip),
 	}
-	ctx := context.Background()
-	s.DailLogic(ctx)
 	return s
 }
 
-func (s *ConnectorService) DailLogic(ctx context.Context) {
-	conn, err := grpc.DialContext(ctx, "127.0.0.1:9003",
-		[]grpc.DialOption{
-			grpc.WithInitialWindowSize(grpcInitialWindowSize),
-			grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
-			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize)),
-			grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
-			grpc.WithTransportCredentials(insecure.NewCredentials()),
-			grpc.WithKeepaliveParams(keepalive.ClientParameters{
-				Time:                grpcKeepAliveTime,
-				Timeout:             grpcKeepAliveTimeout,
-				PermitWithoutStream: true,
-			}),
-		}...,
-	)
-	if err != nil {
-		s.log.Error("Grpc 连接失败", err)
+// SetNaming init the nacos naming client of Data
+func (s *ConnectorService) SetNaming(naming naming_client.INamingClient) {
+	s.naming = naming
+	s.discovery = *discover.NewDiscovery(s.naming)
+}
+
+// TODO 如何优雅退出
+func (s *ConnectorService) CloseClient() {
+	for _, v := range s.discovery.Clients {
+		v.Close()
 	}
-	s.LogicClient = logicV1.NewLogicClient(conn)
 }
 
-func update(ctx context.Context) {
+func (s *ConnectorService) InitClient() {
 
+	go s.discovery.Watch()
+	// s.log.Debugf("已开始监听业务服务地址")
 }
+
+// func (s *ConnectorService) DailLogic(ctx context.Context) {
+// 	conn, err := grpc.DialContext(ctx, "127.0.0.1:9003",
+// 		[]grpc.DialOption{
+// 			grpc.WithInitialWindowSize(grpcInitialWindowSize),
+// 			grpc.WithInitialConnWindowSize(grpcInitialConnWindowSize),
+// 			grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(grpcMaxCallMsgSize)),
+// 			grpc.WithDefaultCallOptions(grpc.MaxCallSendMsgSize(grpcMaxSendMsgSize)),
+// 			grpc.WithTransportCredentials(insecure.NewCredentials()),
+// 			grpc.WithKeepaliveParams(keepalive.ClientParameters{
+// 				Time:                grpcKeepAliveTime,
+// 				Timeout:             grpcKeepAliveTimeout,
+// 				PermitWithoutStream: true,
+// 			}),
+// 		}...,
+// 	)
+// 	if err != nil {
+// 		s.log.Error("Grpc 连接失败", err)
+// 	}
+// 	s.LogicClient = logicV1.NewLogicClient(conn)
+// }
+
+// func update(ctx context.Context) {
+
+// }

@@ -45,12 +45,12 @@ func (s *ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 	// note： 初次连接，鉴权，将地址存入redis
 	// c.Close(nil)
 	success, err := s.StoreConnect(cookie.Uid, address)
-	// 存储uid，关联uid与ws连接
-	c.Context().(*websocket.WsContext).Uid = cookie.Uid
-	s.log.Infof("成功连接")
 	if err != nil {
 		return err
 	}
+	// 存储uid，关联uid与ws连接
+	c.Context().(*websocket.WsContext).Uid = cookie.Uid
+	s.log.Infof("成功连接")
 
 	if !success {
 		// TODO 连接操作失败
@@ -60,10 +60,10 @@ func (s *ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 		s.bc.AddCh(address, c)
 	}
 
-	bufProto, _ := json.Marshal(&cookie)
-	var msg websocket.Message
-	msg.Body = bufProto
-	s.log.Info("msgBody is ", cookie.Uid, "+", cookie.GroupId)
+	// bufProto, _ := json.Marshal(&cookie)
+	// var msg websocket.Message
+	// msg.Body = bufProto
+	// s.log.Info("msgBody is ", cookie.Uid, "+", cookie.GroupId)
 
 	return nil
 }
@@ -71,18 +71,23 @@ func (s *ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 func (s *ConnectorService) OnCloseHandler(c gnet.Conn) {
 	address := c.RemoteAddr().String()
 	uid := c.Context().(*websocket.WsContext).Uid
-	connect, _ := s.LogicClient.Disconnect(context.Background(), &v1.DisConnectReq{
-		Server: s.Address,
-		// TODO how 获得uid
+	// 获取业务服务失败时重复获取
+start:
+	client := s.discovery.GetClient()
+	if client == nil {
+		goto start
+	}
+	connect, _ := client.Disconnect(context.Background(), &v1.DisConnectReq{
 		Uid:     uid,
 		Address: address,
+		Server:  s.Address,
 	})
 	s.log.Infof("成功关闭连接")
 
 	if !connect.Success {
 		// TODO 关闭连接操作失败
 	} else {
-		// 存储连接
+		// 删除存储连接
 		s.bc.DeleteCh(address)
 	}
 }

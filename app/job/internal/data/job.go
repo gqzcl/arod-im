@@ -47,23 +47,5 @@ func (j *jobRepo) SingleSend(ctx context.Context, address, server, senderId, seq
 	} else {
 		j.log.WithContext(ctx).Debugf("连接服务:%s 未上线", server)
 	}
-
-	// if connector, ok := j.data.clients[server]; ok {
-	// 	client := connector.GetClient()
-	// 	// TODO 为client加入环形队列，进行缓存
-	// 	sendReply, err := client.SingleSend(ctx, &v1.SingleSendReq{
-	// 		Address:  address,
-	// 		SenderId: senderId,
-	// 		Seq:      seq,
-	// 		Msg:      msg,
-	// 	})
-	// 	if err != nil {
-	// 		j.log.WithContext(ctx).Error(err)
-	// 	}
-	// 	j.log.WithContext(ctx).Infof("Response received: %v", sendReply)
-	// } else {
-	// 	j.log.WithContext(ctx).Infof("Connector server : %s Service address does not exist:", server)
-	// 	// TODO return 自定义错误
-	// }
 	return nil
 }

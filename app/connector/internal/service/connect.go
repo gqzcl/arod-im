@@ -7,7 +7,12 @@ import (
 
 // StoreConnect 发送连接信息到业务服务
 func (s *ConnectorService) StoreConnect(uid, address string) (bool, error) {
-	connect, err := s.LogicClient.Connect(context.Background(), &v1.ConnectReq{
+start:
+	client := s.discovery.GetClient()
+	if client == nil {
+		goto start
+	}
+	connect, err := client.Connect(context.Background(), &v1.ConnectReq{
 		Server:  s.Address,
 		Uid:     uid,
 		Address: address,
