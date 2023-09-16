@@ -36,7 +36,7 @@ func (s *ConnectorService) OnMessageHandler(c gnet.Conn, message []byte) error {
 
 	var cookie WebsocketProto
 	if err := json.Unmarshal(message, &cookie); err != nil {
-		s.log.Error("Error unmarshalling proto json %v", err)
+		s.log.Errorf("error unmarshalling proto json %v", err)
 		return nil
 	}
 	s.log.Debug(cookie)
